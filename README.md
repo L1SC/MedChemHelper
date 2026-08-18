@@ -13,19 +13,13 @@
 
 ## 快速开始
 
-### 网页版
+### 桌面版（唯一使用方式）
 
-双击 `启动工具.bat`，首次运行自动创建独立 Python 环境并安装 RDKit，然后打开浏览器访问 `http://127.0.0.1:8765/`。
+- 直接运行 `desktop\dist\MedChemHelper-win32-x64\MedChemHelper.exe`
+- 或解压 `desktop\dist\MedChemHelper.zip` 到任意 Windows 电脑（Win10/11，64 位）后运行 `MedChemHelper.exe`
+- 无需安装 Python，无需手动启动服务；程序内置本地服务，关窗即退出
 
-手动启动：
-
-```bat
-.venv\Scripts\python server.py --port 8765
-```
-
-### 桌面版（独立窗口）
-
-`desktop\dist\ChemHelper-win32-x64\ChemHelper.exe`（或 `desktop\dist\化学结构速查助手-独立版.zip` 解压即用），无需安装 Python。
+修改源码后重新打包：运行 `desktop\build-all.ps1`（需要 Node 环境）。
 
 ## 数据与依赖
 
@@ -38,18 +32,17 @@
 
 ```text
 chem-helper/
-├─ server.py                 # 本地后端服务
-├─ start.bat / 启动工具.bat   # 网页版一键启动
+├─ server.py                 # 本地后端服务（仅桌面版内部使用，禁止浏览器直连）
 ├─ static/                   # 前端页面
 ├─ data/                     # 药物库 / 药理信息 / 官能团库 / 中文词典
 ├─ scripts/                  # 药物库构建脚本
-├─ desktop/                  # 桌面版（Electron 壳 + 打包脚本）
+├─ desktop/                  # 桌面版（Electron 壳 + 打包脚本 + 打包产物）
 └─ images/                   # 结构图缓存（运行时生成）
 ```
 
 ## 常见问题
 
-- **端口被占用**：`start.bat 8766` 或 `.venv\Scripts\python server.py --port 8766`
+- **端口被占用**：桌面版会自动连接已有实例；如需换端口，设置环境变量 `CHEMHELPER_PORT` 后重启桌面版
 - **显示“未找到”**：中文名用常见叫法；英文支持部分匹配；也可用分子式（`C2H6O`）、SMILES（`CCO`）或 CAS 号
 - **想添加更多药物**：编辑 `data/drug_names.csv` 后运行 `.venv\Scripts\python scripts\build_drugs.py` 重建
 - **重新打包桌面版**：运行 `desktop\build-all.ps1`（需要 Node 环境）

@@ -1113,6 +1113,13 @@ def main():
     ap.add_argument("--no-browser", action="store_true", help="不自动打开浏览器")
     args = ap.parse_args()
 
+    # 已取消浏览器版：非打包（桌面版）环境下直接运行即退出。
+    # 桌面版由 Electron 以打包模式调用，不受此限制。
+    if not getattr(sys, "frozen", False) and os.environ.get("MEDCHEMHELPER_DEV") != "1":
+        print("MedChemHelper 已取消浏览器版，请使用桌面版 MedChemHelper.exe。")
+        print("（如需开发调试，请设置环境变量 MEDCHEMHELPER_DEV=1）")
+        return
+
     os.makedirs(IMAGE_DIR, exist_ok=True)
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     url = f"http://127.0.0.1:{args.port}/"

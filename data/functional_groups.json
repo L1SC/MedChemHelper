@@ -1,0 +1,2528 @@
+{
+  "groups": [
+    {
+      "id": "carbonyl",
+      "category": "含氧基团",
+      "zh": "羰基（通用）",
+      "en": "Carbonyl",
+      "symbol": "C=O",
+      "smiles_example": "CC(=O)C",
+      "smarts": "[CX3]=[OX1]",
+      "substructure_smiles": "C=O",
+      "short": "碳氧双键，是醛、酮、羧酸、酯、酰胺等基团的共同核心",
+      "description": "羰基是极性不饱和基团，氧原子带部分负电荷、碳原子带部分正电荷，因此碳原子易受亲核试剂进攻。看到 C=O 时先判断它两边连着什么：连 H 是醛，连两个碳是酮，连 OH 是羧酸，连 OR 是酯，连 N 是酰胺。",
+      "reactions": [
+        "亲核加成（醛/酮）",
+        "还原成醇",
+        "α-H 的酸性（醛/酮）"
+      ],
+      "hint": "见到 C=O 先问：旁边连的原子/基团是什么？这是确定官能团类别的关键一步。",
+      "representatives": [
+        {
+          "name": "丙酮",
+          "en": "acetone",
+          "smiles": "CC(=O)C"
+        },
+        {
+          "name": "乙醛",
+          "en": "acetaldehyde",
+          "smiles": "CC=O"
+        },
+        {
+          "name": "乙酸",
+          "en": "acetic acid",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "name": "乙酸乙酯",
+          "en": "ethyl acetate",
+          "smiles": "CCOC(=O)C"
+        },
+        {
+          "name": "乙酰胺",
+          "en": "acetamide",
+          "smiles": "CC(=O)N"
+        }
+      ]
+    },
+    {
+      "id": "alcohol",
+      "category": "含氧基团",
+      "zh": "羟基（醇）",
+      "en": "Hydroxyl / Alcohol",
+      "symbol": "-OH",
+      "smiles_example": "CCO",
+      "smarts": "[OX2H][CX4]",
+      "substructure_smiles": "CO",
+      "short": "-OH 与饱和碳相连；O 上带 H，能形成氢键",
+      "description": "极性基团，可形成分子间氢键，因此醇的沸点明显高于同碳数的烷烃；小分子醇可与水混溶。羟基氢有一定酸性（能与 Na 反应放出 H₂，但比水弱），伯醇可氧化成醛、仲醇氧化成酮，醇与羧酸可酯化。",
+      "reactions": [
+        "与 Na 反应放 H₂",
+        "氧化成醛/酮",
+        "与羧酸酯化",
+        "分子间脱水成醚"
+      ],
+      "hint": "同碳数下沸点：醇 > 醚 > 烷烃；溶于水的能力随碳链增长而下降。",
+      "representatives": [
+        {
+          "name": "甲醇",
+          "en": "methanol",
+          "smiles": "CO"
+        },
+        {
+          "name": "乙醇",
+          "en": "ethanol",
+          "smiles": "CCO"
+        },
+        {
+          "name": "1-丙醇",
+          "en": "1-propanol",
+          "smiles": "CCCO"
+        },
+        {
+          "name": "异丙醇",
+          "en": "2-propanol",
+          "smiles": "CC(C)O"
+        },
+        {
+          "name": "乙二醇",
+          "en": "ethylene glycol",
+          "smiles": "C(CO)O"
+        },
+        {
+          "name": "甘油",
+          "en": "glycerol",
+          "smiles": "C(C(CO)O)O"
+        }
+      ]
+    },
+    {
+      "id": "phenol",
+      "category": "含氧基团",
+      "zh": "酚羟基",
+      "en": "Phenolic Hydroxyl",
+      "symbol": "Ar-OH",
+      "smiles_example": "Oc1ccccc1",
+      "smarts": "[OX2H][c]",
+      "substructure_smiles": "Oc1ccccc1",
+      "short": "-OH 直接连在苯环上，酸性强于醇",
+      "description": "酚羟基连在苯环上，由于苯环的共轭稳定作用，O-H 键更容易断裂，所以苯酚的酸性比醇强、比碳酸弱（不能使石蕊明显变红，但能与 NaOH 反应）。苯酚遇 FeCl₃ 显紫色，是酚类的重要鉴别反应；酚羟基的邻对位易发生取代。",
+      "reactions": [
+        "与 NaOH 成盐",
+        "遇 FeCl₃ 显紫色",
+        "邻对位取代（卤代、硝化）"
+      ],
+      "hint": "区分醇和酚：羟基连在苯环上就是酚，酸性更强；这也是中学化学常考考点。",
+      "representatives": [
+        {
+          "name": "苯酚",
+          "en": "phenol",
+          "smiles": "C1=CC=C(C=C1)O"
+        },
+        {
+          "name": "对甲酚",
+          "en": "p-cresol",
+          "smiles": "CC1=CC=C(C=C1)O"
+        },
+        {
+          "name": "邻苯二酚",
+          "en": "catechol",
+          "smiles": "C1=CC=C(C(=C1)O)O"
+        },
+        {
+          "name": "双酚 A",
+          "en": "bisphenol A",
+          "smiles": "CC(C)(C1=CC=C(C=C1)O)C2=CC=C(C=C2)O"
+        }
+      ]
+    },
+    {
+      "id": "carboxyl",
+      "category": "含氧基团",
+      "zh": "羧基",
+      "en": "Carboxyl",
+      "symbol": "-COOH",
+      "smiles_example": "CC(=O)O",
+      "smarts": "[CX3](=O)[OX2H1]",
+      "substructure_smiles": "C(=O)O",
+      "short": "羰基 + 羟基组合，具有明显的酸性",
+      "description": "羧基是羰基碳上连羟基，能电离出 H⁺，是典型的有机酸官能团（乙酸 Ka 约 1.8×10⁻⁵）。羧基既能与碱成盐，又能与醇发生酯化反应（酸脱羟基、醇脱氢）。吸电子基团（如 Cl、NO₂）会增强酸性。",
+      "reactions": [
+        "电离出 H⁺（酸性）",
+        "与醇酯化",
+        "与碱中和成盐",
+        "还原成醇"
+      ],
+      "hint": "酸性比较：羧酸 > 碳酸 > 苯酚 > 醇；羧基是‘酸’字辈官能团的核心。",
+      "pharmacophore": {
+        "drug_class": "非甾体抗炎药（NSAIDs）",
+        "target": "环氧合酶 COX-1/COX-2",
+        "sar": "多数 NSAID 的羧基与 COX 活性位点精氨酸形成盐桥，是活性必需；芳环疏水区与 COX-2 侧袋选择性相关。",
+        "drugs": [
+          {
+            "name": "阿司匹林",
+            "en": "aspirin",
+            "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"
+          },
+          {
+            "name": "布洛芬",
+            "en": "ibuprofen",
+            "smiles": "CC(C)CC1=CC=C(C=C1)C(C)C(=O)O"
+          },
+          {
+            "name": "萘普生",
+            "en": "naproxen",
+            "smiles": "CC(C1=CC2=C(C=C1)C=C(C=C2)OC)C(=O)O"
+          },
+          {
+            "name": "双氯芬酸",
+            "en": "diclofenac",
+            "smiles": "C1=CC=C(C(=C1)CC(=O)O)NC2=C(C=CC=C2Cl)Cl"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "甲酸",
+          "en": "formic acid",
+          "smiles": "C(=O)O"
+        },
+        {
+          "name": "乙酸",
+          "en": "acetic acid",
+          "smiles": "CC(=O)O"
+        },
+        {
+          "name": "苯甲酸",
+          "en": "benzoic acid",
+          "smiles": "C1=CC=C(C=C1)C(=O)O"
+        },
+        {
+          "name": "草酸",
+          "en": "oxalic acid",
+          "smiles": "C(=O)(C(=O)O)O"
+        },
+        {
+          "name": "柠檬酸",
+          "en": "citric acid",
+          "smiles": "C(C(=O)O)C(CC(=O)O)(C(=O)O)O"
+        },
+        {
+          "name": "阿司匹林",
+          "en": "aspirin",
+          "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"
+        }
+      ]
+    },
+    {
+      "id": "aldehyde",
+      "category": "含氧基团",
+      "zh": "醛基",
+      "en": "Aldehyde",
+      "symbol": "-CHO",
+      "smiles_example": "CC=O",
+      "smarts": "[CX3H1](=O)[#6]",
+      "substructure_smiles": "[CH]=O",
+      "short": "羰基碳上连 H，结构为 R-CHO，易被氧化",
+      "description": "醛基的羰基碳上连有一个氢，这个氢使醛具有强还原性：能被银氨溶液氧化（银镜反应）、被新制 Cu(OH)₂ 氧化（砖红色沉淀），也能被催化加氢还原成醇。甲醛是最简单的醛（HCHO），其 40% 水溶液即福尔马林。",
+      "reactions": [
+        "银镜反应（还原性）",
+        "与新制 Cu(OH)₂ 反应",
+        "催化加氢还原成伯醇"
+      ],
+      "hint": "鉴别醛：银镜反应或斐林/班氏试剂；醛基永远在碳链末端（-CHO）。",
+      "representatives": [
+        {
+          "name": "甲醛",
+          "en": "formaldehyde",
+          "smiles": "C=O"
+        },
+        {
+          "name": "乙醛",
+          "en": "acetaldehyde",
+          "smiles": "CC=O"
+        },
+        {
+          "name": "丙醛",
+          "en": "propanal",
+          "smiles": "CCC=O"
+        },
+        {
+          "name": "苯甲醛",
+          "en": "benzaldehyde",
+          "smiles": "C1=CC=C(C=C1)C=O"
+        },
+        {
+          "name": "糠醛",
+          "en": "furfural",
+          "smiles": "C1=COC(=C1)C=O"
+        }
+      ]
+    },
+    {
+      "id": "ketone",
+      "category": "含氧基团",
+      "zh": "酮羰基",
+      "en": "Ketone",
+      "symbol": ">C=O",
+      "smiles_example": "CC(=O)C",
+      "smarts": "[#6][CX3](=O)[#6]",
+      "substructure_smiles": "[#6]C(=O)[#6]",
+      "short": "羰基碳两边都连碳（R-CO-R'），不在链末端",
+      "description": "酮的羰基两端都连碳原子，没有醛基那样的活泼氢，因此酮一般不能被银氨溶液氧化（无还原性），但可以被催化加氢还原成仲醇。丙酮是最简单的酮，是常用溶剂。α-H 使酮存在酮-烯醇互变异构。",
+      "reactions": [
+        "催化加氢还原成仲醇",
+        "亲核加成（如与 HCN、格氏试剂）",
+        "α-H 导致酮-烯醇互变"
+      ],
+      "hint": "醛 vs 酮：羰基碳上有 H 是醛（可被氧化），两边都是 C 是酮。",
+      "representatives": [
+        {
+          "name": "丙酮",
+          "en": "acetone",
+          "smiles": "CC(=O)C"
+        },
+        {
+          "name": "丁酮",
+          "en": "butanone",
+          "smiles": "CCC(=O)C"
+        },
+        {
+          "name": "环己酮",
+          "en": "cyclohexanone",
+          "smiles": "C1CCC(=O)CC1"
+        },
+        {
+          "name": "苯乙酮",
+          "en": "acetophenone",
+          "smiles": "CC(=O)C1=CC=CC=C1"
+        }
+      ]
+    },
+    {
+      "id": "ester",
+      "category": "含氧基团",
+      "zh": "酯基",
+      "en": "Ester",
+      "symbol": "-COOR",
+      "smiles_example": "CCOC(=O)C",
+      "smarts": "[CX3](=O)[OX2][#6]",
+      "substructure_smiles": "C(=O)OC",
+      "short": "羧酸与醇脱水缩合的产物，结构 R-COO-R'",
+      "description": "酯基由羧酸和醇酯化生成，多数低分子酯有水果香气，是香料和食品添加剂的重要成分。酯在酸或碱催化下可水解：酸性水解可逆生成酸+醇；碱性（皂化）水解不可逆生成盐+醇，这是制肥皂的原理。",
+      "reactions": [
+        "酸性水解（可逆）",
+        "碱性水解/皂化（不可逆）",
+        "与胺反应生成酰胺"
+      ],
+      "hint": "看到 R-COO-R' 就想到‘酸+醇酯化、水解逆向’这条主线。",
+      "representatives": [
+        {
+          "name": "乙酸甲酯",
+          "en": "methyl acetate",
+          "smiles": "CC(=O)OC"
+        },
+        {
+          "name": "乙酸乙酯",
+          "en": "ethyl acetate",
+          "smiles": "CCOC(=O)C"
+        },
+        {
+          "name": "苯甲酸甲酯",
+          "en": "methyl benzoate",
+          "smiles": "COC(=O)C1=CC=CC=C1"
+        },
+        {
+          "name": "阿司匹林",
+          "en": "aspirin",
+          "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O"
+        }
+      ]
+    },
+    {
+      "id": "ether",
+      "category": "含氧基团",
+      "zh": "醚键",
+      "en": "Ether",
+      "symbol": "R-O-R'",
+      "smiles_example": "CCOCC",
+      "smarts": "[#6;!$(C=O)][OX2][#6;!$(C=O)]",
+      "substructure_smiles": "COC",
+      "short": "氧原子连接两个碳，R-O-R'，化学性质相对稳定",
+      "description": "醚是醇分子间脱水（或 Williamson 合成）的产物，氧两侧都是碳。醚一般比较稳定、不易反应，常用作惰性溶剂；但小分子醚（如乙醚）极易燃，且长期放置可能被氧化生成易爆的过氧化物。",
+      "reactions": [
+        "作惰性溶剂",
+        "与强酸（如 HI）反应断键",
+        "长期存放可氧化成过氧化物"
+      ],
+      "hint": "区分醚与酯：酯中有 C=O，醚中没有；醚的氧两侧都直接连碳。",
+      "representatives": [
+        {
+          "name": "二甲醚",
+          "en": "dimethyl ether",
+          "smiles": "COC"
+        },
+        {
+          "name": "乙醚",
+          "en": "diethyl ether",
+          "smiles": "CCOCC"
+        },
+        {
+          "name": "四氢呋喃",
+          "en": "tetrahydrofuran",
+          "smiles": "C1CCOC1"
+        },
+        {
+          "name": "苯甲醚",
+          "en": "anisole",
+          "smiles": "COC1=CC=CC=C1"
+        },
+        {
+          "name": "1,4-二氧六环",
+          "en": "1,4-dioxane",
+          "smiles": "C1COCCO1"
+        }
+      ]
+    },
+    {
+      "id": "amine",
+      "category": "含氮基团",
+      "zh": "氨基",
+      "en": "Amine",
+      "symbol": "-NH₂",
+      "smiles_example": "CN",
+      "smarts": "[NX3;H2,H1;!$(NC=O);!$(N=O)]",
+      "substructure_smiles": "NC",
+      "short": "氮上连氢，呈碱性，是胺类化合物标志",
+      "description": "氨基氮上有孤对电子，能结合 H⁺，所以胺显碱性（脂肪胺碱性一般强于氨）。氨基也是合成酰胺、染料、药物的关键基团；苯胺等芳胺碱性弱于脂肪胺，且易被氧化变色。氨基酸同时含 -NH₂ 和 -COOH，是两性分子。",
+      "reactions": [
+        "与酸成铵盐",
+        "与羧酸/酰氯生成酰胺",
+        "重氮化反应（芳伯胺）"
+      ],
+      "hint": "注意区分：-NH₂ 连碳是胺（碱性），-NH₂ 连 C=O 是酰胺（中性偏弱碱）。",
+      "representatives": [
+        {
+          "name": "甲胺",
+          "en": "methylamine",
+          "smiles": "CN"
+        },
+        {
+          "name": "乙胺",
+          "en": "ethylamine",
+          "smiles": "CCN"
+        },
+        {
+          "name": "苯胺",
+          "en": "aniline",
+          "smiles": "C1=CC=C(C=C1)N"
+        },
+        {
+          "name": "乙二胺",
+          "en": "ethylenediamine",
+          "smiles": "C(CN)N"
+        },
+        {
+          "name": "甘氨酸",
+          "en": "glycine",
+          "smiles": "C(C(=O)O)N"
+        }
+      ]
+    },
+    {
+      "id": "amide",
+      "category": "含氮基团",
+      "zh": "酰胺基",
+      "en": "Amide",
+      "symbol": "-CONH-",
+      "smiles_example": "CC(N)=O",
+      "smarts": "[CX3](=O)[NX3]",
+      "substructure_smiles": "C(=O)N",
+      "short": "羰基碳连氮，是蛋白质多肽链的连接键",
+      "description": "酰胺由羧酸衍生物与氨/胺反应生成，羰基与氮的孤对电子共轭，使 C-N 键具有部分双键性质、氮的碱性大大减弱。肽键（-CO-NH-）就是酰胺键，是蛋白质一级结构的基础；聚酰胺（尼龙）也是工业重要材料。",
+      "reactions": [
+        "酸/碱催化水解成酸+胺",
+        "受热脱水成腈（伯酰胺）",
+        "霍夫曼降解成少一个碳的胺"
+      ],
+      "hint": "氨基酸之间脱水缩合形成的肽键，本质上就是酰胺键。",
+      "pharmacophore": {
+        "drug_class": "酰胺类镇痛药 / 局麻药 / 部分抗生素",
+        "target": "COX（对乙酰氨基酚）、Na⁺ 通道（利多卡因）、PBP（β-内酰胺类）",
+        "drugs": [
+          {
+            "name": "对乙酰氨基酚",
+            "en": "paracetamol",
+            "smiles": "CC(=O)NC1=CC=C(C=C1)O"
+          },
+          {
+            "name": "利多卡因",
+            "en": "lidocaine",
+            "smiles": "CCN(CC)CC(=O)NC1=C(C=CC=C1C)C"
+          },
+          {
+            "name": "氯霉素",
+            "en": "chloramphenicol",
+            "smiles": "C1=CC(=CC=C1C(C(CO)NC(=O)C(Cl)Cl)O)[N+](=O)[O-]"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "甲酰胺",
+          "en": "formamide",
+          "smiles": "C(=O)N"
+        },
+        {
+          "name": "乙酰胺",
+          "en": "acetamide",
+          "smiles": "CC(=O)N"
+        },
+        {
+          "name": "苯甲酰胺",
+          "en": "benzamide",
+          "smiles": "C1=CC=C(C=C1)C(=O)N"
+        },
+        {
+          "name": "N,N-二甲基甲酰胺",
+          "en": "DMF",
+          "smiles": "CN(C)C=O"
+        },
+        {
+          "name": "己内酰胺",
+          "en": "caprolactam",
+          "smiles": "C1CCC(=O)NCC1"
+        }
+      ]
+    },
+    {
+      "id": "nitro",
+      "category": "含氮基团",
+      "zh": "硝基",
+      "en": "Nitro",
+      "symbol": "-NO₂",
+      "smiles_example": "C[N+](=O)[O-]",
+      "smarts": "[N+](=O)[O-]",
+      "substructure_smiles": "[N+](=O)[O-]",
+      "short": "氮原子带正电荷、连两个氧，强吸电子基团",
+      "description": "硝基是强吸电子基，能使苯环上的电子云密度下降，因此硝基苯的苯环更难发生亲电取代；同时硝基使邻对位上的其他基团酸性增强。多硝基化合物（如 TNT）具有爆炸性，硝基也常用于合成苯胺（还原）。",
+      "reactions": [
+        "还原成氨基",
+        "强吸电子效应影响苯环反应活性",
+        "多硝基化合物不稳定易爆"
+      ],
+      "hint": "硝基苯还原得苯胺，这是工业上制苯胺的重要路线。",
+      "pharmacophore": {
+        "drug_class": "硝基咪唑类 / 硝基呋喃类抗菌药",
+        "target": "厌氧菌 DNA（甲硝唑还原活化）、细菌核糖体 50S（氯霉素）",
+        "drugs": [
+          {
+            "name": "甲硝唑",
+            "en": "metronidazole",
+            "smiles": "CC1=NC=C(N1CCO)[N+](=O)[O-]"
+          },
+          {
+            "name": "氯霉素",
+            "en": "chloramphenicol",
+            "smiles": "C1=CC(=CC=C1C(C(CO)NC(=O)C(Cl)Cl)O)[N+](=O)[O-]"
+          },
+          {
+            "name": "呋喃妥因",
+            "en": "nitrofurantoin",
+            "smiles": "C1C(=O)NC(=O)N1N=CC2=CC=C(O2)[N+](=O)[O-]"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "硝基甲烷",
+          "en": "nitromethane",
+          "smiles": "C[N+](=O)[O-]"
+        },
+        {
+          "name": "硝基苯",
+          "en": "nitrobenzene",
+          "smiles": "C1=CC=C(C=C1)[N+](=O)[O-]"
+        },
+        {
+          "name": "三硝基甲苯",
+          "en": "TNT",
+          "smiles": "CC1=C(C=C(C=C1[N+](=O)[O-])[N+](=O)[O-])[N+](=O)[O-]"
+        },
+        {
+          "name": "硝化甘油",
+          "en": "nitroglycerin",
+          "smiles": "C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-]"
+        }
+      ]
+    },
+    {
+      "id": "nitrile",
+      "category": "含氮基团",
+      "zh": "氰基",
+      "en": "Nitrile",
+      "symbol": "-C≡N",
+      "smiles_example": "CC#N",
+      "smarts": "C#N",
+      "substructure_smiles": "C#N",
+      "short": "碳氮三键，直线型，可水解成羧酸或还原成胺",
+      "description": "氰基由碳和氮以三键相连（-C≡N），结构类似炔烃。腈水解得到羧酸（或酰胺），催化加氢还原得到伯胺，是延长碳链、引入官能团的常用中间体。氢氰酸（HCN）剧毒，但许多含氰基的药物和材料（如腈纶）本身稳定。",
+      "reactions": [
+        "水解成羧酸",
+        "还原成伯胺",
+        "与格氏试剂反应成酮"
+      ],
+      "hint": "丙烯腈（CH₂=CH-CN）聚合得到腈纶（人造羊毛）。",
+      "representatives": [
+        {
+          "name": "氢氰酸",
+          "en": "hydrogen cyanide",
+          "smiles": "C#N"
+        },
+        {
+          "name": "乙腈",
+          "en": "acetonitrile",
+          "smiles": "CC#N"
+        },
+        {
+          "name": "丙烯腈",
+          "en": "acrylonitrile",
+          "smiles": "C=CC#N"
+        },
+        {
+          "name": "苯甲腈",
+          "en": "benzonitrile",
+          "smiles": "C1=CC=C(C=C1)C#N"
+        }
+      ]
+    },
+    {
+      "id": "sulfonic",
+      "category": "含硫/卤素",
+      "zh": "磺酸基",
+      "en": "Sulfonic Acid",
+      "symbol": "-SO₃H",
+      "smiles_example": "CS(=O)(=O)O",
+      "smarts": "[SX4](=O)(=O)[OX2H1]",
+      "substructure_smiles": "S(=O)(=O)O",
+      "short": "硫连三个氧（两个双键氧 + 一个羟基），酸性很强",
+      "description": "磺酸基的酸性强于一般羧酸（苯磺酸几乎完全电离），使含磺酸基的化合物水溶性很好。对甲苯磺酸是常用有机强酸催化剂；磺酸基还是合成染料、表面活性剂（烷基苯磺酸钠）的关键基团。",
+      "reactions": [
+        "强酸性（近全电离）",
+        "与碱成盐",
+        "磺化反应引入到芳环"
+      ],
+      "hint": "烷基苯磺酸钠是洗衣粉中的主要表面活性成分。",
+      "representatives": [
+        {
+          "name": "甲磺酸",
+          "en": "methanesulfonic acid",
+          "smiles": "CS(=O)(=O)O"
+        },
+        {
+          "name": "苯磺酸",
+          "en": "benzenesulfonic acid",
+          "smiles": "C1=CC=C(C=C1)S(=O)(=O)O"
+        },
+        {
+          "name": "对甲苯磺酸",
+          "en": "p-toluenesulfonic acid",
+          "smiles": "CC1=CC=C(C=C1)S(=O)(=O)O"
+        },
+        {
+          "name": "牛磺酸",
+          "en": "taurine",
+          "smiles": "C(CS(=O)(=O)O)N"
+        }
+      ]
+    },
+    {
+      "id": "halogen",
+      "category": "含硫/卤素",
+      "zh": "卤代烃",
+      "en": "Alkyl Halide",
+      "symbol": "-X (F/Cl/Br/I)",
+      "smiles_example": "CCCl",
+      "smarts": "[#6][F,Cl,Br,I]",
+      "substructure_smiles": "CCl",
+      "short": "烃分子中氢被卤素取代，碳卤键有极性",
+      "description": "卤原子吸电子，使碳卤键极化，可发生亲核取代（与 NaOH 水溶液水解成醇）和消去反应（与 NaOH 醇溶液加热得烯烃）。卤代烃一般不溶于水，密度常大于水（氯仿、CCl₄）；氟代烃化学性质最稳定。",
+      "reactions": [
+        "NaOH 水溶液水解成醇",
+        "NaOH 醇溶液消去成烯烃",
+        "与金属镁/锂生成格氏试剂"
+      ],
+      "hint": "卤代烃水解与消去条件对比（水溶液 vs 醇溶液）是常考点。",
+      "representatives": [
+        {
+          "name": "氯甲烷",
+          "en": "chloromethane",
+          "smiles": "CCl"
+        },
+        {
+          "name": "氯乙烷",
+          "en": "chloroethane",
+          "smiles": "CCCl"
+        },
+        {
+          "name": "氯仿",
+          "en": "chloroform",
+          "smiles": "C(Cl)(Cl)Cl"
+        },
+        {
+          "name": "溴乙烷",
+          "en": "bromoethane",
+          "smiles": "CCBr"
+        },
+        {
+          "name": "氯苯",
+          "en": "chlorobenzene",
+          "smiles": "C1=CC=C(C=C1)Cl"
+        }
+      ]
+    },
+    {
+      "id": "thiol",
+      "category": "含硫/卤素",
+      "zh": "硫醇",
+      "en": "Thiol",
+      "symbol": "-SH",
+      "smiles_example": "CS",
+      "smarts": "[SX2H]",
+      "substructure_smiles": "CS",
+      "short": "氧被硫替代的‘醇’，有特殊臭味、酸性略强于醇",
+      "description": "硫醇可看作醇中 O 换成 S，硫氢键极性弱、更难形成氢键，所以沸点低、气味强烈（如甲硫醇是大蒜/天然气加臭剂成分）。硫醇酸性比醇强，可被氧化成二硫化物（-S-S-），半胱氨酸中的巯基就是通过二硫键稳定蛋白质结构。",
+      "reactions": [
+        "氧化成二硫化物",
+        "与重金属离子成盐",
+        "与卤代烃生成硫醚"
+      ],
+      "hint": "蛋白质中半胱氨酸的 -SH 氧化成 -S-S-（二硫键），稳定空间结构。",
+      "representatives": [
+        {
+          "name": "甲硫醇",
+          "en": "methanethiol",
+          "smiles": "CS"
+        },
+        {
+          "name": "乙硫醇",
+          "en": "ethanethiol",
+          "smiles": "CCS"
+        },
+        {
+          "name": "苯硫酚",
+          "en": "thiophenol",
+          "smiles": "C1=CC=C(C=C1)S"
+        },
+        {
+          "name": "半胱氨酸",
+          "en": "cysteine",
+          "smiles": "C(C(C(=O)O)N)S"
+        }
+      ]
+    },
+    {
+      "id": "thioether",
+      "category": "含硫/卤素",
+      "zh": "硫醚",
+      "en": "Thioether",
+      "symbol": "R-S-R'",
+      "smiles_example": "CSC",
+      "smarts": "[#6][SX2][#6]",
+      "substructure_smiles": "CSC",
+      "short": "醚中的 O 换成 S，可被氧化成亚砜/砜",
+      "description": "硫醚结构与醚类似但硫原子亲核性更强，容易被氧化：先成亚砜（R-SO-R'），再氧化成砜（R-SO₂-R'）。甲硫氨酸（蛋氨酸）含硫醚键；工业上二甲基亚砜（DMSO）是优良的极性溶剂。",
+      "reactions": [
+        "氧化成亚砜、再成砜",
+        "与卤代烃成锍盐"
+      ],
+      "hint": "DMSO（二甲基亚砜）就是由二甲硫醚氧化而来，是很常用的反应溶剂。",
+      "representatives": [
+        {
+          "name": "二甲硫醚",
+          "en": "dimethyl sulfide",
+          "smiles": "CSC"
+        },
+        {
+          "name": "二甲基亚砜",
+          "en": "DMSO",
+          "smiles": "CS(=O)C"
+        },
+        {
+          "name": "蛋氨酸",
+          "en": "methionine",
+          "smiles": "CSCCC(C(=O)O)N"
+        }
+      ]
+    },
+    {
+      "id": "alkene",
+      "category": "烃类",
+      "zh": "烯烃（碳碳双键）",
+      "en": "Alkene",
+      "symbol": "C=C",
+      "smiles_example": "C=C",
+      "smarts": "[CX3]=[CX3]",
+      "substructure_smiles": "C=C",
+      "short": "含碳碳双键的不饱和烃，易发生加成反应",
+      "description": "双键由 1 个 σ 键和 1 个 π 键组成，π 键易被打开，因此烯烃化学性质活泼：能与 H₂、X₂、HX、H₂O 等发生加成，能被 KMnO₄ 氧化（使酸性高锰酸钾褪色），能发生加聚反应生成高分子。乙烯是最重要的烯烃，是聚乙烯的单体。",
+      "reactions": [
+        "加成（H₂/X₂/HX/H₂O）",
+        "被 KMnO₄ 氧化褪色",
+        "加聚成聚乙烯等"
+      ],
+      "hint": "鉴别烯烃：溴水或酸性 KMnO₄ 褪色；双键两端各有一个不饱和度。",
+      "representatives": [
+        {
+          "name": "乙烯",
+          "en": "ethylene",
+          "smiles": "C=C"
+        },
+        {
+          "name": "丙烯",
+          "en": "propylene",
+          "smiles": "CC=C"
+        },
+        {
+          "name": "1,3-丁二烯",
+          "en": "1,3-butadiene",
+          "smiles": "C=CC=C"
+        },
+        {
+          "name": "苯乙烯",
+          "en": "styrene",
+          "smiles": "C=CC1=CC=CC=C1"
+        },
+        {
+          "name": "环己烯",
+          "en": "cyclohexene",
+          "smiles": "C1CCC=CC1"
+        }
+      ]
+    },
+    {
+      "id": "alkyne",
+      "category": "烃类",
+      "zh": "炔烃（碳碳三键）",
+      "en": "Alkyne",
+      "symbol": "C≡C",
+      "smiles_example": "C#C",
+      "smarts": "[CX2]#[CX2]",
+      "substructure_smiles": "C#C",
+      "short": "含碳碳三键，直线型，比烯烃更不饱和",
+      "description": "三键含 1 个 σ 键和 2 个 π 键，键长更短、电子云更密集，可发生加成（H₂ 可逐步加成到烷烃）、氧化和聚合反应。末端炔烃（R-C≡CH）的 H 有弱酸性，可与银氨溶液生成白色炔银沉淀，是末端炔烃的鉴别方法。",
+      "reactions": [
+        "逐步加成（1 mol → 烯，2 mol → 烷）",
+        "末端炔烃与 AgNO₃/氨溶液生成沉淀",
+        "氧化裂解"
+      ],
+      "hint": "乙炔（C₂H₂）是最简单的炔烃，俗称电石气，燃烧火焰温度高。",
+      "representatives": [
+        {
+          "name": "乙炔",
+          "en": "acetylene",
+          "smiles": "C#C"
+        },
+        {
+          "name": "丙炔",
+          "en": "propyne",
+          "smiles": "CC#C"
+        },
+        {
+          "name": "苯乙炔",
+          "en": "phenylacetylene",
+          "smiles": "C#CC1=CC=CC=C1"
+        }
+      ]
+    },
+    {
+      "id": "benzene",
+      "category": "烃类",
+      "zh": "苯环",
+      "en": "Benzene Ring",
+      "symbol": "C₆H₅- / Ar-",
+      "smiles_example": "c1ccccc1",
+      "smarts": "c1ccccc1",
+      "substructure_smiles": "c1ccccc1",
+      "short": "六元芳香环，电子云离域，性质‘易取代、难加成’",
+      "description": "苯环是芳香族化合物的核心骨架：6 个碳形成平面正六边形，π 电子离域使体系稳定，因此苯不发生烯烃式的加成，而主要发生取代反应（卤代、硝化、磺化、烷基化/酰基化）。苯环上的取代基分为给电子基（如 -CH₃、-OH、-NH₂）和吸电子基（如 -NO₂、-COOH、-X），决定进一步取代的位置。",
+      "reactions": [
+        "亲电取代（卤代/硝化/磺化/傅克反应）",
+        "催化加氢（特殊条件）成环己烷",
+        "侧链被氧化（烷基苯）"
+      ],
+      "hint": "‘苯易取代难加成’是判断芳香化合物反应类型的金句。",
+      "representatives": [
+        {
+          "name": "苯",
+          "en": "benzene",
+          "smiles": "C1=CC=CC=C1"
+        },
+        {
+          "name": "甲苯",
+          "en": "toluene",
+          "smiles": "CC1=CC=CC=C1"
+        },
+        {
+          "name": "邻二甲苯",
+          "en": "o-xylene",
+          "smiles": "CC1=CC=CC=C1C"
+        },
+        {
+          "name": "乙苯",
+          "en": "ethylbenzene",
+          "smiles": "CCC1=CC=CC=C1"
+        },
+        {
+          "name": "苯乙烯",
+          "en": "styrene",
+          "smiles": "C=CC1=CC=CC=C1"
+        }
+      ]
+    },
+    {
+      "id": "pyridine",
+      "category": "杂环",
+      "zh": "吡啶环",
+      "en": "Pyridine",
+      "symbol": "C₅H₅N",
+      "smiles_example": "c1ccncc1",
+      "smarts": "c1ccncc1",
+      "substructure_smiles": "c1ccncc1",
+      "short": "苯环中一个 CH 被 N 取代的六元杂环，呈弱碱性",
+      "description": "吡啶是苯环中一个碳被氮替换，环上氮有孤对电子且不参与芳香共轭，因此吡啶显弱碱性（pKa 约 5.2），可与酸成盐。氮的吸电子作用使吡啶环的亲电取代比苯难，且主要发生在 3-位。吡啶环广泛存在于药物（如烟酸、维生素 B₆、尼古丁）和农药中。",
+      "reactions": [
+        "与酸成盐（弱碱性）",
+        "亲电取代主要发生在 3-位",
+        "可被还原成哌啶"
+      ],
+      "hint": "尼古丁、烟酸（维生素 B₃）都含吡啶环；‘吡啶弱碱、哌啶强碱’。",
+      "pharmacophore": {
+        "drug_class": "吡啶类抗结核 / PPI 侧链",
+        "target": "分枝杆菌 InhA 通路（异烟肼）、H⁺/K⁺-ATPase（PPI 吡啶侧链）",
+        "drugs": [
+          {
+            "name": "异烟肼",
+            "en": "isoniazid",
+            "smiles": "C1=CN=CC=C1C(=O)NN"
+          },
+          {
+            "name": "奥美拉唑",
+            "en": "omeprazole",
+            "smiles": "CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "吡啶",
+          "en": "pyridine",
+          "smiles": "C1=CC=NC=C1"
+        },
+        {
+          "name": "2-甲基吡啶",
+          "en": "2-methylpyridine",
+          "smiles": "CC1=CC=CC=N1"
+        },
+        {
+          "name": "烟酸",
+          "en": "nicotinic acid",
+          "smiles": "C1=CC(=CN=C1)C(=O)O"
+        },
+        {
+          "name": "尼古丁",
+          "en": "nicotine",
+          "smiles": "CN1CCCC1C2=CN=CC=C2"
+        }
+      ]
+    },
+    {
+      "id": "furan",
+      "category": "杂环",
+      "zh": "呋喃环",
+      "en": "Furan",
+      "symbol": "C₄H₄O",
+      "smiles_example": "c1ccoc1",
+      "smarts": "c1ccoc1",
+      "substructure_smiles": "c1ccoc1",
+      "short": "五元含氧芳香杂环，富电子、易发生亲电取代",
+      "description": "呋喃是五元环中含一个氧的芳香杂环，氧的孤对电子参与芳香共轭，使环上电子云密度较高，比苯更容易发生亲电取代（主要 2-位）。四氢呋喃（THF）是其加氢产物，是常用极性溶剂；糠醛（呋喃-2-甲醛）是重要化工原料。",
+      "reactions": [
+        "亲电取代主要在 2-位",
+        "加氢成四氢呋喃",
+        "Diels-Alder 反应（共轭二烯）"
+      ],
+      "hint": "糠醛（O=Cc1ccco1）可看作呋喃环 + 醛基的组合，常用于有机合成。",
+      "pharmacophore": {
+        "drug_class": "呋喃类利尿药 / 硝基呋喃类抗菌药",
+        "target": "Na⁺-K⁺-2Cl⁻ 共转运体（呋塞米）、细菌还原酶（呋喃妥因）",
+        "drugs": [
+          {
+            "name": "呋塞米",
+            "en": "furosemide",
+            "smiles": "C1=COC(=C1)CNC2=CC(=C(C=C2C(=O)O)S(=O)(=O)N)Cl"
+          },
+          {
+            "name": "呋喃妥因",
+            "en": "nitrofurantoin",
+            "smiles": "C1C(=O)NC(=O)N1N=CC2=CC=C(O2)[N+](=O)[O-]"
+          },
+          {
+            "name": "雷尼替丁",
+            "en": "ranitidine",
+            "smiles": "CNC(=C[N+](=O)[O-])NCCSCC1=CC=C(O1)CN(C)C"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "呋喃",
+          "en": "furan",
+          "smiles": "C1=COC=C1"
+        },
+        {
+          "name": "四氢呋喃",
+          "en": "tetrahydrofuran",
+          "smiles": "C1CCOC1"
+        },
+        {
+          "name": "糠醛",
+          "en": "furfural",
+          "smiles": "C1=COC(=C1)C=O"
+        }
+      ]
+    },
+    {
+      "id": "thiophene",
+      "category": "杂环",
+      "zh": "噻吩环",
+      "en": "Thiophene",
+      "symbol": "C₄H₄S",
+      "smiles_example": "c1ccsc1",
+      "smarts": "c1ccsc1",
+      "substructure_smiles": "c1ccsc1",
+      "short": "五元含硫芳香杂环，性质类似苯",
+      "description": "噻吩是五元环中含硫的芳香杂环，芳香性介于呋喃和苯之间，比呋喃稳定，亲电取代主要发生在 2-位。噻吩存在于煤焦油中，其衍生物广泛用于药物（如氯吡格雷）和导电高分子（聚噻吩）。",
+      "reactions": [
+        "亲电取代主要在 2-位",
+        "加氢脱硫（石油炼制中去除噻吩类杂质）"
+      ],
+      "hint": "石油中的含硫杂质常以噻吩类存在，加氢脱硫是炼油重要工序。",
+      "pharmacophore": {
+        "drug_class": "噻吩并吡啶类抗血小板药",
+        "target": "血小板 P2Y12 受体（活性代谢物不可逆结合）",
+        "drugs": [
+          {
+            "name": "氯吡格雷",
+            "en": "clopidogrel",
+            "smiles": "COC(=O)C(C1=CC=CC=C1Cl)N2CCC3=C(C2)C=CS3"
+          },
+          {
+            "name": "噻氯匹定",
+            "en": "ticlopidine",
+            "smiles": "C1CN(CC2=C1SC=C2)CC3=CC=CC=C3Cl"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "噻吩",
+          "en": "thiophene",
+          "smiles": "C1=CSC=C1"
+        },
+        {
+          "name": "2-噻吩甲醛",
+          "en": "2-thiophenecarboxaldehyde",
+          "smiles": "C1=CSC(=C1)C=O"
+        }
+      ]
+    },
+    {
+      "id": "pyrrole",
+      "category": "杂环",
+      "zh": "吡咯环",
+      "en": "Pyrrole",
+      "symbol": "C₄H₅N",
+      "smiles_example": "c1cc[nH]c1",
+      "smarts": "c1cccn1",
+      "substructure_smiles": "c1cc[nH]c1",
+      "short": "五元含氮芳香杂环，氮的孤对电子参与芳香共轭",
+      "description": "吡咯环上氮的孤对电子参与形成芳香六电子体系，因此氮的碱性几乎消失（与吡啶相反），反而呈极弱酸性（N-H 可被强碱夺取）。吡咯是卟啉（血红素、叶绿素核心）的基本单元，亲电取代主要发生在 2-位。",
+      "reactions": [
+        "N-H 有弱酸性",
+        "亲电取代主要在 2-位",
+        "加氢成四氢吡咯（吡咯烷）"
+      ],
+      "hint": "对比记忆：吡啶 N 的孤对电子在环外（弱碱），吡咯 N 的孤对电子参与芳香共轭（无碱性）。",
+      "pharmacophore": {
+        "drug_class": "吡咯类他汀（HMG-CoA 还原酶抑制剂）",
+        "target": "HMG-CoA 还原酶",
+        "drugs": [
+          {
+            "name": "阿托伐他汀",
+            "en": "atorvastatin",
+            "smiles": "CC(C)C1=C(C(=C(N1CCC(CC(CC(=O)O)O)O)C2=CC=C(C=C2)F)C3=CC=CC=C3)C(=O)NC4=CC=CC=C4"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "吡咯",
+          "en": "pyrrole",
+          "smiles": "C1=CNC=C1"
+        },
+        {
+          "name": "N-甲基吡咯",
+          "en": "N-methylpyrrole",
+          "smiles": "CN1C=CC=C1"
+        },
+        {
+          "name": "四氢吡咯",
+          "en": "pyrrolidine",
+          "smiles": "C1CCNC1"
+        }
+      ]
+    },
+    {
+      "id": "imidazole",
+      "category": "杂环",
+      "zh": "咪唑环",
+      "en": "Imidazole",
+      "symbol": "C₃H₄N₂",
+      "smiles_example": "c1cnc[nH]1",
+      "smarts": "c1cncn1",
+      "substructure_smiles": "c1cnc[nH]1",
+      "short": "五元二氮杂环，同时具有碱性和弱酸性",
+      "description": "咪唑含两个氮：吡啶型氮（孤对电子在环外）提供碱性，吡咯型氮（N-H）提供弱酸性，因此咪唑既是弱碱又是弱酸。组氨酸的侧链就是咪唑环，在酶催化中常作为质子传递的酸碱中心；苯并咪唑类化合物是重要药物骨架。",
+      "reactions": [
+        "与酸成盐（碱性）",
+        "N-H 可去质子（弱酸性）",
+        "配位金属离子"
+      ],
+      "hint": "组氨酸侧链咪唑在生理 pH 附近可发生质子化/去质子化，是酶的‘质子搬运工’。",
+      "pharmacophore": {
+        "drug_class": "咪唑类抗真菌药 / 硝基咪唑类抗原虫药",
+        "target": "真菌 CYP51（14α-去甲基化酶）、厌氧菌 DNA（甲硝唑）",
+        "drugs": [
+          {
+            "name": "酮康唑",
+            "en": "ketoconazole",
+            "smiles": "CC(=O)N1CCN(CC1)C2=CC=C(C=C2)OCC3COC(O3)(CN4C=CN=C4)C5=C(C=C(C=C5)Cl)Cl"
+          },
+          {
+            "name": "咪康唑",
+            "en": "miconazole",
+            "smiles": "C1=CC(=C(C=C1Cl)Cl)COC(CN2C=CN=C2)C3=C(C=C(C=C3)Cl)Cl"
+          },
+          {
+            "name": "甲硝唑",
+            "en": "metronidazole",
+            "smiles": "CC1=NC=C(N1CCO)[N+](=O)[O-]"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "咪唑",
+          "en": "imidazole",
+          "smiles": "C1=CN=CN1"
+        },
+        {
+          "name": "苯并咪唑",
+          "en": "benzimidazole",
+          "smiles": "C1=CC=C2C(=C1)NC=N2"
+        },
+        {
+          "name": "组氨酸",
+          "en": "histidine",
+          "smiles": "C1=C(NC=N1)CC(C(=O)O)N"
+        }
+      ]
+    },
+    {
+      "id": "pyrimidine",
+      "category": "杂环",
+      "zh": "嘧啶环",
+      "en": "Pyrimidine",
+      "symbol": "C₄H₄N₂",
+      "smiles_example": "c1cncnc1",
+      "smarts": "c1cncnc1",
+      "substructure_smiles": "c1cncnc1",
+      "short": "六元二氮杂环，核酸碱基（C/U/T）的核心骨架",
+      "description": "嘧啶是吡啶环上再引入一个氮的六元环，两个氮使环电子云密度更低、碱性更弱。胞嘧啶、尿嘧啶、胸腺嘧啶都是嘧啶衍生物，是 DNA/RNA 的重要组成部分；许多抗病毒、抗肿瘤药物也以嘧啶为骨架（如氟尿嘧啶）。",
+      "reactions": [
+        "与酸成盐（弱碱）",
+        "亲电取代难，亲核取代相对易",
+        "加氢成哌啶类衍生物"
+      ],
+      "hint": "DNA 中 C、T 与 RNA 中 C、U 都是嘧啶碱基；嘌呤是另一个二环体系。",
+      "pharmacophore": {
+        "drug_class": "嘧啶类抗肿瘤 / 抗病毒 / 抗菌药",
+        "target": "胸苷酸合酶（氟尿嘧啶）、病毒逆转录酶（拉米夫定）、DHFR（甲氧苄啶）",
+        "drugs": [
+          {
+            "name": "氟尿嘧啶",
+            "en": "fluorouracil",
+            "smiles": "C1=C(C(=O)NC(=O)N1)F"
+          },
+          {
+            "name": "拉米夫定",
+            "en": "lamivudine",
+            "smiles": "C1C(OC(S1)CO)N2C=CC(=NC2=O)N"
+          },
+          {
+            "name": "甲氧苄啶",
+            "en": "trimethoprim",
+            "smiles": "COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "嘧啶",
+          "en": "pyrimidine",
+          "smiles": "C1=CN=CN=C1"
+        },
+        {
+          "name": "胞嘧啶",
+          "en": "cytosine",
+          "smiles": "C1=C(NC(=O)N=C1)N"
+        },
+        {
+          "name": "尿嘧啶",
+          "en": "uracil",
+          "smiles": "C1=CNC(=O)NC1=O"
+        },
+        {
+          "name": "胸腺嘧啶",
+          "en": "thymine",
+          "smiles": "CC1=CNC(=O)NC1=O"
+        }
+      ]
+    },
+    {
+      "id": "naphthalene",
+      "category": "烃类",
+      "zh": "萘环",
+      "en": "Naphthalene",
+      "symbol": "C₁₀H₈",
+      "smiles_example": "c1ccc2ccccc2c1",
+      "smarts": "c1ccc2ccccc2c1",
+      "substructure_smiles": "c1ccc2ccccc2c1",
+      "short": "两个苯环稠合，比苯活泼、易发生取代",
+      "description": "萘由两个苯环稠合而成，是煤焦油中的重要成分（传统樟脑丸的主要成分）。相比苯，萘的芳香性略低、更易发生亲电取代（主要 1-位，也常见 2-位），可加氢生成四氢萘/十氢萘。许多稠环芳烃（蒽、菲等）都是学习芳香化合物的延伸。",
+      "reactions": [
+        "亲电取代主要 1-位",
+        "加氢成四氢萘/十氢萘",
+        "氧化成邻苯二甲酸酐（工业）"
+      ],
+      "hint": "萘的 1-位（α）比 2-位（β）更活泼；取代基位置用 α/β 表示。",
+      "pharmacophore": {
+        "drug_class": "萘基丙酸类 NSAID / 萘类抗过敏药",
+        "target": "COX-1/COX-2（萘普生）、H1 受体",
+        "drugs": [
+          {
+            "name": "萘普生",
+            "en": "naproxen",
+            "smiles": "CC(C1=CC2=C(C=C1)C=C(C=C2)OC)C(=O)O"
+          },
+          {
+            "name": "萘丁美酮",
+            "en": "nabumetone",
+            "smiles": "CC(=O)CCC1=CC2=C(C=C1)C=C(C=C2)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "萘",
+          "en": "naphthalene",
+          "smiles": "C1=CC=C2C=CC=CC2=C1"
+        },
+        {
+          "name": "1-甲基萘",
+          "en": "1-methylnaphthalene",
+          "smiles": "CC1=CC=CC2=CC=CC=C12"
+        },
+        {
+          "name": "2-萘酚",
+          "en": "2-naphthol",
+          "smiles": "C1=CC=C2C=C(C=CC2=C1)O"
+        }
+      ]
+    },
+    {
+      "id": "guanidine",
+      "category": "含氮基团",
+      "zh": "胍基",
+      "en": "Guanidine",
+      "symbol": "-N=C(NH₂)₂",
+      "smiles_example": "NC(=N)N",
+      "smarts": "[NX3][CX3](=[NX2])[NX3]",
+      "substructure_smiles": "NC(=N)N",
+      "short": "强碱性含氮基团，生理 pH 下带正电荷",
+      "description": "胍基 pKa 约 12-13，在生理条件下以胍正离子存在，能与带负电的磷酸基、羧酸根形成离子对和氢键，因此常见于降糖药（双胍类）、消毒剂及含精氨酸的酶结合位点。",
+      "reactions": [
+        "强碱性（质子化）",
+        "与金属离子配位",
+        "生成胍盐"
+      ],
+      "hint": "胍正离子与精氨酸侧链类似，是药物与靶点静电结合的重要药效基团。",
+      "pharmacophore": {
+        "drug_class": "双胍类降糖药 / 消毒防腐剂",
+        "target": "AMPK（二甲双胍间接激活）、微生物膜/蛋白结合（氯己定）",
+        "sar": "双胍（两个胍基相连）保留强碱性且毒性低于单胍；胍基上的取代基影响脂溶性与口服吸收。",
+        "drugs": [
+          {
+            "name": "二甲双胍",
+            "en": "metformin",
+            "smiles": "CN(C)C(=N)N=C(N)N"
+          },
+          {
+            "name": "苯乙双胍",
+            "en": "phenformin",
+            "smiles": "C1=CC=C(C=C1)CCN=C(N)N=C(N)N"
+          },
+          {
+            "name": "氯己定",
+            "en": "chlorhexidine",
+            "smiles": "C1=CC(=CC=C1NC(=NC(=NCCCCCCN=C(N)N=C(N)NC2=CC=C(C=C2)Cl)N)N)Cl"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "二甲双胍",
+          "en": "metformin",
+          "smiles": "CN(C)C(=N)N=C(N)N"
+        },
+        {
+          "name": "苯乙双胍",
+          "en": "phenformin",
+          "smiles": "C1=CC=C(C=C1)CCN=C(N)N=C(N)N"
+        },
+        {
+          "name": "氯己定",
+          "en": "chlorhexidine",
+          "smiles": "C1=CC(=CC=C1NC(=NC(=NCCCCCCN=C(N)N=C(N)NC2=CC=C(C=C2)Cl)N)N)Cl"
+        }
+      ]
+    },
+    {
+      "id": "beta_lactam",
+      "category": "含氮基团",
+      "zh": "β-内酰胺环",
+      "en": "β-Lactam Ring",
+      "symbol": "2-氮杂环丁酮",
+      "smiles_example": "O=C1CNC1",
+      "smarts": "C1NC(=O)C1",
+      "substructure_smiles": "O=C1CNC1",
+      "short": "四元内酰胺环，青霉素/头孢/碳青霉烯类抗菌药的核心",
+      "description": "β-内酰胺环是四元环内酰胺，环张力大、易被亲核试剂开环。青霉素结合蛋白（PBP）转肽时，β-内酰胺环作为 D-Ala-D-Ala 的模拟物被酰化，从而不可逆抑制细胞壁交联。环张力与稳定性直接影响抗菌活性与耐药性。",
+      "reactions": [
+        "被 β-内酰胺酶水解开环（耐药机制）",
+        "与 PBP 丝氨酸酰化",
+        "碱性条件下开环失活"
+      ],
+      "hint": "β-内酰胺环是‘时间依赖性’杀菌药；过敏与 β-内酰胺环有关。",
+      "pharmacophore": {
+        "drug_class": "β-内酰胺类抗菌药（青霉素、头孢菌素、碳青霉烯等）",
+        "target": "青霉素结合蛋白（PBP，细胞壁转肽酶）",
+        "sar": "青霉素构效关系：①6-位酰氨基侧链决定抗菌谱与耐酶性（如苯唑西林引入异噁唑耐青霉素酶，氨苄西林引入氨基扩大阴性菌谱）；②2-位羧基为活性必需，成酯可改善口服吸收；③噻唑烷环 3-位甲基增加环稳定性；④β-内酰胺环张力必须保持，任何开环均失活；⑤侧链亲水性影响分布与蛋白结合。",
+        "drugs": [
+          {
+            "name": "阿莫西林",
+            "en": "amoxicillin",
+            "smiles": "CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=C(C=C3)O)N)C(=O)O)C"
+          },
+          {
+            "name": "头孢氨苄",
+            "en": "cephalexin",
+            "smiles": "CC1=C(N2C(C(C2=O)NC(=O)C(C3=CC=CC=C3)N)SC1)C(=O)O"
+          },
+          {
+            "name": "美罗培南",
+            "en": "meropenem",
+            "smiles": "CC1C2C(C(=O)N2C(=C1SC3CC(NC3)C(=O)N(C)C)C(=O)O)C(C)O"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "阿莫西林",
+          "en": "amoxicillin",
+          "smiles": "CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=C(C=C3)O)N)C(=O)O)C"
+        },
+        {
+          "name": "头孢氨苄",
+          "en": "cephalexin",
+          "smiles": "CC1=C(N2C(C(C2=O)NC(=O)C(C3=CC=CC=C3)N)SC1)C(=O)O"
+        },
+        {
+          "name": "美罗培南",
+          "en": "meropenem",
+          "smiles": "CC1C2C(C(=O)N2C(=C1SC3CC(NC3)C(=O)N(C)C)C(=O)O)C(C)O"
+        }
+      ]
+    },
+    {
+      "id": "dihydropyridine",
+      "category": "杂环",
+      "zh": "1,4-二氢吡啶",
+      "en": "1,4-Dihydropyridine",
+      "symbol": "DHP",
+      "smiles_example": "C1=CNC=CC1",
+      "smarts": "C1=CNC=CC1",
+      "substructure_smiles": "C1=CNC=CC1",
+      "short": "二氢吡啶环，经典钙通道阻滞剂的药效骨架",
+      "description": "1,4-二氢吡啶环（DHP）是硝苯地平等二氢吡啶类钙通道阻滞剂的核心。环的 1 位 N-H、2/6 位甲基、3/5 位酯基对活性至关重要；N-H 易被氧化成吡啶而失活，故需避光保存。",
+      "reactions": [
+        "N-H 被氧化成吡啶（光降解失活）",
+        "酯基水解"
+      ],
+      "hint": "看到 1,4-二氢吡啶环就想到钙通道阻滞剂；二氢吡啶≠二氢嘧啶。",
+      "pharmacophore": {
+        "drug_class": "二氢吡啶类钙通道阻滞剂（CCB）",
+        "target": "L 型钙通道 α1C 亚基（电压门控）",
+        "sar": "1 位 N-H 必须保留（氧化成吡啶失活）；2,6-位二甲基维持构象；3,5-位二酯基为活性必需（不对称酯可改善药动学，如氨氯地平）；4-位芳环邻位取代（如邻氯）增强活性；侧链碱性基团（氨氯地平）延长作用时间。",
+        "drugs": [
+          {
+            "name": "硝苯地平",
+            "en": "nifedipine",
+            "smiles": "CC1=C(C(C(=C(N1)C)C(=O)OC)C2=CC=CC=C2[N+](=O)[O-])C(=O)OC"
+          },
+          {
+            "name": "氨氯地平",
+            "en": "amlodipine",
+            "smiles": "CCOC(=O)C1=C(NC(=C(C1C2=CC=CC=C2Cl)C(=O)OC)C)COCCN"
+          },
+          {
+            "name": "非洛地平",
+            "en": "felodipine",
+            "smiles": "CCOC(=O)C1=C(NC(=C(C1C2=C(C(=CC=C2)Cl)Cl)C(=O)OC)C)C"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "硝苯地平",
+          "en": "nifedipine",
+          "smiles": "CC1=C(C(C(=C(N1)C)C(=O)OC)C2=CC=CC=C2[N+](=O)[O-])C(=O)OC"
+        },
+        {
+          "name": "氨氯地平",
+          "en": "amlodipine",
+          "smiles": "CCOC(=O)C1=C(NC(=C(C1C2=CC=CC=C2Cl)C(=O)OC)C)COCCN"
+        },
+        {
+          "name": "非洛地平",
+          "en": "felodipine",
+          "smiles": "CCOC(=O)C1=C(NC(=C(C1C2=C(C(=CC=C2)Cl)Cl)C(=O)OC)C)C"
+        }
+      ]
+    },
+    {
+      "id": "benzodiazepine",
+      "category": "杂环",
+      "zh": "苯二氮䓬",
+      "en": "1,4-Benzodiazepine",
+      "symbol": "BZD",
+      "smiles_example": "c1ccc2c(c1)CN=CN2",
+      "smarts": "[#7&R]1-&@[#6&R](=&!@[#8&!R])-&@[#6&R]-&@[#7&R]=&@[#6&R](-&@[#6&R]2:&@[#6&R]-&@1:&@[#6&R]:&@[#6&R]:&@[#6&R]:&@[#6&R]:&@2)-&!@[#6&R]1:&@[#6&R]:&@[#6&R]:&@[#6&R]:&@[#6&R]:&@[#6&R]:&@1",
+      "substructure_smiles": "c1ccc2c(c1)CN=CN2",
+      "short": "苯环并七元二氮环，镇静催眠/抗焦虑药经典骨架",
+      "description": "1,4-苯二氮䓬由苯环与二氮䓬七元环稠合而成，是地西泮、阿普唑仑等药物的核心。它与 GABAA 受体上的苯二氮䓬位点结合，增强 GABA 的 Cl⁻ 通道开放频率，从而产生镇静、抗焦虑、抗惊厥和肌松作用。",
+      "reactions": [
+        "与 GABAA 受体变构调节",
+        "N1-甲基可代谢去甲基（活性代谢物）",
+        "长期使用产生耐受与依赖"
+      ],
+      "hint": "注意“䓬”与“卓”同音同义，检索时两者均可。",
+      "pharmacophore": {
+        "drug_class": "苯二氮䓬类镇静催眠/抗焦虑药",
+        "target": "GABAA 受体苯二氮䓬位点（增强 Cl⁻ 通道开放频率）",
+        "sar": "7-位吸电子取代（Cl、NO₂）增强活性；5-位苯环为受体结合所必需；1,2-位并入三唑（阿普唑仑）或咪唑可增强效价并加快起效；3-位羟基化降低毒性但活性下降。",
+        "drugs": [
+          {
+            "name": "地西泮",
+            "en": "diazepam",
+            "smiles": "CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3"
+          },
+          {
+            "name": "氯硝西泮",
+            "en": "clonazepam",
+            "smiles": "C1C(=O)NC2=C(C=C(C=C2)[N+](=O)[O-])C(=N1)C3=CC=CC=C3Cl"
+          },
+          {
+            "name": "阿普唑仑",
+            "en": "alprazolam",
+            "smiles": "CC1=NN=C2N1C3=C(C=C(C=C3)Cl)C(=NC2)C4=CC=CC=C4"
+          },
+          {
+            "name": "劳拉西泮",
+            "en": "lorazepam",
+            "smiles": "C1=CC=C(C(=C1)C2=NC(C(=O)NC3=C2C=C(C=C3)Cl)O)Cl"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "地西泮",
+          "en": "diazepam",
+          "smiles": "CN1C(=O)CN=C(C2=C1C=CC(=C2)Cl)C3=CC=CC=C3"
+        },
+        {
+          "name": "氯硝西泮",
+          "en": "clonazepam",
+          "smiles": "C1C(=O)NC2=C(C=C(C=C2)[N+](=O)[O-])C(=N1)C3=CC=CC=C3Cl"
+        },
+        {
+          "name": "阿普唑仑",
+          "en": "alprazolam",
+          "smiles": "CC1=NN=C2N1C3=C(C=C(C=C3)Cl)C(=NC2)C4=CC=CC=C4"
+        }
+      ]
+    },
+    {
+      "id": "thiazide",
+      "category": "杂环",
+      "zh": "噻嗪（苯并噻二嗪）",
+      "en": "Thiazide / Benzothiadiazine",
+      "symbol": "Benzothiadiazine-1,1-dioxide",
+      "smiles_example": "O=S1(=O)NC2=CC=CC=C2N=C1",
+      "smarts": "[#6&R]-&@[#7&R]-&@[#6&R]1:&@[#6&R]:&@[#6&R]:&@[#6&R](:&@[#6&R]:&@[#6&R]:&@1-&@[#16&R](=&!@[#8&!R])(=&!@[#8&!R])-&@[#7&R])-&!@[#16&!R](=&!@[#8&!R])(=&!@[#8&!R])-&!@[#7&!R]",
+      "substructure_smiles": "O=S1(=O)NC2=CC=CC=C2N=C1",
+      "short": "苯环并噻二嗪二氧化物环，噻嗪类利尿药核心",
+      "description": "噻嗪类利尿药含苯并噻二嗪-1,1-二氧化物骨架，作用于肾远曲小管的 Na⁺-Cl⁻ 共转运体（NCC），抑制 NaCl 重吸收产生利尿和降压作用。氢氯噻嗪是代表药物，吲达帕胺虽非噻嗪环但机制相同。",
+      "reactions": [
+        "抑制 NCC 共转运体",
+        "轻度碳酸酐酶抑制作用",
+        "长期使用致低钾、高尿酸"
+      ],
+      "hint": "噻嗪类利尿药的核心结构是苯并噻二嗪，看到 S(=O)2-N 与苯环稠合即可识别。",
+      "pharmacophore": {
+        "drug_class": "噻嗪类利尿降压药",
+        "target": "肾远曲小管 Na⁺-Cl⁻ 共转运体（NCC）",
+        "sar": "7-位氯原子与磺酰胺基增强利尿活性；3,4-位双键或 3-位取代影响作用强度与持续时间；2-位磺酰胺的酸性 H 可与载体结合。",
+        "drugs": [
+          {
+            "name": "氢氯噻嗪",
+            "en": "hydrochlorothiazide",
+            "smiles": "C1NC2=CC(=C(C=C2S(=O)(=O)N1)S(=O)(=O)N)Cl"
+          },
+          {
+            "name": "氯噻嗪",
+            "en": "chlorothiazide",
+            "smiles": "C1=C2C(=CC(=C1Cl)S(=O)(=O)N)S(=O)(=O)N=CN2"
+          },
+          {
+            "name": "苄氟噻嗪",
+            "en": "bendroflumethiazide",
+            "smiles": "C1=CC=C(C=C1)CC2NC3=C(C=C(C(=C3)C(F)(F)F)S(=O)(=O)N)S(=O)(=O)N2"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "氢氯噻嗪",
+          "en": "hydrochlorothiazide",
+          "smiles": "C1NC2=CC(=C(C=C2S(=O)(=O)N1)S(=O)(=O)N)Cl"
+        },
+        {
+          "name": "氯噻嗪",
+          "en": "chlorothiazide",
+          "smiles": "C1=C2C(=CC(=C1Cl)S(=O)(=O)N)S(=O)(=O)N=CN2"
+        }
+      ]
+    },
+    {
+      "id": "sulfonamide",
+      "category": "含硫/卤素",
+      "zh": "磺酰胺基",
+      "en": "Sulfonamide",
+      "symbol": "-SO₂NH-",
+      "smiles_example": "CS(=O)(=O)N",
+      "smarts": "[SX4](=O)(=O)[NX3]",
+      "substructure_smiles": "S(=O)(=O)N",
+      "short": "磺酰基与氨基相连，磺胺类抗菌药与多种药物的药效基团",
+      "description": "磺酰胺基（-SO₂NH-）呈弱酸性，氮上的氢可与靶点形成关键氢键。磺胺类抗菌药以对氨基苯磺酰胺为母体，竞争性抑制二氢蝶酸合酶；磺酰脲类降糖药、噻嗪类利尿药、COX-2 抑制剂（塞来昔布）也都含此基团。",
+      "reactions": [
+        "氮上氢显弱酸性",
+        "与芳环相连形成磺胺母核",
+        "磺酰脲类与 K-ATP 通道结合"
+      ],
+      "hint": "磺酰胺与磺酸不同：磺酰胺含 N-H，酸性较弱，是形成氢键的药效基团。",
+      "pharmacophore": {
+        "drug_class": "磺胺类抗菌药 / 磺酰脲类降糖药 / 噻嗪类利尿药",
+        "target": "二氢蝶酸合酶（磺胺）、K-ATP 通道（磺酰脲）、NCC（噻嗪）",
+        "sar": "磺胺类：对位氨基为活性必需，N1 取代决定抗菌谱，N4 酰化（前药）需在体内水解恢复氨基。",
+        "drugs": [
+          {
+            "name": "磺胺甲噁唑",
+            "en": "sulfamethoxazole",
+            "smiles": "CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N"
+          },
+          {
+            "name": "呋塞米",
+            "en": "furosemide",
+            "smiles": "C1=COC(=C1)CNC2=CC(=C(C=C2C(=O)O)S(=O)(=O)N)Cl"
+          },
+          {
+            "name": "格列本脲",
+            "en": "glibenclamide",
+            "smiles": "COC1=C(C=C(C=C1)Cl)C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3"
+          },
+          {
+            "name": "塞来昔布",
+            "en": "celecoxib",
+            "smiles": "CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "磺胺甲噁唑",
+          "en": "sulfamethoxazole",
+          "smiles": "CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N"
+        },
+        {
+          "name": "呋塞米",
+          "en": "furosemide",
+          "smiles": "C1=COC(=C1)CNC2=CC(=C(C=C2C(=O)O)S(=O)(=O)N)Cl"
+        },
+        {
+          "name": "塞来昔布",
+          "en": "celecoxib",
+          "smiles": "CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F"
+        }
+      ]
+    },
+    {
+      "id": "quinolone",
+      "category": "杂环",
+      "zh": "喹诺酮骨架",
+      "en": "Quinolone",
+      "symbol": "4-喹诺酮-3-羧酸",
+      "smiles_example": "O=C1C=CNC2=CC=CC=C12",
+      "smarts": "[#7&R]1:&@[#6&R]:&@[#6&R](:&@[#6&R](:&@[#6&R]2:&@[#6&R]:&@1:&@[#6&R]:&@[#6&R](:&@[#6&R](:&@[#6&R]:&@2)-&!@[#9&!R])-&!@[#7&R](-&@[#6&R]-&@[#6&R]-&@[#7&R])-&@[#6&R]-&@[#6&R])=&!@[#8&!R])-&!@[#6&!R](=&!@[#8&!R])-&!@[#8&!R]",
+      "substructure_smiles": "O=C1C=CNC2=CC=CC=C12",
+      "short": "喹啉并 4-酮环，氟喹诺酮类抗菌药母核",
+      "description": "喹诺酮骨架为 4-喹诺酮（4-氧代-1,4-二氢喹啉），3-位羧基与 4-位羰基能与 DNA 旋转酶活性中心及 Mg²⁺ 螯合。氟喹诺酮在此基础上 6-位引入氟、7-位引入哌嗪等，显著增强抗菌活性。",
+      "reactions": [
+        "与 DNA 旋转酶- DNA 复合物结合",
+        "3-羧基/4-羰基与 Mg²⁺ 螯合",
+        "光敏性与 QT 延长相关"
+      ],
+      "hint": "喹诺酮=4-喹诺酮母核；氟喹诺酮=6-位氟取代的喹诺酮。",
+      "pharmacophore": {
+        "drug_class": "喹诺酮类抗菌药（氟喹诺酮）",
+        "target": "细菌 DNA 旋转酶（GyrA）与拓扑异构酶Ⅳ",
+        "sar": "3-位羧基与 4-位羰基为活性必需；6-位氟增强对酶的结合与组织穿透；7-位哌嗪/氨基吡咯烷增强抗铜绿假单胞菌活性并影响中枢不良反应；8-位取代影响光敏性与半衰期；1-位环丙基/乙基影响抗菌谱。",
+        "drugs": [
+          {
+            "name": "左氧氟沙星",
+            "en": "levofloxacin",
+            "smiles": "CC1COC2=C3N1C=C(C(=O)C3=CC(=C2N4CCN(CC4)C)F)C(=O)O"
+          },
+          {
+            "name": "环丙沙星",
+            "en": "ciprofloxacin",
+            "smiles": "C1CC1N2C=C(C(=O)C3=CC(=C(C=C32)N4CCNCC4)F)C(=O)O"
+          },
+          {
+            "name": "莫西沙星",
+            "en": "moxifloxacin",
+            "smiles": "COC1=C2C(=CC(=C1N3CC4CCCNC4C3)F)C(=O)C(=CN2C5CC5)C(=O)O"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "左氧氟沙星",
+          "en": "levofloxacin",
+          "smiles": "CC1COC2=C3N1C=C(C(=O)C3=CC(=C2N4CCN(CC4)C)F)C(=O)O"
+        },
+        {
+          "name": "环丙沙星",
+          "en": "ciprofloxacin",
+          "smiles": "C1CC1N2C=C(C(=O)C3=CC(=C(C=C32)N4CCNCC4)F)C(=O)O"
+        },
+        {
+          "name": "莫西沙星",
+          "en": "moxifloxacin",
+          "smiles": "COC1=C2C(=CC(=C1N3CC4CCCNC4C3)F)C(=O)C(=CN2C5CC5)C(=O)O"
+        }
+      ]
+    },
+    {
+      "id": "purine",
+      "category": "杂环",
+      "zh": "嘌呤",
+      "en": "Purine",
+      "symbol": "C₅H₄N₄",
+      "smiles_example": "c1ncc2[nH]cnc2n1",
+      "smarts": [
+        "c1ncc2[nH]cnc2n1",
+        "[#7&R]1:&@[#6&R]2:&@[#7&R]:&@[#6&R]:&@[#7&R]:&@[#6&R]:&@2:&@[#6&R](:&@[#7&R]:&@[#6&R]:&@1)=&!@[#8&!R]"
+      ],
+      "substructure_smiles": "c1ncc2[nH]cnc2n1",
+      "short": "嘧啶并咪唑双环，核酸碱基与多种药物核心",
+      "description": "嘌呤由嘧啶环与咪唑环稠合而成，是腺嘌呤/鸟嘌呤的基础，也是核苷类抗病毒药（阿昔洛韦、替诺福韦）、抗痛风药（别嘌醇）、黄嘌呤类（茶碱、咖啡因）的母核。",
+      "reactions": [
+        "与核糖成苷",
+        "参与碱基配对",
+        "黄嘌呤氧化酶底物/抑制剂（别嘌醇）"
+      ],
+      "hint": "嘌呤=嘧啶+咪唑稠合；嘌呤类药常与核酸代谢酶相关。",
+      "pharmacophore": {
+        "drug_class": "嘌呤类抗病毒 / 抗肿瘤 / 抗痛风 / 平喘药",
+        "target": "病毒 DNA 聚合酶、黄嘌呤氧化酶、磷酸二酯酶等",
+        "sar": "核苷类（阿昔洛韦）开环糖侧链可被病毒胸苷激酶选择性磷酸化，是其选择性毒性基础；别嘌醇以嘌呤类似物抑制黄嘌呤氧化酶。",
+        "drugs": [
+          {
+            "name": "阿昔洛韦",
+            "en": "aciclovir",
+            "smiles": "C1=NC2=C(N1COCCO)N=C(NC2=O)N"
+          },
+          {
+            "name": "别嘌醇",
+            "en": "allopurinol",
+            "smiles": "C1=NNC2=C1C(=O)NC=N2"
+          },
+          {
+            "name": "茶碱",
+            "en": "theophylline",
+            "smiles": "CN1C2=C(C(=O)N(C1=O)C)NC=N2"
+          },
+          {
+            "name": "硫唑嘌呤",
+            "en": "azathioprine",
+            "smiles": "CN1C=NC(=C1SC2=NC=NC3=C2NC=N3)[N+](=O)[O-]"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "阿昔洛韦",
+          "en": "aciclovir",
+          "smiles": "C1=NC2=C(N1COCCO)N=C(NC2=O)N"
+        },
+        {
+          "name": "别嘌醇",
+          "en": "allopurinol",
+          "smiles": "C1=NNC2=C1C(=O)NC=N2"
+        },
+        {
+          "name": "茶碱",
+          "en": "theophylline",
+          "smiles": "CN1C2=C(C(=O)N(C1=O)C)NC=N2"
+        }
+      ]
+    },
+    {
+      "id": "indole",
+      "category": "杂环",
+      "zh": "吲哚",
+      "en": "Indole",
+      "symbol": "苯并吡咯",
+      "smiles_example": "c1ccc2[nH]ccc2c1",
+      "smarts": "c1ccc2c(c1)ccn2",
+      "substructure_smiles": "c1ccc2[nH]ccc2c1",
+      "short": "苯环并吡咯双环，色氨酸/5-羟色胺相关药物核心",
+      "description": "吲哚是苯环与吡咯稠合的双环，是色氨酸和 5-羟色胺的结构基础。含吲哚药物包括非甾体抗炎药吲哚美辛、曲普坦类偏头痛药、褪黑素等。",
+      "reactions": [
+        "3-位富电子易发生亲电取代",
+        "参与 5-HT 受体/色氨酸代谢通路"
+      ],
+      "hint": "看到吲哚先想 5-羟色胺通路与曲普坦类、吲哚美辛。",
+      "pharmacophore": {
+        "drug_class": "吲哚类抗炎 / 抗偏头痛（曲普坦）/ 激素类",
+        "target": "COX（吲哚美辛）、5-HT1B/1D 受体（舒马普坦）、褪黑素受体",
+        "drugs": [
+          {
+            "name": "吲哚美辛",
+            "en": "indomethacin",
+            "smiles": "CC1=C(C2=C(N1C(=O)C3=CC=C(C=C3)Cl)C=CC(=C2)OC)CC(=O)O"
+          },
+          {
+            "name": "舒马普坦",
+            "en": "sumatriptan",
+            "smiles": "CNS(=O)(=O)CC1=CC2=C(C=C1)NC=C2CCN(C)C"
+          },
+          {
+            "name": "褪黑素",
+            "en": "melatonin",
+            "smiles": "CC(=O)NCCC1=CNC2=C1C=C(C=C2)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "吲哚美辛",
+          "en": "indomethacin",
+          "smiles": "CC1=C(C2=C(N1C(=O)C3=CC=C(C=C3)Cl)C=CC(=C2)OC)CC(=O)O"
+        },
+        {
+          "name": "舒马普坦",
+          "en": "sumatriptan",
+          "smiles": "CNS(=O)(=O)CC1=CC2=C(C=C1)NC=C2CCN(C)C"
+        },
+        {
+          "name": "褪黑素",
+          "en": "melatonin",
+          "smiles": "CC(=O)NCCC1=CNC2=C1C=C(C=C2)OC"
+        }
+      ]
+    },
+    {
+      "id": "quinoline",
+      "category": "杂环",
+      "zh": "喹啉",
+      "en": "Quinoline",
+      "symbol": "苯并吡啶",
+      "smiles_example": "c1ccc2ncccc2c1",
+      "smarts": "c1ccc2ncccc2c1",
+      "substructure_smiles": "c1ccc2ncccc2c1",
+      "short": "苯环并吡啶双环，喹啉类抗疟药与喹诺酮相关",
+      "description": "喹啉是苯环与吡啶稠合的双环含氮杂环。4-氨基喹啉类（氯喹、羟氯喹）是经典抗疟药；喹诺酮抗菌药可视为 4-喹诺酮衍生物。",
+      "reactions": [
+        "氮原子弱碱性",
+        "4-氨基喹啉在疟原虫食物泡蓄积"
+      ],
+      "hint": "喹啉（quinoline）与异喹啉（isoquinoline）互为异构体，注意氮原子位置。",
+      "pharmacophore": {
+        "drug_class": "喹啉类抗疟药",
+        "target": "疟原虫食物泡血红素解毒途径（氯喹）",
+        "drugs": [
+          {
+            "name": "氯喹",
+            "en": "chloroquine",
+            "smiles": "CCN(CC)CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl"
+          },
+          {
+            "name": "羟氯喹",
+            "en": "hydroxychloroquine",
+            "smiles": "CCN(CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl)CCO"
+          },
+          {
+            "name": "奎宁",
+            "en": "quinine",
+            "smiles": "COC1=CC2=C(C=CN=C2C=C1)C(C3CC4CCN3CC4C=C)O"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "氯喹",
+          "en": "chloroquine",
+          "smiles": "CCN(CC)CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl"
+        },
+        {
+          "name": "羟氯喹",
+          "en": "hydroxychloroquine",
+          "smiles": "CCN(CCCC(C)NC1=C2C=CC(=CC2=NC=C1)Cl)CCO"
+        },
+        {
+          "name": "奎宁",
+          "en": "quinine",
+          "smiles": "COC1=CC2=C(C=CN=C2C=C1)C(C3CC4CCN3CC4C=C)O"
+        }
+      ]
+    },
+    {
+      "id": "isoquinoline",
+      "category": "杂环",
+      "zh": "异喹啉",
+      "en": "Isoquinoline",
+      "symbol": "苯并吡啶（N 在 2-位）",
+      "smiles_example": "c1ccc2cnccc2c1",
+      "smarts": "c1ccc2cnccc2c1",
+      "substructure_smiles": "c1ccc2cnccc2c1",
+      "short": "氮在 2-位的苯并吡啶，阿片类生物碱相关骨架",
+      "description": "异喹啉与喹啉互为异构体（氮原子位置不同）。吗啡喃类阿片镇痛药、罂粟碱、罗通定等均与异喹啉骨架相关，是天然生物碱化学的重要母核。",
+      "reactions": [
+        "弱碱性",
+        "与阿片受体结合（吗啡喃类）"
+      ],
+      "hint": "吗啡的骨架（吗啡喃）可看作异喹啉衍生的多环体系。",
+      "pharmacophore": {
+        "drug_class": "异喹啉类生物碱（镇痛/解痉）",
+        "target": "μ 阿片受体（吗啡类）、磷酸二酯酶（罂粟碱）",
+        "drugs": [
+          {
+            "name": "吗啡",
+            "en": "morphine",
+            "smiles": "CN1CCC23C4C1CC5=C2C(=C(C=C5)O)OC3C(C=C4)O"
+          },
+          {
+            "name": "可待因",
+            "en": "codeine",
+            "smiles": "CN1CCC23C4C1CC5=C2C(=C(C=C5)OC)OC3C(C=C4)O"
+          },
+          {
+            "name": "罂粟碱",
+            "en": "papaverine",
+            "smiles": "COC1=C(C=C(C=C1)CC2=NC=CC3=CC(=C(C=C32)OC)OC)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "吗啡",
+          "en": "morphine",
+          "smiles": "CN1CCC23C4C1CC5=C2C(=C(C=C5)O)OC3C(C=C4)O"
+        },
+        {
+          "name": "可待因",
+          "en": "codeine",
+          "smiles": "CN1CCC23C4C1CC5=C2C(=C(C=C5)OC)OC3C(C=C4)O"
+        },
+        {
+          "name": "罂粟碱",
+          "en": "papaverine",
+          "smiles": "COC1=C(C=C(C=C1)CC2=NC=CC3=CC(=C(C=C32)OC)OC)OC"
+        }
+      ]
+    },
+    {
+      "id": "piperazine",
+      "category": "杂环",
+      "zh": "哌嗪",
+      "en": "Piperazine",
+      "symbol": "六元二氮环",
+      "smiles_example": "C1CNCCN1",
+      "smarts": "[NX3;R1]1[CX4;R1][CX4;R1][NX3;R1][CX4;R1][CX4;R1]1",
+      "substructure_smiles": "C1CNCCN1",
+      "short": "六元环含两个对位氮，抗组胺药和药物侧链常用",
+      "description": "哌嗪是含两个对位氮原子的六元饱和杂环，碱性适中、水溶性好，常作为药效侧链引入药物（如西替利嗪、伊马替尼、喹诺酮 7-位）。",
+      "reactions": [
+        "两个氮均可质子化",
+        "作为亲水性侧链改善药动学"
+      ],
+      "hint": "哌嗪侧链常见于抗组胺药与酪氨酸激酶抑制剂。",
+      "pharmacophore": {
+        "drug_class": "哌嗪类抗组胺 / 抗精神病 / 抗肿瘤药",
+        "target": "H1 受体、5-HT/多巴胺受体、BCR-ABL 激酶等",
+        "drugs": [
+          {
+            "name": "西替利嗪",
+            "en": "cetirizine",
+            "smiles": "C1CN(CCN1CCOCC(=O)O)C(C2=CC=CC=C2)C3=CC=C(C=C3)Cl"
+          },
+          {
+            "name": "氟桂利嗪",
+            "en": "flunarizine",
+            "smiles": "C1CN(CCN1CC=CC2=CC=CC=C2)C(C3=CC=C(C=C3)F)C4=CC=C(C=C4)F"
+          },
+          {
+            "name": "伊马替尼",
+            "en": "imatinib",
+            "smiles": "CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "西替利嗪",
+          "en": "cetirizine",
+          "smiles": "C1CN(CCN1CCOCC(=O)O)C(C2=CC=CC=C2)C3=CC=C(C=C3)Cl"
+        },
+        {
+          "name": "氟桂利嗪",
+          "en": "flunarizine",
+          "smiles": "C1CN(CCN1CC=CC2=CC=CC=C2)C(C3=CC=C(C=C3)F)C4=CC=C(C=C4)F"
+        },
+        {
+          "name": "伊马替尼",
+          "en": "imatinib",
+          "smiles": "CC1=C(C=C(C=C1)NC(=O)C2=CC=C(C=C2)CN3CCN(CC3)C)NC4=NC=CC(=N4)C5=CN=CC=C5"
+        }
+      ]
+    },
+    {
+      "id": "piperidine",
+      "category": "杂环",
+      "zh": "哌啶",
+      "en": "Piperidine",
+      "symbol": "六元含氮饱和环",
+      "smiles_example": "C1CCNCC1",
+      "smarts": "[NX3;R1]1[CX4;R1][CX4;R1][CX4;R1][CX4;R1][CX4;R1]1",
+      "substructure_smiles": "C1CCNCC1",
+      "short": "六元饱和含氮环，镇痛药与多种药物骨架",
+      "description": "哌啶是六元饱和含氮杂环，碱性适中。芬太尼、哌替啶等阿片类镇痛药含哌啶环，多奈哌齐、帕利哌酮等药物也以此环为药效骨架。",
+      "reactions": [
+        "弱碱性（pKa≈11）",
+        "N-取代影响受体选择性"
+      ],
+      "hint": "哌啶（六元饱和）与吡啶（六元芳香）不同，注意区分。",
+      "pharmacophore": {
+        "drug_class": "哌啶类镇痛 / 抗精神病 / 促智药",
+        "target": "μ 阿片受体（芬太尼）、毒蕈碱受体（多奈哌齐）、5-HT2A/D2 受体（帕利哌酮）",
+        "drugs": [
+          {
+            "name": "芬太尼",
+            "en": "fentanyl",
+            "smiles": "CCC(=O)N(C1CCN(CC1)CCC2=CC=CC=C2)C3=CC=CC=C3"
+          },
+          {
+            "name": "哌替啶",
+            "en": "pethidine",
+            "smiles": "CCOC(=O)C1(CCN(CC1)C)C2=CC=CC=C2"
+          },
+          {
+            "name": "多奈哌齐",
+            "en": "donepezil",
+            "smiles": "COC1=C(C=C2C(=C1)CC(C2=O)CC3CCN(CC3)CC4=CC=CC=C4)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "芬太尼",
+          "en": "fentanyl",
+          "smiles": "CCC(=O)N(C1CCN(CC1)CCC2=CC=CC=C2)C3=CC=CC=C3"
+        },
+        {
+          "name": "哌替啶",
+          "en": "pethidine",
+          "smiles": "CCOC(=O)C1(CCN(CC1)C)C2=CC=CC=C2"
+        },
+        {
+          "name": "多奈哌齐",
+          "en": "donepezil",
+          "smiles": "COC1=C(C=C2C(=C1)CC(C2=O)CC3CCN(CC3)CC4=CC=CC=C4)OC"
+        }
+      ]
+    },
+    {
+      "id": "morpholine",
+      "category": "杂环",
+      "zh": "吗啉",
+      "en": "Morpholine",
+      "symbol": "含氧含氮六元环",
+      "smiles_example": "C1COCCN1",
+      "smarts": "[NX3;R1]1[CX4;R1][CX4;R1][OX2;R1][CX4;R1][CX4;R1]1",
+      "substructure_smiles": "C1COCCN1",
+      "short": "氧、氮对位的六元杂环，改善药物水溶性与代谢稳定性",
+      "description": "吗啉环含一个氧和一个氮，氮的碱性可调节，氧增加亲水性。利奈唑胺（噁唑烷酮类抗菌药）、吗氯贝胺（MAO-A 抑制剂）等含吗啉环。",
+      "reactions": [
+        "氮原子弱碱性",
+        "参与氢键与代谢稳定"
+      ],
+      "hint": "吗啉常见于抗菌药与抗抑郁药侧链，是良好的亲水修饰基团。",
+      "pharmacophore": {
+        "drug_class": "吗啉类抗菌 / 抗抑郁药",
+        "target": "细菌核糖体 50S（利奈唑胺）、MAO-A（吗氯贝胺）",
+        "drugs": [
+          {
+            "name": "利奈唑胺",
+            "en": "linezolid",
+            "smiles": "CC(=O)NCC1CN(C(=O)O1)C2=CC(=C(C=C2)N3CCOCC3)F"
+          },
+          {
+            "name": "吗氯贝胺",
+            "en": "moclobemide",
+            "smiles": "C1COCCN1CCNC(=O)C2=CC=C(C=C2)Cl"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "利奈唑胺",
+          "en": "linezolid",
+          "smiles": "CC(=O)NCC1CN(C(=O)O1)C2=CC(=C(C=C2)N3CCOCC3)F"
+        },
+        {
+          "name": "吗氯贝胺",
+          "en": "moclobemide",
+          "smiles": "C1COCCN1CCNC(=O)C2=CC=C(C=C2)Cl"
+        }
+      ]
+    },
+    {
+      "id": "tetrazole",
+      "category": "杂环",
+      "zh": "四氮唑",
+      "en": "Tetrazole",
+      "symbol": "五元四氮杂环",
+      "smiles_example": "c1nnn[nH]1",
+      "smarts": "c1nnnn1",
+      "substructure_smiles": "c1nnn[nH]1",
+      "short": "五元环含四个氮，酸性强，沙坦类降压药常用羧酸替代",
+      "description": "四氮唑呈弱酸性（pKa≈4.9），可作为羧酸（pKa≈4-5）的生物电子等排体，代谢稳定性更好。氯沙坦、缬沙坦等 ARB 类降压药以四氮唑模拟羧基与 AT1 受体结合。",
+      "reactions": [
+        "酸性（模拟羧酸）",
+        "与受体碱性残基形成盐桥"
+      ],
+      "hint": "四氮唑≈羧酸生物电子等排体，是沙坦类（ARB）的标志。",
+      "pharmacophore": {
+        "drug_class": "血管紧张素Ⅱ受体拮抗剂（ARB/沙坦类）",
+        "target": "AT1 受体",
+        "drugs": [
+          {
+            "name": "氯沙坦",
+            "en": "losartan",
+            "smiles": "CCCCC1=NC(=C(N1CC2=CC=C(C=C2)C3=CC=CC=C3C4=NNN=N4)CO)Cl"
+          },
+          {
+            "name": "缬沙坦",
+            "en": "valsartan",
+            "smiles": "CCCCC(=O)N(CC1=CC=C(C=C1)C2=CC=CC=C2C3=NNN=N3)C(C(C)C)C(=O)O"
+          },
+          {
+            "name": "厄贝沙坦",
+            "en": "irbesartan",
+            "smiles": "CCCCC1=NC2(CCCC2)C(=O)N1CC3=CC=C(C=C3)C4=CC=CC=C4C5=NNN=N5"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "氯沙坦",
+          "en": "losartan",
+          "smiles": "CCCCC1=NC(=C(N1CC2=CC=C(C=C2)C3=CC=CC=C3C4=NNN=N4)CO)Cl"
+        },
+        {
+          "name": "缬沙坦",
+          "en": "valsartan",
+          "smiles": "CCCCC(=O)N(CC1=CC=C(C=C1)C2=CC=CC=C2C3=NNN=N3)C(C(C)C)C(=O)O"
+        },
+        {
+          "name": "厄贝沙坦",
+          "en": "irbesartan",
+          "smiles": "CCCCC1=NC2(CCCC2)C(=O)N1CC3=CC=C(C=C3)C4=CC=CC=C4C5=NNN=N5"
+        }
+      ]
+    },
+    {
+      "id": "triazole",
+      "category": "杂环",
+      "zh": "三唑",
+      "en": "Triazole",
+      "symbol": "五元三氮杂环",
+      "smiles_example": "c1ncn[nH]1",
+      "smarts": "n1cncn1",
+      "substructure_smiles": "c1ncn[nH]1",
+      "short": "五元环含三个氮，三唑类抗真菌药药效环",
+      "description": "三唑环（1,2,4-三唑）的氮原子可与真菌 CYP450 的血红素铁配位，抑制羊毛甾醇 14α-去甲基化酶，阻断麦角固醇合成。氟康唑、伏立康唑等三唑类抗真菌药以此为药效基团。",
+      "reactions": [
+        "与血红素铁配位",
+        "抑制 CYP51（14α-去甲基化酶）"
+      ],
+      "hint": "三唑 vs 咪唑：三唑多一个氮，对真菌 CYP 选择性更好、肝毒性更低。",
+      "pharmacophore": {
+        "drug_class": "三唑类抗真菌药",
+        "target": "真菌羊毛甾醇 14α-去甲基化酶（CYP51）",
+        "sar": "三唑氮与血红素铁配位是活性必需；芳环与侧链决定抗真菌谱与 CYP 选择性（伏立康唑对曲霉更强，泊沙康唑谱更广）。",
+        "drugs": [
+          {
+            "name": "氟康唑",
+            "en": "fluconazole",
+            "smiles": "C1=CC(=C(C=C1F)F)C(CN2C=NC=N2)(CN3C=NC=N3)O"
+          },
+          {
+            "name": "伏立康唑",
+            "en": "voriconazole",
+            "smiles": "CC(C1=NC=NC=C1F)C(CN2C=NC=N2)(C3=C(C=C(C=C3)F)F)O"
+          },
+          {
+            "name": "泊沙康唑",
+            "en": "posaconazole",
+            "smiles": "CCC(C(C)O)N1C(=O)N(C=N1)C2=CC=C(C=C2)N3CCN(CC3)C4=CC=C(C=C4)OCC5CC(OC5)(CN6C=NC=N6)C7=C(C=C(C=C7)F)F"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "氟康唑",
+          "en": "fluconazole",
+          "smiles": "C1=CC(=C(C=C1F)F)C(CN2C=NC=N2)(CN3C=NC=N3)O"
+        },
+        {
+          "name": "伏立康唑",
+          "en": "voriconazole",
+          "smiles": "CC(C1=NC=NC=C1F)C(CN2C=NC=N2)(C3=C(C=C(C=C3)F)F)O"
+        },
+        {
+          "name": "泊沙康唑",
+          "en": "posaconazole",
+          "smiles": "CCC(C(C)O)N1C(=O)N(C=N1)C2=CC=C(C=C2)N3CCN(CC3)C4=CC=C(C=C4)OCC5CC(OC5)(CN6C=NC=N6)C7=C(C=C(C=C7)F)F"
+        }
+      ]
+    },
+    {
+      "id": "pyrazole",
+      "category": "杂环",
+      "zh": "吡唑",
+      "en": "Pyrazole",
+      "symbol": "五元二氮杂环",
+      "smiles_example": "c1cc[nH]n1",
+      "smarts": "c1ccnn1",
+      "substructure_smiles": "c1cc[nH]n1",
+      "short": "五元环含两个邻位氮，COX-2 选择性抑制剂常用环",
+      "description": "吡唑是五元二氮杂环。塞来昔布以 1,5-二芳基吡唑为核心实现 COX-2 选择性抑制；保泰松等吡唑烷酮类则是传统抗炎药。",
+      "reactions": [
+        "N-H 弱酸性",
+        "与 COX-2 侧袋结合（二芳基吡唑）"
+      ],
+      "hint": "看到 1,5-二芳基吡唑+磺酰胺，先想到塞来昔布（COX-2 选择性）。",
+      "pharmacophore": {
+        "drug_class": "吡唑类抗炎药",
+        "target": "COX-2（塞来昔布）",
+        "drugs": [
+          {
+            "name": "塞来昔布",
+            "en": "celecoxib",
+            "smiles": "CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F"
+          },
+          {
+            "name": "保泰松",
+            "en": "phenylbutazone",
+            "smiles": "CCCCC1C(=O)N(N(C1=O)C2=CC=CC=C2)C3=CC=CC=C3"
+          },
+          {
+            "name": "安乃近",
+            "en": "metamizole",
+            "smiles": "CC1=C(C(=O)N(N1C)C2=CC=CC=C2)N(C)CS(=O)(=O)O"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "塞来昔布",
+          "en": "celecoxib",
+          "smiles": "CC1=CC=C(C=C1)C2=CC(=NN2C3=CC=C(C=C3)S(=O)(=O)N)C(F)(F)F"
+        },
+        {
+          "name": "保泰松",
+          "en": "phenylbutazone",
+          "smiles": "CCCCC1C(=O)N(N(C1=O)C2=CC=CC=C2)C3=CC=CC=C3"
+        },
+        {
+          "name": "安乃近",
+          "en": "metamizole",
+          "smiles": "CC1=C(C(=O)N(N1C)C2=CC=CC=C2)N(C)CS(=O)(=O)O"
+        }
+      ]
+    },
+    {
+      "id": "oxazole",
+      "category": "杂环",
+      "zh": "噁唑",
+      "en": "Oxazole",
+      "symbol": "含氧含氮五元环",
+      "smiles_example": "c1cocn1",
+      "smarts": "O=C1OCCN1",
+      "substructure_smiles": "c1cocn1",
+      "short": "五元环含氧和氮，噁唑烷酮类抗菌药药效环",
+      "description": "噁唑是五元芳环，氧、氮对位。噁唑烷酮（2-噁唑烷酮）是利奈唑胺等新型抗菌药的核心结构，通过与细菌核糖体 50S 结合抑制蛋白质合成；噁唑/恶唑为同音异形字，检索不区分。",
+      "reactions": [
+        "与 50S 核糖体结合",
+        "噁唑烷酮抑制翻译起始"
+      ],
+      "hint": "“噁唑”与“恶唑”同音同义；噁唑烷酮类以利奈唑胺为代表。",
+      "pharmacophore": {
+        "drug_class": "噁唑烷酮类抗菌药",
+        "target": "细菌核糖体 50S 亚基（抑制蛋白质合成起始）",
+        "drugs": [
+          {
+            "name": "利奈唑胺",
+            "en": "linezolid",
+            "smiles": "CC(=O)NCC1CN(C(=O)O1)C2=CC(=C(C=C2)N3CCOCC3)F"
+          },
+          {
+            "name": "泰地唑胺",
+            "en": "tedizolid",
+            "smiles": "CN1N=C(N=N1)C2=NC=C(C=C2)C3=C(C=C(C=C3)N4CC(OC4=O)CO)F"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "利奈唑胺",
+          "en": "linezolid",
+          "smiles": "CC(=O)NCC1CN(C(=O)O1)C2=CC(=C(C=C2)N3CCOCC3)F"
+        }
+      ]
+    },
+    {
+      "id": "isoxazole",
+      "category": "杂环",
+      "zh": "异噁唑",
+      "en": "Isoxazole",
+      "symbol": "氮氧相邻五元环",
+      "smiles_example": "c1ccno1",
+      "smarts": "c1ccno1",
+      "substructure_smiles": "c1ccno1",
+      "short": "氮氧相邻的五元环，异噁唑类青霉素与磺胺药常用",
+      "description": "异噁唑的氮氧相邻。苯唑西林等异噁唑青霉素在侧链引入异噁唑环获得耐青霉素酶特性；磺胺甲噁唑含异噁唑；来氟米特为异噁唑前药，体内开环生成活性代谢物。",
+      "reactions": [
+        "耐 β-内酰胺酶（异噁唑青霉素）",
+        "前药开环活化（来氟米特）"
+      ],
+      "hint": "噁唑与异噁唑的区别在氮氧位置；两者书写都可用“恶”。",
+      "pharmacophore": {
+        "drug_class": "异噁唑类青霉素 / 磺胺类抗菌药",
+        "target": "PBP（青霉素类）、二氢蝶酸合酶（磺胺甲噁唑）",
+        "drugs": [
+          {
+            "name": "苯唑西林",
+            "en": "oxacillin",
+            "smiles": "CC1=C(C(=NO1)C2=CC=CC=C2)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O"
+          },
+          {
+            "name": "磺胺甲噁唑",
+            "en": "sulfamethoxazole",
+            "smiles": "CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N"
+          },
+          {
+            "name": "来氟米特",
+            "en": "leflunomide",
+            "smiles": "CC1=C(C=NO1)C(=O)NC2=CC=C(C=C2)C(F)(F)F"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "苯唑西林",
+          "en": "oxacillin",
+          "smiles": "CC1=C(C(=NO1)C2=CC=CC=C2)C(=O)NC3C4N(C3=O)C(C(S4)(C)C)C(=O)O"
+        },
+        {
+          "name": "磺胺甲噁唑",
+          "en": "sulfamethoxazole",
+          "smiles": "CC1=CC(=NO1)NS(=O)(=O)C2=CC=C(C=C2)N"
+        },
+        {
+          "name": "来氟米特",
+          "en": "leflunomide",
+          "smiles": "CC1=C(C=NO1)C(=O)NC2=CC=C(C=C2)C(F)(F)F"
+        }
+      ]
+    },
+    {
+      "id": "steroid",
+      "category": "烃类",
+      "zh": "甾体骨架",
+      "en": "Steroid Nucleus",
+      "symbol": "环戊烷多氢菲",
+      "smiles_example": "C1CC2C3CCC4CCCCC4C3CCC2C1",
+      "smarts": "",
+      "substructure_smiles": "C1CC2C3CCC4CCCCC4C3CCC2C1",
+      "short": "四环稠合的环戊烷多氢菲，甾体激素类药物母核",
+      "description": "甾体骨架由三个六元环（A/B/C）和一个五元环（D）稠合而成，是糖皮质激素、性激素、孕激素等药物的共同母核。按侧链不同分为孕甾烷（21 碳）、雄甾烷（19 碳）、雌甾烷（18 碳，A 环芳香化）等系列。",
+      "reactions": [
+        "与核受体（GR/AR/ER/PR）结合",
+        "A 环芳香化（雌激素）",
+        "肝脏代谢失活（羟化、结合）"
+      ],
+      "hint": "看到四环稠合骨架先判断是哪类甾体：19-去甲（雌）、雄甾（雄）、孕甾（孕/皮质）。",
+      "pharmacophore": {
+        "drug_class": "甾体激素类药物（糖皮质激素、雄激素、雌激素、孕激素）",
+        "target": "核受体超家族：糖皮质激素受体（GR）、雄激素受体（AR）、雌激素受体（ER）、孕激素受体（PR）",
+        "sar": "糖皮质激素：C3 酮、C4-5 双键、C11β-羟基、C17α-羟基与 C21-羟为活性必需；9α-氟、16α-甲基/羟基增强抗炎并降低钠潴留。雌激素：A 环芳香环与 C3 酚羟基、C17β-羟基必需。雄激素/孕激素：17β-羟基或 20-酮参与受体结合。",
+        "drugs": [
+          {
+            "name": "地塞米松",
+            "en": "dexamethasone",
+            "smiles": "CC1CC2C3CCC4=CC(=O)C=CC4(C3(C(CC2(C1(C(=O)CO)O)C)O)F)C"
+          },
+          {
+            "name": "睾酮",
+            "en": "testosterone",
+            "smiles": "CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C"
+          },
+          {
+            "name": "雌二醇",
+            "en": "estradiol",
+            "smiles": "CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O"
+          },
+          {
+            "name": "黄体酮",
+            "en": "progesterone",
+            "smiles": "CC(=O)C1CCC2C1(CCC3C2CCC4=CC(=O)CCC34C)C"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "地塞米松",
+          "en": "dexamethasone",
+          "smiles": "CC1CC2C3CCC4=CC(=O)C=CC4(C3(C(CC2(C1(C(=O)CO)O)C)O)F)C"
+        },
+        {
+          "name": "睾酮",
+          "en": "testosterone",
+          "smiles": "CC12CCC3C(C1CCC2O)CCC4=CC(=O)CCC34C"
+        },
+        {
+          "name": "雌二醇",
+          "en": "estradiol",
+          "smiles": "CC12CCC3C(C1CCC2O)CCC4=C3C=CC(=C4)O"
+        },
+        {
+          "name": "黄体酮",
+          "en": "progesterone",
+          "smiles": "CC(=O)C1CCC2C1(CCC3C2CCC4=CC(=O)CCC34C)C"
+        }
+      ]
+    },
+    {
+      "id": "benzimidazole",
+      "category": "杂环",
+      "zh": "苯并咪唑",
+      "en": "Benzimidazole",
+      "symbol": "苯环并咪唑",
+      "smiles_example": "c1ccc2nc[nH]c2c1",
+      "smarts": "c1ccc2nc[nH]c2c1",
+      "substructure_smiles": "c1ccc2nc[nH]c2c1",
+      "short": "苯环并咪唑双环，质子泵抑制剂与驱肠虫药核心",
+      "description": "苯并咪唑由苯环与咪唑稠合而成。奥美拉唑等质子泵抑制剂在胃酸中活化为亚磺酰胺，与 H⁺/K⁺-ATPase 的巯基共价结合；阿苯达唑等苯并咪唑类则抑制微管蛋白聚合。",
+      "reactions": [
+        "酸性环境中环化活化（PPI 前药）",
+        "与酶巯基共价结合",
+        "抑制微管蛋白（驱虫）"
+      ],
+      "hint": "PPI（“拉唑”）的标志是苯并咪唑+亚磺酰基+吡啶侧链。",
+      "pharmacophore": {
+        "drug_class": "质子泵抑制剂（PPI） / 苯并咪唑类驱肠虫药",
+        "target": "胃壁细胞 H⁺/K⁺-ATPase（PPI）、微管蛋白（阿苯达唑）",
+        "sar": "PPI 的 2-位亚磺酰基为活性前体，苯并咪唑与 4-取代吡啶通过亚磺酰基相连；侧链取代决定酸活化速率与 CYP 相互作用。",
+        "drugs": [
+          {
+            "name": "奥美拉唑",
+            "en": "omeprazole",
+            "smiles": "CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC"
+          },
+          {
+            "name": "兰索拉唑",
+            "en": "lansoprazole",
+            "smiles": "CC1=C(C=CN=C1CS(=O)C2=NC3=CC=CC=C3N2)OCC(F)(F)F"
+          },
+          {
+            "name": "阿苯达唑",
+            "en": "albendazole",
+            "smiles": "CCCSC1=CC2=C(C=C1)N=C(N2)NC(=O)OC"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "奥美拉唑",
+          "en": "omeprazole",
+          "smiles": "CC1=CN=C(C(=C1OC)C)CS(=O)C2=NC3=C(N2)C=C(C=C3)OC"
+        },
+        {
+          "name": "兰索拉唑",
+          "en": "lansoprazole",
+          "smiles": "CC1=C(C=CN=C1CS(=O)C2=NC3=CC=CC=C3N2)OCC(F)(F)F"
+        },
+        {
+          "name": "阿苯达唑",
+          "en": "albendazole",
+          "smiles": "CCCSC1=CC2=C(C=C1)N=C(N2)NC(=O)OC"
+        }
+      ]
+    },
+    {
+      "id": "thiazole",
+      "category": "杂环",
+      "zh": "噻唑",
+      "en": "Thiazole",
+      "symbol": "含硫含氮五元环",
+      "smiles_example": "c1cscn1",
+      "smarts": "c1cscn1",
+      "substructure_smiles": "c1cscn1",
+      "short": "硫、氮五元芳环，H2 受体拮抗剂等药物常用",
+      "description": "噻唑是含硫和氮的五元芳环。法莫替丁等 H2 受体拮抗剂含噻唑环，利托那韦等抗病毒药也含噻唑；噻唑的硫原子可参与配位与氢键。",
+      "reactions": [
+        "弱碱性",
+        "参与组胺 H2 受体结合"
+      ],
+      "hint": "噻唑（含 S）与噁唑（含 O）的区别在杂原子。",
+      "pharmacophore": {
+        "drug_class": "H2 受体拮抗剂等",
+        "target": "组胺 H2 受体（法莫替丁）",
+        "drugs": [
+          {
+            "name": "法莫替丁",
+            "en": "famotidine",
+            "smiles": "C1=C(N=C(S1)N=C(N)N)CSCCC(=NS(=O)(=O)N)N"
+          },
+          {
+            "name": "利托那韦",
+            "en": "ritonavir",
+            "smiles": "CC(C)C1=NC(=CS1)CN(C)C(=O)NC(C(C)C)C(=O)NC(CC2=CC=CC=C2)CC(C(CC3=CC=CC=C3)NC(=O)OCC4=CN=CS4)O"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "法莫替丁",
+          "en": "famotidine",
+          "smiles": "C1=C(N=C(S1)N=C(N)N)CSCCC(=NS(=O)(=O)N)N"
+        },
+        {
+          "name": "利托那韦",
+          "en": "ritonavir",
+          "smiles": "CC(C)C1=NC(=CS1)CN(C)C(=O)NC(C(C)C)C(=O)NC(CC2=CC=CC=C2)CC(C(CC3=CC=CC=C3)NC(=O)OCC4=CN=CS4)O"
+        }
+      ]
+    },
+    {
+      "id": "dihydropyrimidine",
+      "category": "杂环",
+      "zh": "二氢嘧啶",
+      "en": "Dihydropyrimidine",
+      "symbol": "DHPM",
+      "smiles_example": "C1=CNCN=C1",
+      "smarts": "",
+      "substructure_smiles": "C1=CNCN=C1",
+      "short": "嘧啶部分饱和的六元环，DHFR 抑制剂与驱动蛋白抑制剂相关",
+      "description": "二氢嘧啶（DHPM）是嘧啶环部分加氢的骨架。上市药物中最接近的药效结构是 2,4-二氨基嘧啶类（甲氧苄啶、乙胺嘧啶，DHFR 抑制剂）；monastrol 类二氢嘧啶酮则是驱动蛋白 Eg5 抑制剂研究骨架。注意与钙通道阻滞剂的 1,4-二氢吡啶环区分。",
+      "reactions": [
+        "与二氢叶酸还原酶（DHFR）结合",
+        "嘧啶类抗代谢（氟尿嘧啶）"
+      ],
+      "hint": "甲氧苄啶/乙胺嘧啶=二氨基嘧啶类 DHFR 抑制剂；1,4-二氢吡啶是钙通道阻滞剂，别混淆。",
+      "pharmacophore": {
+        "drug_class": "二氨基嘧啶类抗菌/抗疟药",
+        "target": "二氢叶酸还原酶（DHFR）",
+        "drugs": [
+          {
+            "name": "甲氧苄啶",
+            "en": "trimethoprim",
+            "smiles": "COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N"
+          },
+          {
+            "name": "乙胺嘧啶",
+            "en": "pyrimethamine",
+            "smiles": "CCC1=C(C(=NC(=N1)N)N)C2=CC=C(C=C2)Cl"
+          },
+          {
+            "name": "氟尿嘧啶",
+            "en": "fluorouracil",
+            "smiles": "C1=C(C(=O)NC(=O)N1)F"
+          }
+        ]
+      },
+      "representatives": [
+        {
+          "name": "甲氧苄啶",
+          "en": "trimethoprim",
+          "smiles": "COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N"
+        },
+        {
+          "name": "乙胺嘧啶",
+          "en": "pyrimethamine",
+          "smiles": "CCC1=C(C(=NC(=N1)N)N)C2=CC=C(C=C2)Cl"
+        },
+        {
+          "name": "氟尿嘧啶",
+          "en": "fluorouracil",
+          "smiles": "C1=C(C(=O)NC(=O)N1)F"
+        }
+      ]
+    }
+  ]
+}

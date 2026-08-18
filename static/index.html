@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedChemHelper</title>
+  <link rel="stylesheet" href="/static/style.css?v=2">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">⚗️</div>
+      <div>
+        <h1>MedChemHelper</h1>
+        <p class="subtitle">结构 ↔ 名称 ↔ 药效基团 ↔ 药理作用 · 官能团速查 · 相似药物</p>
+      </div>
+    </div>
+    <div class="top-right">
+      <label class="toggle" title="关闭后仅使用本地词典与本地渲染">
+        <input type="checkbox" id="online-toggle" checked>
+        <span class="toggle-label">允许联网搜索</span>
+      </label>
+      <div class="status" id="status">本地服务已启动</div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="tab active" data-tab="search">🔍 化合物检索</button>
+    <button class="tab" data-tab="groups">🧪 官能团速查</button>
+  </nav>
+
+  <main class="main-layout">
+    <div class="main-col">
+      <section id="tab-search" class="tab-panel active">
+        <div class="search-box card">
+          <form id="search-form" autocomplete="off">
+            <input id="q" type="text" placeholder="输入名称（中/英文）、药名、分子式、SMILES 或 CAS 号…">
+            <select id="type">
+              <option value="auto">自动识别</option>
+              <option value="name">名称</option>
+              <option value="formula">分子式</option>
+              <option value="smiles">SMILES</option>
+              <option value="cas">CAS</option>
+            </select>
+            <button type="submit" class="btn-primary">检索</button>
+          </form>
+          <div class="examples">
+            <span>试试：</span>
+            <button class="chip" data-q="阿司匹林">阿司匹林</button>
+            <button class="chip" data-q="阿莫西林">阿莫西林</button>
+            <button class="chip" data-q="奥美拉唑">奥美拉唑</button>
+            <button class="chip" data-q="苯二氮卓">苯二氮卓（基团）</button>
+            <button class="chip" data-q="恶唑">恶唑（基团）</button>
+            <button class="chip" data-q="C7H6O2">C7H6O2</button>
+            <button class="chip" data-q="50-78-2">50-78-2</button>
+          </div>
+        </div>
+        <div id="message"></div>
+        <div id="results-header" class="results-header hidden"></div>
+        <div id="results" class="cards"></div>
+        <div id="more-wrap" class="hidden center"><button id="more-btn" class="btn-ghost">加载更多结果</button></div>
+        <div id="similar-panel" class="panel hidden">
+          <div class="panel-title" id="similar-title">🧬 相似化合物</div>
+          <div id="similar-grid" class="cards small"></div>
+        </div>
+      </section>
+
+      <section id="tab-groups" class="tab-panel">
+        <div class="intro card">
+          <p><strong>看结构式的思路：</strong>先找特征官能团 → 判断是否某类药物的药效基团 → 再联想药理作用与代表药物。共收录 <span id="group-count"></span> 个基团/骨架，含药物化学常用母核。</p>
+        </div>
+        <div class="search-box card">
+          <input id="group-filter" type="text" placeholder="筛选官能团：如 羧基、β-内酰胺、噻嗪、苯二氮卓、嘌呤…">
+        </div>
+        <div id="substruct-panel" class="panel hidden">
+          <div class="panel-title" id="substruct-title">官能团搜索结果</div>
+          <div id="substruct-grid" class="cards small"></div>
+        </div>
+        <div id="groups-root"></div>
+      </section>
+    </div>
+
+    <aside id="pinned-panel" class="pinned-panel card">
+      <div class="pinned-head">
+        <span class="pinned-title">📌 固定对比栏</span>
+        <span id="pinned-count" class="pinned-count">0</span>
+        <button id="pinned-clear" class="btn-mini" title="清空">清空</button>
+      </div>
+      <div class="pinned-tip">检索新化合物时，已固定的结果会留在旁边方便比对。</div>
+      <div id="pinned-list"></div>
+    </aside>
+  </main>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-card">
+      <button id="modal-close" class="modal-close" title="关闭">×</button>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <footer>
+    数据来源：PubChem（检索/药理兜底）· ChemToolsHub（结构图渲染）· RDKit（本地官能团识别）· 内置药理信息库
+  </footer>
+
+  <script src="/static/app.js?v=2"></script>
+</body>
+</html>

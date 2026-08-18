@@ -1,0 +1,17 @@
+{
+  "name": "medchemhelper-desktop",
+  "version": "1.0.0",
+  "description": "MedChemHelper - 化学结构速查助手桌面版（内置本地服务）",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "powershell -ExecutionPolicy Bypass -File build-all.ps1"
+  },
+  "author": "Codex",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^43.4.0",
+    "electron-packager": "^17.1.2",
+    "rcedit": "^5.0.2"
+  }
+}

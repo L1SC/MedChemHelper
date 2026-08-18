@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# Node / Electron
+node_modules/
+desktop/node_modules/
+desktop/dist/
+desktop/build-backend/
+desktop/*.spec
+
+# 打包产物（可从源码重新生成）
+desktop/dist-backend/
+*.exe
+*.zip
+
+# 运行缓存
+images/
+
+# 系统 / 编辑器
+Thumbs.db
+.DS_Store
+.idea/
+.vscode/
+
+# 日志
+*.log

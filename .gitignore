@@ -4,15 +4,10 @@ __pycache__/
 *.egg-info/
 .venv/
 
-# Node / Electron
-node_modules/
-desktop/node_modules/
-desktop/dist/
-desktop/build-backend/
-desktop/*.spec
-
 # 打包产物（可从源码重新生成）
-desktop/dist-backend/
+backend-dist/
+build-backend-tauri/
+data/images_pre/
 *.exe
 *.zip
 

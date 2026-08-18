@@ -38,6 +38,7 @@ else:
 STATIC_DIR = os.path.join(BASE_DIR, "static")
 DATA_DIR = os.path.join(BASE_DIR, "data")
 IMAGE_DIR = os.path.join(RUN_DIR, "images")
+IMAGE_PRE_DIR = os.path.join(DATA_DIR, "images_pre")   # 打包内置的预生成结构图（WebP）
 
 PUB_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 AUTO_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/autocomplete/compound"
@@ -580,6 +581,10 @@ def render_smiles(smiles, online=True):
         except Exception:
             pass
     if HAVE_RDKIT:
+        # 预生成图优先：打包内置的 WebP，秒显且离线可用
+        pre = os.path.join(IMAGE_PRE_DIR, hashlib.md5(smiles.encode("utf-8")).hexdigest() + ".webp")
+        if os.path.exists(pre):
+            return "/api/image/" + os.path.basename(pre), rd_descriptors(smiles) or {}, "rdkit-pre"
         png_path = os.path.join(IMAGE_DIR, hashlib.md5(smiles.encode("utf-8")).hexdigest() + ".png")
         if rd_render_png(smiles, png_path):
             return "/api/image/" + os.path.basename(png_path), rd_descriptors(smiles) or {}, "rdkit"
@@ -1121,6 +1126,8 @@ class Handler(BaseHTTPRequestHandler):
         with open(path, "rb") as f:
             body = f.read()
         ct = content_type or mimetypes.guess_type(path)[0] or "application/octet-stream"
+        if path.endswith(".webp"):
+            ct = "image/webp"
         self.send_response(200)
         self.send_header("Content-Type", ct)
         self.send_header("Content-Length", str(len(body)))
@@ -1154,7 +1161,10 @@ class Handler(BaseHTTPRequestHandler):
                 self._send_json(check_network())
             elif path.startswith("/api/image/"):
                 name = os.path.basename(path)
-                self._send_file(os.path.join(IMAGE_DIR, name), "image/png")
+                fp = os.path.join(IMAGE_DIR, name)
+                if not os.path.exists(fp):
+                    fp = os.path.join(IMAGE_PRE_DIR, name)
+                self._send_file(fp, "image/webp" if name.endswith(".webp") else "image/png")
             elif path.startswith("/static/"):
                 name = os.path.basename(path)
                 self._send_file(os.path.join(STATIC_DIR, name), cache=(not name.endswith((".js", ".css"))))

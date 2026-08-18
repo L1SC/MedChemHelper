@@ -14,7 +14,7 @@ Write-Host "[1/4] 打包后端 exe ..."
 & $py -m PyInstaller --noconfirm --onedir --name ChemHelperBackend `
   --distpath (Join-Path $root "backend-dist") `
   --workpath (Join-Path $root "build-backend-tauri") `
-  --specpath (Join-Path $root "scripts") `
+  --specpath (Join-Path $root "build-backend-tauri") `
   --add-data (Join-Path $root "static;static") `
   --add-data (Join-Path $root "data;data") `
   --collect-all rdkit `

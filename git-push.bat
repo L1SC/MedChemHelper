@@ -4,7 +4,7 @@ setlocal
 cd /d "%~dp0"
 
 echo ============================================
-echo   MedChemHelper - Commit & Push
+echo   MedChemHelper - Commit ^& Push
 echo ============================================
 echo.
 
@@ -35,17 +35,16 @@ git show --stat --oneline HEAD
 echo.
 
 :ask
-set /p CONFIRM=Push to GitHub now? (Y/N):
-if /i "%CONFIRM%"=="Y" goto do_push
-if /i "%CONFIRM%"=="N" (
-  echo.
-  echo Pushing cancelled. Changes are saved locally.
-  echo Press any key to exit...
-  pause >nul
-  exit /b 0
-)
-echo Please enter Y or N.
-goto ask
+choice /C YN /M "Push to GitHub now? (Y/N)"
+if errorlevel 2 goto no_push
+if errorlevel 1 goto do_push
+
+:no_push
+echo.
+echo Pushing cancelled. Changes are saved locally.
+echo Press any key to exit...
+pause >nul
+exit /b 0
 
 :do_push
 echo.

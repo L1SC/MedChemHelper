@@ -18,6 +18,8 @@ Write-Host "[1/4] 打包后端 exe ..."
   --add-data (Join-Path $root "static;static") `
   --add-data (Join-Path $root "data;data") `
   --collect-all rdkit `
+  --exclude-module tkinter --exclude-module Tkinter --exclude-module _tkinter `
+  --exclude-module tcl --exclude-module turtle `
   (Join-Path $root "server.py")
 
 Write-Host "[2/4] 生成图标 ..."

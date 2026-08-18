@@ -668,6 +668,7 @@ def _enrich(cid, props, source):
         out["mt"] = ph.get("mt")
         out["sar"] = ph.get("sar")
         out["similar"] = ph.get("similar", [])
+        out["source"] = ph.get("source", [])
     out["groups"] = detect_groups(out.get("smiles") or "")
     return out
 
@@ -856,6 +857,7 @@ def _local_search(q, type_):
             for k in ("parent", "pharmacophore", "target", "action", "mt", "sar"):
                 out[k] = ph.get(k)
             out["similar"] = ph.get("similar", [])
+            out["source"] = ph.get("source", [])
         out["groups"] = detect_groups(props.get("smiles") or "")
         candidates.append(out)
     return {
@@ -970,7 +972,9 @@ def do_search(q, type_="auto", online=True):
                 c["zh"] = matched_zh
     # 有中文名/来源优先排序：autocomplete/name/dict 在前
     rank = {"dict": 0, "name": 1, "autocomplete": 2, "cas": 1, "smiles": 3, "formula": 4}
-    candidates.sort(key=lambda c: (rank.get(c.get("source"), 5), c.get("cid") or 0))
+    candidates.sort(key=lambda c: (
+        rank.get(c.get("source")) if isinstance(c.get("source"), str) else 5,
+        c.get("cid") or 0))
     return {
         "query": q,
         "type": type_,
@@ -1004,8 +1008,10 @@ def compound_detail(cid):
         for k in ("parent", "pharmacophore", "target", "action", "mt", "sar"):
             out[k] = ph.get(k)
         out["similar"] = ph.get("similar", [])
+        if ph.get("source"):
+            out["source"] = ph["source"]
     out["groups"] = detect_groups(out.get("smiles") or "")
-    out["source"] = "detail"
+    out["source"] = out.get("source") or "detail"
     return out
 
 

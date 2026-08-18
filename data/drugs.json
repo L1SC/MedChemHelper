@@ -8154,7 +8154,7 @@
   ]
  },
  {
-  "zh": "年发现碘苷",
+  "zh": "碘苷",
   "en": "idoxuridine",
   "category": "人工合成抗菌药",
   "cid": 5905,
@@ -8182,7 +8182,7 @@
   "mt": "肝炎病毒感染是当今国际公认的治疗学难题,肝炎病毒被分为五型:甲乙\\丙`丁\\戊以后,人们\n发现尚有 10% ~ 20% 的临床上表现为病毒性肝炎的患者不能分型,尚待进一步研究。 目前除丙型肝炎外,对其他类型病毒性肝炎的抗病毒治疗还未有特效药。"
  },
  {
-  "zh": "甲匠达只",
+  "zh": "甲苯达唑",
   "en": "mebendazole",
   "category": "抗寄生虫药",
   "cid": 4030,
@@ -8196,7 +8196,7 @@
   "mt": "吸收后分布于各组\n织 ,代谢迅速 ,代谢物随尿液排泄 ,无蕾积作用。 不良反应与乙胺嗪相似。"
  },
  {
-  "zh": "阿音替尼",
+  "zh": "阿昔替尼",
   "en": "axitinib",
   "category": "抗恶性肿瘤药",
   "cid": 6450551,
@@ -8210,7 +8210,7 @@
   "mt": "不良反应主要有肝功能异常.视觉异常(闪光、视物模糊、重影)\\神经麻阅.头学\\疲倦\\水肿、肠\n胃不适(恶心.呕吐\\腹演\\便秘、食管咽喉不适) 味觉减退、皮疹等。 不良反应主要有高血压血栓栓塞.出血\\心力衰竭,胃肠穿孔和瘘管形成,甲状腺功能不全、可逆性后\n部脑白质病综合征、蛋白尿、肝酶升高\\.肝损害和胎儿发育等。"
  },
  {
-  "zh": "青车素",
+  "zh": "青蒿素",
   "en": "artemisinin",
   "category": "抗寄生虫药",
   "cid": 68827,
@@ -8224,7 +8224,7 @@
   "mt": "该\n药的半衰期较长(约30 天) ,用于连状的抑制性预防 ,每两周用药一次。 可出现一过\n性中枢神经精神系统毒性,如眩学烦躁不安和失眠等,很少引起严重的神经精神系统反应。"
  },
  {
-  "zh": "双氧青蒿素",
+  "zh": "双氢青蒿素",
   "en": "dihydroartemisinin",
   "category": "抗寄生虫药",
   "cid": 3000518,
@@ -9300,7 +9300,7 @@
   "mt": "@)抗胆碱酯酶药不仅不能持抗其\n骨骼肌松弛作用,反能加强之,因此过量时不能用新斯的明解救; 约2% 的药物以原形经肾排泄 ,其余以代谢产物的形式从尿液中排出"
  },
  {
-  "zh": "贝那萘秦",
+  "zh": "贝那替秦",
   "en": "benactyzine",
   "category": "胆碱受体阻断药",
   "cid": 9330,
@@ -10411,7 +10411,7 @@
   "mt": "血浆蛋白结合率为 80% ,主要经肝脏代谢,大部分代谢产物和少量原形药\n物(5% )随尿排出。 【不良反应】常见有镇静、乏力、出汗,个别出现嗜睡.头痛、眩学、慰浮感、精神错乱等。"
  },
  {
-  "zh": "枸橡酸芬太尼",
+  "zh": "枸橼酸芬太尼",
   "en": "fentanyl",
   "category": "抗精神失常药",
   "cid": 3345,
@@ -12730,7 +12730,7 @@
   "inchikey": "MLYYVTUWGNIJIB-BXKDBHETSA-N"
  },
  {
-  "zh": "氨共西林钠",
+  "zh": "氨苄西林钠",
   "en": "ampicillin",
   "category": "-内酰胺类抗生素",
   "cid": 6249,
@@ -12741,7 +12741,7 @@
   "inchikey": "AVKUERGKIZMTKX-NJBDSQKTSA-N"
  },
  {
-  "zh": "头孢氨革",
+  "zh": "头孢氨苄",
   "en": "cefalexin",
   "category": "-内酰胺类抗生素",
   "cid": 27447,
@@ -12761,17 +12761,6 @@
   "mw": "514.6",
   "iupac": "(6R,7R)-7-[[(2Z)-2-(2-amino-1,3-thiazol-4-yl)-2-methoxyiminoacetyl]amino]-3-(6,7-dihydro-5H-cyclopenta[b]pyridin-1-ium-1-ylmethyl)-8-oxo-5-thia-1-azabicyclo[4.2.0]oct-2-ene-2-carboxylate",
   "inchikey": "DKOQGJHPHLTOJR-WHRDSVKCSA-N"
- },
- {
-  "zh": "头孢呆肝钠",
-  "en": "cefotaxime",
-  "category": "-内酰胺类抗生素",
-  "cid": 5742673,
-  "smiles": "CC(=O)OCC1=C(N2C(C(C2=O)NC(=O)C(=NOC)C3=CSC(=N3)N)SC1)C(=O)O",
-  "formula": "C16H17N5O7S2",
-  "mw": "455.5",
-  "iupac": "(6R,7R)-3-(acetyloxymethyl)-7-[[(2Z)-2-(2-amino-1,3-thiazol-4-yl)-2-methoxyiminoacetyl]amino]-8-oxo-5-thia-1-azabicyclo[4.2.0]oct-2-ene-2-carboxylic acid",
-  "inchikey": "GPRBEKHLDVQUJE-QSWIMTSFSA-N"
  },
  {
   "zh": "霉素",

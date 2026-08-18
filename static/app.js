@@ -294,18 +294,33 @@
   }
 
   /* ---------------- 结果卡片 ---------------- */
+  function sourceHtml(src) {
+    if (!src || !src.length) return "";
+    const parts = src.slice(0, 2).map((s) => {
+      if (!s || typeof s !== "object") return "";
+      if (s.book === "PubChem") return "PubChem 中文整理";
+      if (s.book === "人工整理") return "人工精编";
+      return `${s.book}${s.chapter ? "《" + s.chapter + "》" : ""}${s.page ? "（p" + s.page + "）" : ""}`;
+    }).filter(Boolean);
+    if (!parts.length) return "";
+    return `<div class="pharm-src">来源：${parts.join("；")}</div>`;
+  }
+
   function pharmBlockHtml(c) {
     const rows = [];
     if (c.parent) rows.push(`<div class="pharm-row"><span class="k">母体</span><span>${esc(c.parent)}</span></div>`);
     if (c.pharmacophore) rows.push(`<div class="pharm-row"><span class="k">药效基团</span><span>${esc(c.pharmacophore)}</span></div>`);
     if (c.target) rows.push(`<div class="pharm-row"><span class="k">靶点</span><span>${esc(c.target)}</span></div>`);
-    if (c.action) rows.push(`<div class="pharm-row"><span class="k">药理</span><span class="pharm-action" title="${esc(c.action)}">${esc(c.action)}</span></div>`);
+    const act = String(c.action || "").replace(/\s+/g, "");
+    if (act) rows.push(`<div class="pharm-row"><span class="k">药理</span><span class="pharm-action" title="${esc(c.action)}">${esc(act.length > 100 ? act.slice(0, 100) + "…" : act)}</span></div>`);
     const sims = (c.similar || []).slice(0, 5)
       .map((s) => `<button class="chip" data-sim-name="${esc(s)}">${esc(s)}</button>`).join("");
+    const src = sourceHtml(c.source);
     if (rows.length || sims) {
       return `<div class="pharm-block">
         ${rows.join("")}
         ${sims ? `<div class="pharm-row"><span class="k">相似药</span><span class="similar-chips">${sims}</span></div>` : ""}
+        ${src}
       </div>`;
     }
     return `<div class="no-pharm">（暂无药理资料，点击“详情”可查看 PubChem 药理信息）</div>`;
@@ -472,6 +487,7 @@
               ${d.target ? `<div class="m-block"><h4>作用靶点</h4><p>${esc(d.target)}</p></div>` : ""}
               <div class="m-block"><h4>药理作用</h4><p id="m-action">${esc(d.action || "加载中…")}</p></div>
               <div class="m-block"><h4>代谢与毒理</h4><p id="m-mt">${esc(d.mt || "加载中…")}</p></div>
+              ${d.source ? `<div class="m-block">${sourceHtml(d.source)}</div>` : ""}
               ${d.sar ? `<div class="m-block"><h4>构效关系（SAR）</h4><p>${esc(d.sar)}</p></div>` : ""}
               ${sims ? `<div class="m-block"><h4>相似药物</h4><div class="similar-chips">${sims}</div></div>` : ""}
               ${groups ? `<div class="m-block"><h4>检出的官能团</h4><div class="groups-row">${groups}</div></div>` : ""}

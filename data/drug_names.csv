@@ -685,12 +685,12 @@
 萘勃龙,tibolone,性激素类药及避孕药
 雌激素,estrogen,性激素类药及避孕药
 氟甲睾酮,fluoxymesterone,性激素类药及避孕药
-年发现碘苷,idoxuridine,人工合成抗菌药
+碘苷,idoxuridine,人工合成抗菌药
 阿德福韦酯,adefovir dipivoxil,抗病毒药和抗真菌药
-甲匠达只,mebendazole,抗寄生虫药
-阿音替尼,axitinib,抗恶性肿瘤药
-青车素,artemisinin,抗寄生虫药
-双氧青蒿素,dihydroartemisinin,抗寄生虫药
+甲苯达唑,mebendazole,抗寄生虫药
+阿昔替尼,axitinib,抗恶性肿瘤药
+青蒿素,artemisinin,抗寄生虫药
+双氢青蒿素,dihydroartemisinin,抗寄生虫药
 拉帕替尼,lapatinib,抗恶性肿瘤药
 丙米嗪,imipramine,抗精神失常药
 硫酸妥布霉素,tobramycin,氨基苦类抗生素
@@ -768,7 +768,7 @@ pyridin-2-yD,methyl,抗寄生虫药
 溴丙胺太林,propantheline,胆碱受体阻断药
 奥芬溴铵,oxyphenonium,胆碱受体阻断药
 又称司可林,scoline,胆碱受体阻断药
-贝那萘秦,benactyzine,胆碱受体阻断药
+贝那替秦,benactyzine,胆碱受体阻断药
 阿曲库匀,atracurium,胆碱受体阻断药
 多库铵,doxacurium,胆碱受体阻断药
 氯化政珀胆碱,suxamethonium chloride,胆碱受体阻断药
@@ -850,7 +850,7 @@ N-甲基-D-天冬氨酸,nmda,中枢神经系统药理学概论
 布托啡诺,butorphanol,抗精神失常药
 延胡索乙素,tetrahydropalmatine,抗精神失常药
 纳布啡,nalbuphine,抗精神失常药
-枸橡酸芬太尼,fentanyl,抗精神失常药
+枸橼酸芬太尼,fentanyl,抗精神失常药
 喷他估辛,pentazocine,抗精神失常药
 丁两诺啡,buprenorphine,抗精神失常药
 是非那西汀,phenacetin,解热镇痛抗炎药
@@ -1019,8 +1019,8 @@ LI-精氨酸,l-arg,影响自体活性物质的药物
 称为奥格门汀,augmentin,-内酰胺类抗生素
 射剂为特治星,tazocin,-内酰胺类抗生素
 头孢唑林钠,cefazolin,-内酰胺类抗生素
-氨共西林钠,ampicillin,-内酰胺类抗生素
-头孢氨革,cefalexin,-内酰胺类抗生素
+氨苄西林钠,ampicillin,-内酰胺类抗生素
+头孢氨苄,cefalexin,-内酰胺类抗生素
 头孢匹罗,cefpirome,-内酰胺类抗生素
 头孢呆肝钠,cefotaxime,-内酰胺类抗生素
 霉素,cethromycin,-内酰胺类抗生素

@@ -683,6 +683,118 @@ def _local_props(info):
     }
 
 
+# 知识库导入锁：避免并发写盘
+IMPORT_LOCK = threading.Lock()
+
+
+def _write_json(name, obj):
+    with open(os.path.join(DATA_DIR, name), "w", encoding="utf-8") as f:
+        json.dump(obj, f, ensure_ascii=False, indent=1)
+
+
+def import_drugs(items):
+    """课本/资料导入通路：合并药物条目到本地知识库。
+
+    items: [{zh, en, category, parent, pharmacophore, target, action,
+             mt, similar, sar, smiles, cid, formula, mw, iupac, inchikey, ...}]
+    缺基础属性时自动用英文名/中文名查 PubChem 补齐。
+    返回 {"added": n, "updated": m, "skipped": k}。
+    """
+    if not isinstance(items, list):
+        raise ApiError("drugs 必须是列表")
+    added = updated = skipped = 0
+    new_drugs = []
+    with IMPORT_LOCK:
+        for it in items:
+            if not isinstance(it, dict):
+                skipped += 1
+                continue
+            zh = str(it.get("zh") or "").strip()
+            en = str(it.get("en") or "").strip()
+            if not zh and not en:
+                skipped += 1
+                continue
+            if not zh:
+                # 无中文名：仅合并药理条目（用英文名做键），不进入主药物库
+                ph = {k: it.get(k) for k in ("parent", "pharmacophore", "target", "action", "mt", "sar") if it.get(k)}
+                if it.get("similar"):
+                    ph["similar"] = it["similar"]
+                if ph:
+                    if en in DRUG_PHARM:
+                        DRUG_PHARM[en].update(ph)
+                    else:
+                        DRUG_PHARM[en] = ph
+                skipped += 1
+                continue
+
+            base = dict(it)
+            base["zh"] = zh
+            # 补齐基础属性（缺 SMILES/CID 时查 PubChem）
+            if (not base.get("smiles") or not base.get("cid")) and (en or zh):
+                try:
+                    term = en or zh
+                    cids = pc_name_cids(term)
+                    if cids:
+                        cid = int(cids[0])
+                        props = pc_props([cid]).get(cid) or {}
+                        base.setdefault("cid", cid)
+                        for k in ("formula", "mw", "smiles", "iupac", "inchikey"):
+                            if not base.get(k) and props.get(k):
+                                base[k] = props[k]
+                except Exception:
+                    pass
+
+            # 药理字段（非空才合并）
+            ph = {k: base.get(k) for k in ("parent", "pharmacophore", "target", "action", "mt", "sar") if base.get(k)}
+            if base.get("similar"):
+                ph["similar"] = base["similar"]
+
+            old = DRUGS_BY_ZH.get(zh)
+            if old is not None:
+                old.update({k: v for k, v in base.items() if v})
+                updated += 1
+            else:
+                new_drugs.append(base)
+                added += 1
+
+            if ph:
+                if zh in DRUG_PHARM:
+                    DRUG_PHARM[zh].update(ph)
+                else:
+                    DRUG_PHARM[zh] = ph
+
+        # 更新内存索引
+        for d in new_drugs:
+            DRUGS.append(d)
+            DRUGS_BY_ZH[d["zh"]] = d
+            if d.get("cid"):
+                DRUGS_BY_CID[d["cid"]] = d
+            CHINESE[d["zh"]] = d
+            CHINESE_NORM[norm_zh(d["zh"])] = d["zh"]
+            _index_name(d["zh"], d)
+
+        if added or updated:
+            _write_json("drugs.json", DRUGS)
+            _write_json("drug_pharm.json", DRUG_PHARM)
+            # 追加到 drug_names.csv（保留可重建来源），避免重复行
+            csv_path = os.path.join(DATA_DIR, "drug_names.csv")
+            existing = set()
+            if os.path.exists(csv_path):
+                with open(csv_path, "r", encoding="utf-8-sig") as f:
+                    for row in f:
+                        parts = row.strip().split(",")
+                        if len(parts) >= 2:
+                            existing.add(parts[0] + "\t" + parts[1])
+            with open(csv_path, "a", encoding="utf-8-sig", newline="") as f:
+                for d in new_drugs:
+                    pair = (d.get("zh") or "") + "\t" + (d.get("en") or "")
+                    if pair not in existing:
+                        f.write("%s,%s,%s\n" % (d.get("zh", ""), d.get("en", ""), d.get("category", "")))
+                        existing.add(pair)
+
+    return {"added": added, "updated": updated, "skipped": skipped}
+
+
 def group_match_ids(q):
     """查询是否命中官能团名称（支持同音异形字）。"""
     qn = norm_zh(q.strip()).lower()
@@ -1054,6 +1166,9 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/api/search":
                 result = do_search(body.get("q", ""), body.get("type", "auto"),
                                    online=bool(body.get("online", True)))
+                self._send_json(result)
+            elif path == "/api/import":
+                result = import_drugs(body.get("drugs") or [])
                 self._send_json(result)
             elif path == "/api/render":
                 smiles = body.get("smiles", "").strip()

@@ -2523,6 +2523,575 @@
           "smiles": "C1=C(C(=O)NC(=O)N1)F"
         }
       ]
+    },
+    {
+      "id": "barbiturate",
+      "category": "含氮基团",
+      "zh": "巴比妥（丙二酰脲）",
+      "en": "Barbiturate",
+      "symbol": "丙二酰脲",
+      "smiles_example": "O=C1NC(=O)NC(=O)C1",
+      "smarts": "O=C1NC(=O)NC(=O)C1",
+      "substructure_smiles": "O=C1NC(=O)NC(=O)C1",
+      "short": "丙二酰脲母核，经典的镇静催眠/抗惊厥药骨架",
+      "description": "巴比妥类由丙二酰脲（巴比妥酸）构成，5-位双取代后具有中枢抑制作用。主要增强 GABA_A 受体介导的氯离子内流，延长氯通道开放时间；高剂量时直接抑制兴奋性突触。现已多被苯二氮䓬类取代，仍用于抗癫痫与麻醉诱导（硫喷妥钠）。",
+      "reactions": ["5-位亚甲基酸性强（pKa 约 7.4），成钠盐溶于水", "硫代巴比妥脂溶性高、起效快", "肝药酶诱导、耐受与依赖"],
+      "hint": "巴比妥类是肝药酶强诱导剂，可加速自身及其他药物代谢。",
+      "pharmacophore": {
+        "drug_class": "镇静催眠药 / 抗惊厥药 / 麻醉诱导药",
+        "target": "GABA_A 受体（延长 Cl⁻ 通道开放）",
+        "sar": "5-位双取代基的性质决定作用时间与脂溶性：短效（戊巴比妥）侧链短、脂溶性高；长效（苯巴比妥）侧链带芳环。2-位硫代（硫喷妥）脂溶性更高，静脉麻醉起效极快。",
+        "drugs": [
+          {"name": "苯巴比妥", "en": "phenobarbital", "smiles": "CCC1(C(=O)NC(=O)NC1=O)C2=CC=CC=C2"},
+          {"name": "戊巴比妥", "en": "pentobarbital", "smiles": "CCCC1(C(=O)NC(=O)NC1=O)CC(C)C"},
+          {"name": "硫喷妥钠", "en": "thiopental", "smiles": "CCCC1(C(=O)NC(=S)NC1=O)CC(C)C"}
+        ]
+      },
+      "representatives": [
+        {"name": "苯巴比妥", "en": "phenobarbital", "smiles": "CCC1(C(=O)NC(=O)NC1=O)C2=CC=CC=C2"},
+        {"name": "戊巴比妥", "en": "pentobarbital", "smiles": "CCCC1(C(=O)NC(=O)NC1=O)CC(C)C"},
+        {"name": "硫喷妥钠", "en": "thiopental", "smiles": "CCCC1(C(=O)NC(=S)NC1=O)CC(C)C"}
+      ]
+    },
+    {
+      "id": "hydantoin",
+      "category": "含氮基团",
+      "zh": "乙内酰脲",
+      "en": "Hydantoin",
+      "symbol": "咪唑烷二酮",
+      "smiles_example": "O=C1NC(=O)NC1",
+      "smarts": "O=C1NC(=O)NC1",
+      "substructure_smiles": "O=C1NC(=O)NC1",
+      "short": "乙内酰脲母核，苯妥英等抗癫痫药骨架",
+      "description": "乙内酰脲（咪唑烷-2,4-二酮）与巴比妥酸结构相近。苯妥英（5,5-二苯基乙内酰脲）通过阻断电压门控 Na⁺ 通道、延长失活状态，抑制神经元高频放电，是经典抗癫痫药。",
+      "reactions": ["5-位亚甲基可被氧化", "酰胺环在强碱下开环"],
+      "hint": "苯妥英治疗窗窄、非线性药动学，需监测血药浓度。",
+      "pharmacophore": {
+        "drug_class": "抗癫痫药",
+        "target": "电压门控 Na⁺ 通道（使用依赖性阻断）",
+        "sar": "5-位双芳基（苯妥英）活性最佳；一端改为烷基（磷苯妥英前药）改善水溶性；N-位取代通常降低活性。",
+        "drugs": [
+          {"name": "苯妥英", "en": "phenytoin", "smiles": "O=C1NC(=O)NC1(C2=CC=CC=C2)C3=CC=CC=C3"}
+        ]
+      },
+      "representatives": [
+        {"name": "苯妥英", "en": "phenytoin", "smiles": "O=C1NC(=O)NC1(C2=CC=CC=C2)C3=CC=CC=C3"}
+      ]
+    },
+    {
+      "id": "phenothiazine",
+      "category": "杂环",
+      "zh": "吩噻嗪",
+      "en": "Phenothiazine",
+      "symbol": "硫氮杂蒽",
+      "smiles_example": "C1=CC=C2C(=C1)NC3=CC=CC=C3S2",
+      "smarts": "c1ccc2c(c1)Nc3ccccc3S2",
+      "substructure_smiles": "C1=CC=C2C(=C1)NC3=CC=CC=C3S2",
+      "short": "三环硫氮杂环，经典抗精神病药（氯丙嗪）骨架",
+      "description": "吩噻嗪为三环含硫含氮杂环。氯丙嗪（2-氯-10-(3-二甲氨基丙基)吩噻嗪）阻断中脑边缘系统 D2 受体产生抗精神病作用，同时阻断 D1、5-HT2、H1、M 和 α1 受体带来锥体外系、镇静、体位性低血压等不良反应。",
+      "reactions": ["S 原子可被氧化为亚砜/砜", "10-位侧链可被代谢脱烷基"],
+      "hint": "锥体外系反应（EPS）与 D2 阻断强度相关；氯丙嗪尚有止吐与降温作用。",
+      "pharmacophore": {
+        "drug_class": "第一代抗精神病药（典型抗精神病药）",
+        "target": "多巴胺 D2 受体（拮抗）",
+        "sar": "2-位引入吸电子基（Cl、CF3）显著增强活性；10-位叔胺侧链（二甲氨基丙基）为必需；侧链长度 3 个碳最佳。硫原子被碳替代得二苯并氮䓬类（活性改变）。",
+        "drugs": [
+          {"name": "氯丙嗪", "en": "chlorpromazine", "smiles": "CN(C)CCCN1C2=CC=CC=C2SC3=CC=CC=C13"},
+          {"name": "奋乃静", "en": "perphenazine", "smiles": "C1CN(CCN1CCCN2C3=CC=CC=C3SC4=CC=CC=C24)CCO"}
+        ]
+      },
+      "representatives": [
+        {"name": "氯丙嗪", "en": "chlorpromazine", "smiles": "CN(C)CCCN1C2=CC=CC=C2SC3=CC=CC=C13"},
+        {"name": "奋乃静", "en": "perphenazine", "smiles": "C1CN(CCN1CCCN2C3=CC=CC=C3SC4=CC=CC=C24)CCO"}
+      ]
+    },
+    {
+      "id": "dibenzazepine",
+      "category": "杂环",
+      "zh": "二苯并氮䓬（三环类）",
+      "en": "Dibenzazepine / Tricyclic",
+      "symbol": "亚胺芪 / 二苯并氮杂䓬",
+      "smiles_example": "C1=CC=C2C(=C1)NC3=CC=CC=C3C=C2",
+      "smarts": "c1ccc2c(c1)Nc1ccccc1C=C2",
+      "substructure_smiles": "C1=CC=C2C(=C1)NC3=CC=CC=C3C=C2",
+      "short": "三环类抗抑郁（丙米嗪、阿米替林）与抗癫痫（卡马西平）骨架",
+      "description": "二苯并氮䓬类三环结构是 TCAs（三环类抗抑郁药）与卡马西平的共同骨架。TCAs 通过阻断 5-HT 与去甲肾上腺素再摄取转运体升高突触单胺浓度；卡马西平（亚胺芪酰胺）则阻断 Na⁺ 通道用于癫痫与三叉神经痛。",
+      "reactions": ["7 元环中的双键可被还原", "侧链叔胺可去甲基代谢"],
+      "hint": "TCAs 过量可致心脏毒性（QRS 增宽），需心电监护。",
+      "pharmacophore": {
+        "drug_class": "三环类抗抑郁药 / 抗癫痫药（卡马西平）",
+        "target": "5-HT/NE 再摄取转运体（SERT/NET）；卡马西平为 Na⁺ 通道阻断剂",
+        "sar": "10,11-位双键与 5-位氮构成刚性三环；侧链二甲氨基丙基增强抗抑郁活性；10,11-二氢衍生物（丙米嗪）活性更高；引入羰基酰胺（卡马西平）转向 Na⁺ 通道阻断。",
+        "drugs": [
+          {"name": "丙米嗪", "en": "imipramine", "smiles": "CN(C)CCCN1C2=CC=CC=C2CCC3=CC=CC=C31"},
+          {"name": "阿米替林", "en": "amitriptyline", "smiles": "CN(C)CC/C=C1\\C2=CC=CC=C2CCC3=CC=CC=C31"},
+          {"name": "卡马西平", "en": "carbamazepine", "smiles": "C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N"}
+        ]
+      },
+      "representatives": [
+        {"name": "丙米嗪", "en": "imipramine", "smiles": "CN(C)CCCN1C2=CC=CC=C2CCC3=CC=CC=C31"},
+        {"name": "阿米替林", "en": "amitriptyline", "smiles": "CN(C)CC/C=C1\\C2=CC=CC=C2CCC3=CC=CC=C31"},
+        {"name": "卡马西平", "en": "carbamazepine", "smiles": "C1=CC=C2C(=C1)C=CC3=CC=CC=C3N2C(=O)N"}
+      ]
+    },
+    {
+      "id": "sulfonylurea",
+      "category": "含硫·卤素",
+      "zh": "磺酰脲",
+      "en": "Sulfonylurea",
+      "symbol": "芳磺酰脲",
+      "smiles_example": "CC1=CC=C(S(=O)(=O)NC(=O)NC(C)C)C=C1",
+      "smarts": "S(=O)(=O)NC(=O)N",
+      "substructure_smiles": "CC1=CC=C(S(=O)(=O)NC(=O)NC(C)C)C=C1",
+      "short": "促胰岛素分泌剂（格列本脲、格列美脲）母核",
+      "description": "磺酰脲类通过与胰岛 β 细胞膜 SUR1 亚基结合，关闭 K-ATP 通道，去极化激活电压门控 Ca²⁺ 通道，促进胰岛素分泌。用于 2 型糖尿病；长期使用可致低血糖与体重增加。",
+      "reactions": ["脲键可被水解失活", "磺酰胺 N 上取代基影响效价与半衰期"],
+      "hint": "第一代（甲苯磺丁脲）与第二代（格列本脲、格列齐特）差别在效价与低血糖风险。",
+      "pharmacophore": {
+        "drug_class": "口服降糖药（促胰岛素分泌剂）",
+        "target": "β 细胞 K-ATP 通道（SUR1 亚基）",
+        "sar": "芳基对位取代（甲苯磺丁脲 CH3）为经典；磺酰脲两端均可修饰：芳环端增大脂溶性、脲端引入杂环（格列本脲的苯甲酰胺环己脲）显著提高效价并延长作用时间。",
+        "drugs": [
+          {"name": "格列本脲", "en": "glibenclamide", "smiles": "COC1=CC=CC=C1C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3"},
+          {"name": "格列美脲", "en": "glimepiride", "smiles": "CCC1=CC(=NN1C)C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3"}
+        ]
+      },
+      "representatives": [
+        {"name": "格列本脲", "en": "glibenclamide", "smiles": "COC1=CC=CC=C1C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3"},
+        {"name": "格列美脲", "en": "glimepiride", "smiles": "CCC1=CC(=NN1C)C(=O)NCCC2=CC=C(C=C2)S(=O)(=O)NC(=O)NC3CCCCC3"}
+      ]
+    },
+    {
+      "id": "biguanide",
+      "category": "含氮基团",
+      "zh": "双胍",
+      "en": "Biguanide",
+      "symbol": "二甲双胍母核",
+      "smiles_example": "CN(C)C(=N)NC(=N)N",
+      "smarts": "NC(=N)NC(=N)N",
+      "substructure_smiles": "CN(C)C(=N)NC(=N)N",
+      "short": "口服降糖药二甲双胍的母核",
+      "description": "双胍（缩二胍）结构高极性、带正电荷。二甲双胍通过抑制线粒体复合体 I、激活 AMPK，减少肝糖异生、增加外周组织葡萄糖摄取，是 2 型糖尿病一线用药；不刺激胰岛素分泌，单独使用低血糖风险低。",
+      "reactions": ["胍基强碱性，成盐酸盐", "肾功能不全时蓄积可致乳酸酸中毒"],
+      "hint": "二甲双胍主要经肾排泄，eGFR 下降时需调整剂量。",
+      "pharmacophore": {
+        "drug_class": "口服降糖药（双胍类）",
+        "target": "线粒体复合体 I / AMPK（间接）",
+        "sar": "二甲双胍（N,N-二甲基双胍）代谢稳定；苯乙双胍（苯乙基）乳酸酸中毒风险高已少用；胍基两端的氮取代控制亲脂性与组织分布。",
+        "drugs": [
+          {"name": "二甲双胍", "en": "metformin", "smiles": "CN(C)C(=N)NC(=N)N"}
+        ]
+      },
+      "representatives": [
+        {"name": "二甲双胍", "en": "metformin", "smiles": "CN(C)C(=N)NC(=N)N"}
+      ]
+    },
+    {
+      "id": "thiazolidinedione",
+      "category": "杂环",
+      "zh": "噻唑烷二酮",
+      "en": "Thiazolidinedione",
+      "symbol": "TZD",
+      "smiles_example": "O=C1NC(=O)SC1",
+      "smarts": "O=C1NC(=O)SC1",
+      "substructure_smiles": "O=C1NC(=O)SC1",
+      "short": "胰岛素增敏剂（吡格列酮、罗格列酮）母核",
+      "description": "噻唑烷-2,4-二酮是 PPARγ 激动剂的药效团。TZDs 激活脂肪组织 PPARγ，促进脂肪酸摄取与储存、改善胰岛素敏感性，用于 2 型糖尿病；常见不良反应为水肿、体重增加，罗格列酮曾因心血管风险受限。",
+      "reactions": ["5-位亚甲基与芳醛缩合形成噻唑烷酮-亚基连接臂", "环上羰基可被还原"],
+      "hint": "TZDs 起效慢（数周），需监测心衰与水肿。",
+      "pharmacophore": {
+        "drug_class": "口服降糖药（胰岛素增敏剂）",
+        "target": "PPARγ（核受体）",
+        "sar": "噻唑烷-2,4-二酮必须通过 5-位亚甲基连接芳环（吡格列酮的乙基吡啶、罗格列酮的氨基吡啶）；间隔链长度与芳环疏水端决定对 PPARγ 的亲和力。",
+        "drugs": [
+          {"name": "吡格列酮", "en": "pioglitazone", "smiles": "CCC1=CN=C(C=C1)CCOC2=CC=C(CC3C(=O)NC(=O)S3)C=C2"},
+          {"name": "罗格列酮", "en": "rosiglitazone", "smiles": "CN(CCOC1=CC=C(CC2C(=O)NC(=O)S2)C=C1)C3=NC=CC=N3"}
+        ]
+      },
+      "representatives": [
+        {"name": "吡格列酮", "en": "pioglitazone", "smiles": "CCC1=CN=C(C=C1)CCOC2=CC=C(CC3C(=O)NC(=O)S3)C=C2"},
+        {"name": "罗格列酮", "en": "rosiglitazone", "smiles": "CN(CCOC1=CC=C(CC2C(=O)NC(=O)S2)C=C1)C3=NC=CC=N3"}
+      ]
+    },
+    {
+      "id": "macrolide",
+      "category": "杂环",
+      "zh": "大环内酯",
+      "en": "Macrolide",
+      "symbol": "14/15 元内酯大环",
+      "smiles_example": "O=C1OC(CC(CC(CC(CC(CC1)C)C)C)C)C",
+      "smarts": "",
+      "substructure_smiles": "O=C1OC(CC(CC(CC(CC(CC1)C)C)C)C)C",
+      "short": "红霉素、阿奇霉素、克拉霉素等抗菌药的大环内酯骨架",
+      "description": "大环内酯类含 14~16 元内酯大环，连接去氧氨基糖与中性糖。通过可逆结合细菌 50S 核糖体大亚基、阻断肽链延伸发挥抑菌作用，主要覆盖革兰阳性菌与非典型病原体（支原体、衣原体、军团菌）。",
+      "reactions": ["内酯环在酸性胃液中易降解（红霉素需肠溶）", "6-位羟基甲基化（克拉霉素）提高酸稳定性", "氮杂内酯（阿奇霉素）组织浓度高"],
+      "hint": "大环内酯为 CYP3A4 抑制剂，与多种药物相互作用（QT 延长）。",
+      "pharmacophore": {
+        "drug_class": "大环内酯类抗菌药",
+        "target": "50S 核糖体（23S rRNA 肽基转移酶中心）",
+        "sar": "大环内酯环与两个糖基为活性必需；14 元（红霉素、克拉霉素）、15 元（阿奇霉素）与 16 元（螺旋霉素）区别影响组织分布与耐药谱；去氧氨基糖（红霉糖胺）参与核糖体结合。",
+        "drugs": [
+          {"name": "阿奇霉素", "en": "azithromycin", "smiles": "CCC1C(C(C(N(CC(CC(C(C(C(C(C(=O)O1)C)OC2CC(C(C(O2)C)O)(C)OC)C)OC3C(C(CC(O3)C)N(C)C)O)(C)O)C)C)C)O)(C)O"},
+          {"name": "克拉霉素", "en": "clarithromycin", "smiles": "CCC1C(C(C(C(=O)C(CC(C(C(C(C(C(=O)O1)C)OC2CC(C(C(O2)C)O)(C)OC)C)OC3C(C(CC(O3)C)N(C)C)O)(C)OC)C)C)O)(C)O"}
+        ]
+      },
+      "representatives": [
+        {"name": "阿奇霉素", "en": "azithromycin", "smiles": "CCC1C(C(C(N(CC(CC(C(C(C(C(C(=O)O1)C)OC2CC(C(C(O2)C)O)(C)OC)C)OC3C(C(CC(O3)C)N(C)C)O)(C)O)C)C)C)O)(C)O"},
+        {"name": "克拉霉素", "en": "clarithromycin", "smiles": "CCC1C(C(C(C(=O)C(CC(C(C(C(C(C(=O)O1)C)OC2CC(C(C(O2)C)O)(C)OC)C)OC3C(C(CC(O3)C)N(C)C)O)(C)OC)C)C)O)(C)O"}
+      ]
+    },
+    {
+      "id": "tetracycline",
+      "category": "杂环",
+      "zh": "四环素骨架",
+      "en": "Tetracycline",
+      "symbol": "并四苯甲酰胺",
+      "smiles_example": "C[C@@H]1[C@@H]2[C@@H](C3=C(C(=C(C(=C3C(=O)[C@]2(O)C(=O)C4=C(C(=C(C=C4)O)O)N(C)C1=O)O)O)O)O)O",
+      "smarts": "",
+      "substructure_smiles": "C[C@@H]1[C@@H]2[C@@H](C3=C(C(=C(C(=C3C(=O)[C@]2(O)C(=O)C4=C(C(=C(C=C4)O)O)N(C)C1=O)O)O)O)O)O",
+      "short": "四环素、多西环素、米诺环素等广谱抗菌药母核",
+      "description": "四环素类以氢化并四苯为母核，含多个酚羟基、烯醇羟基与二甲氨基。通过可逆结合 30S 核糖体 A 位阻止氨酰-tRNA 结合，广谱抑菌；对非典型病原体有效。多西环素是常用代表。",
+      "reactions": ["酸性/碱性条件下易差向异构化失活", "与金属离子（Ca²⁺、Mg²⁺）螯合，影响吸收"],
+      "hint": "四环素类不宜与牛奶、抗酸药同服；儿童牙齿发育期禁用（牙齿黄染）。",
+      "pharmacophore": {
+        "drug_class": "四环素类抗菌药",
+        "target": "30S 核糖体（A 位）",
+        "sar": "母核 A 环的酰胺-烯醇系统与 BCD 环酚羟基参与核糖体结合；C4 二甲氨基为抗菌必需；C6 羟基（四环素）在酸中易脱水失活，多西环素去除 C6 羟基稳定性提高；C7/C9 取代（米诺环素）扩大抗菌谱。",
+        "drugs": [
+          {"name": "多西环素", "en": "doxycycline", "smiles": "C[C@H]1[C@@H]2[C@H](C3=C(C(=C(C(=C3C(=O)[C@@]2(O)C(=O)C4=C(C(=C(C=C4)O)O)N(C)C1=O)O)O)O)O)O"},
+          {"name": "米诺环素", "en": "minocycline", "smiles": "C[C@H]1[C@@H]2[C@H](C3=C(C(=C(C(=C3C(=O)[C@@]2(O)C(=O)C4=C(C(=CC=C4)N(C)C)N(C)C1=O)O)O)O)O)O"}
+        ]
+      },
+      "representatives": [
+        {"name": "多西环素", "en": "doxycycline", "smiles": "C[C@H]1[C@@H]2[C@H](C3=C(C(=C(C(=C3C(=O)[C@@]2(O)C(=O)C4=C(C(=C(C=C4)O)O)N(C)C1=O)O)O)O)O)O"},
+        {"name": "米诺环素", "en": "minocycline", "smiles": "C[C@H]1[C@@H]2[C@H](C3=C(C(=C(C(=C3C(=O)[C@@]2(O)C(=O)C4=C(C(=CC=C4)N(C)C)N(C)C1=O)O)O)O)O)O"}
+      ]
+    },
+    {
+      "id": "aminoglycoside",
+      "category": "含氧基团",
+      "zh": "氨基糖苷",
+      "en": "Aminoglycoside",
+      "symbol": "氨基环醇苷",
+      "smiles_example": "OCC1OC(OC2C(N)CC(N)C(OC3OC(CO)C(N)C(O)C3N)C2O)C(O)C(N)C1O",
+      "smarts": "",
+      "substructure_smiles": "OCC1OC(OC2C(N)CC(N)C(OC3OC(CO)C(N)C(O)C3N)C2O)C(O)C(N)C1O",
+      "short": "链霉素、庆大霉素、阿米卡星等杀菌性抗生素",
+      "description": "氨基糖苷类由氨基环醇（2-脱氧链霉胺）与氨基糖经糖苷键连接。通过主动摄取进入细菌，不可逆结合 30S 核糖体、导致 mRNA 错读，产生杀菌作用；对需氧革兰阴性菌强效，具有耳毒性、肾毒性与神经肌肉阻滞。",
+      "reactions": ["氨基糖苷在碱性环境中抗菌活性增强", "可被细菌产生的氨基糖苷修饰酶钝化（耐药）"],
+      "hint": "浓度依赖性杀菌，推荐每日单次给药；需监测血药浓度与肾功能。",
+      "pharmacophore": {
+        "drug_class": "氨基糖苷类抗菌药",
+        "target": "30S 核糖体（不可逆结合）",
+        "sar": "2-脱氧链霉胺核心的多个氨基/羟基为活性必需；阿米卡星在 1-位引入羟氨基丁酰侧链抵抗常见修饰酶；糖环上的氨基数目与位置决定抗菌谱与毒性。",
+        "drugs": [
+          {"name": "庆大霉素", "en": "gentamicin", "smiles": "CC1COC(C(C1NC)O)OC2C(CC(C(C2O)OC3C(C(C(C(O3)CN)O)O)NC)O)NC"},
+          {"name": "阿米卡星", "en": "amikacin", "smiles": "O=C(NCC1OC(OC2C(O)C(N)CC(N)C2OC3OC(CN)C(O)C(N)C3O)C(O)C(O)C1O)C(O)CCN"}
+        ]
+      },
+      "representatives": [
+        {"name": "庆大霉素", "en": "gentamicin", "smiles": "CC1COC(C(C1NC)O)OC2C(CC(C(C2O)OC3C(C(C(C(O3)CN)O)O)NC)O)NC"},
+        {"name": "阿米卡星", "en": "amikacin", "smiles": "O=C(NCC1OC(OC2C(O)C(N)CC(N)C2OC3OC(CN)C(O)C(N)C3O)C(O)C(O)C1O)C(O)CCN"}
+      ]
+    },
+    {
+      "id": "nitroimidazole",
+      "category": "杂环",
+      "zh": "硝基咪唑",
+      "en": "Nitroimidazole",
+      "symbol": "5-硝基咪唑",
+      "smiles_example": "CC1=NC=C([N+](=O)[O-])N1",
+      "smarts": "c1[nH]c[nH]c1[N+](=O)[O-]",
+      "substructure_smiles": "CC1=NC=C([N+](=O)[O-])N1",
+      "short": "甲硝唑、替硝唑等抗厌氧菌/抗原虫药母核",
+      "description": "5-硝基咪唑类（甲硝唑、替硝唑、奥硝唑）在厌氧菌或原虫细胞内被还原为活性中间体，损伤 DNA，兼有抗厌氧菌与抗滴虫、抗阿米巴作用。是厌氧菌感染与滴虫病的首选药物。",
+      "reactions": ["硝基在厌氧环境下还原为羟胺/亚硝基活性物", "与酒精同服可致双硫仑样反应"],
+      "hint": "甲硝唑代谢物可使尿液变色；用药期间禁酒。",
+      "pharmacophore": {
+        "drug_class": "硝基咪唑类抗菌/抗原虫药",
+        "target": "DNA（还原性活性中间体损伤）",
+        "sar": "5-硝基为活性必需（2-硝基无活性）；N1-位取代基（甲硝唑羟乙基、替硝唑磺酰乙基）影响分布与半衰期；咪唑环 C2 位可修饰。",
+        "drugs": [
+          {"name": "甲硝唑", "en": "metronidazole", "smiles": "CC1=NC=C([N+](=O)[O-])N1CCO"},
+          {"name": "替硝唑", "en": "tinidazole", "smiles": "CC1=NC=C([N+](=O)[O-])N1CCS(=O)(=O)CC"}
+        ]
+      },
+      "representatives": [
+        {"name": "甲硝唑", "en": "metronidazole", "smiles": "CC1=NC=C([N+](=O)[O-])N1CCO"},
+        {"name": "替硝唑", "en": "tinidazole", "smiles": "CC1=NC=C([N+](=O)[O-])N1CCS(=O)(=O)CC"}
+      ]
+    },
+    {
+      "id": "hydrazide",
+      "category": "含氮基团",
+      "zh": "酰肼",
+      "en": "Hydrazide",
+      "symbol": "羰基肼",
+      "smiles_example": "O=C(NN)C1=CC=NC=C1",
+      "smarts": "C(=O)NN",
+      "substructure_smiles": "O=C(NN)C1=CC=NC=C1",
+      "short": "异烟肼（抗结核一线药）的药效基团",
+      "description": "酰肼（R-CO-NH-NH₂）是异烟肼的药效基团。异烟肼需经细菌过氧化氢酶-过氧化物酶（KatG）活化，抑制分枝菌酸合成关键酶（InhA/ENR），对结核分枝杆菌具有高度选择性杀菌作用；主要不良反应为周围神经炎（可用维生素 B6 预防）与肝损伤。",
+      "reactions": ["酰肼与醛酮生成腙", "KatG 氧化活化产生活性中间体"],
+      "hint": "异烟肼为前药，NAT2 乙酰化快慢型影响肝毒性与疗效。",
+      "pharmacophore": {
+        "drug_class": "抗结核药（一线）",
+        "target": "InhA（烯脂酰-ACP 还原酶）/ KatG 活化",
+        "sar": "异烟酰肼（吡啶-4-甲酰肼）为最优结构；酰肼端必须保持游离（成腙/乙酰化降低活性）；吡啶环 4-位羰基肼为活性必需。",
+        "drugs": [
+          {"name": "异烟肼", "en": "isoniazid", "smiles": "O=C(NN)C1=CC=NC=C1"}
+        ]
+      },
+      "representatives": [
+        {"name": "异烟肼", "en": "isoniazid", "smiles": "O=C(NN)C1=CC=NC=C1"}
+      ]
+    },
+    {
+      "id": "nucleoside",
+      "category": "杂环",
+      "zh": "核苷（类似物）",
+      "en": "Nucleoside / Nucleoside Analog",
+      "symbol": "碱基-糖苷",
+      "smiles_example": "NC1=NC2=C(N=CN2[C@@H]2O[C@H](CO)[C@@H](O)[C@H]2O)C(=O)N1",
+      "smarts": "",
+      "substructure_smiles": "NC1=NC2=C(N=CN2[C@@H]2O[C@H](CO)[C@@H](O)[C@H]2O)C(=O)N1",
+      "short": "抗病毒（齐多夫定、阿昔洛韦）与抗肿瘤（氟尿嘧啶、阿糖胞苷）的核苷/碱基类似物",
+      "description": "核苷类似物模拟天然核苷（碱基+核糖），掺入病毒 DNA/RNA 或抑制核苷酸合成酶，发挥抗病毒与抗肿瘤作用。代表如阿昔洛韦（鸟嘌呤开环核苷）、齐多夫定（AZT，3'-叠氮胸苷）、阿糖胞苷（ara-C）。",
+      "reactions": ["3'-位修饰（叠氮、双脱氧）导致 DNA 链终止", "磷酸化后才能活化（三磷酸形式）"],
+      "hint": "核苷类似物多为前药，需细胞内激酶磷酸化激活。",
+      "pharmacophore": {
+        "drug_class": "抗病毒药 / 抗肿瘤药（抗代谢药）",
+        "target": "病毒 DNA 聚合酶 / 逆转录酶 / 宿主核苷酸还原酶",
+        "sar": "碱基部分决定配对特异性；糖 3'-位修饰决定链终止能力（AZT、ddC）；开环糖（阿昔洛韦）提高对病毒 TK 的选择性；氟尿嘧啶以碱基类似物形式掺入 RNA/DNA。",
+        "drugs": [
+          {"name": "齐多夫定", "en": "zidovudine", "smiles": "CC1=CN([C@@H]2O[C@H](CO)[C@@H]([N+](=O)[O-])C2)C(=O)NC1=O"},
+          {"name": "阿昔洛韦", "en": "acyclovir", "smiles": "C1=NC2=C(N1COCCO)NC(=O)N=C2N"},
+          {"name": "氟尿嘧啶", "en": "fluorouracil", "smiles": "C1=C(C(=O)NC(=O)N1)F"}
+        ]
+      },
+      "representatives": [
+        {"name": "齐多夫定", "en": "zidovudine", "smiles": "CC1=CN([C@@H]2O[C@H](CO)[C@@H]([N+](=O)[O-])C2)C(=O)NC1=O"},
+        {"name": "阿昔洛韦", "en": "acyclovir", "smiles": "C1=NC2=C(N1COCCO)NC(=O)N=C2N"},
+        {"name": "氟尿嘧啶", "en": "fluorouracil", "smiles": "C1=C(C(=O)NC(=O)N1)F"}
+      ]
+    },
+    {
+      "id": "platinum_complex",
+      "category": "含硫·卤素",
+      "zh": "铂配合物",
+      "en": "Platinum Complex",
+      "symbol": "顺铂类",
+      "smiles_example": "N[Pt](N)(Cl)Cl",
+      "smarts": "",
+      "substructure_smiles": "N[Pt](N)(Cl)Cl",
+      "short": "顺铂、卡铂、奥沙利铂等抗肿瘤药母体",
+      "description": "铂配合物以二价铂为中心，两个顺式离去基（Cl⁻/草酸根）与两个胺配体。进入细胞后水合活化，与 DNA 鸟嘌呤 N7 形成链内交联，扭曲 DNA 双螺旋、阻断复制转录，诱导凋亡。顺铂对睾丸癌、卵巢癌等疗效显著。",
+      "reactions": ["氯被水分子取代活化（细胞内低氯环境）", "与 DNA 形成 Pt-d(GpG) 链内加合物"],
+      "hint": "顺铂主要毒性为肾毒性、耳毒性与严重呕吐；卡铂以骨髓抑制为主。",
+      "pharmacophore": {
+        "drug_class": "抗肿瘤药（铂类）",
+        "target": "DNA（鸟嘌呤 N7 交联）",
+        "sar": "顺式几何构型必需（反铂无活性）；两个离去基（Cl/草酸/环丁二羧酸）决定水解速率与毒性（卡铂慢、奥沙利铂含二氨基环己烷）；胺配体影响 DNA 加合物形状与耐药谱。",
+        "drugs": [
+          {"name": "顺铂", "en": "cisplatin", "smiles": "N[Pt](N)(Cl)Cl"},
+          {"name": "卡铂", "en": "carboplatin", "smiles": "C1CC(C1)(C(=O)O)C(=O)O.[NH2-].[NH2-].[Pt+2]"},
+          {"name": "奥沙利铂", "en": "oxaliplatin", "smiles": "C1CCC2CCCCC2C1N[Pt]3(N)C(=O)C(=O)O3"}
+        ]
+      },
+      "representatives": [
+        {"name": "顺铂", "en": "cisplatin", "smiles": "N[Pt](N)(Cl)Cl"},
+        {"name": "卡铂", "en": "carboplatin", "smiles": "C1CC(C1)(C(=O)O)C(=O)O.[NH2-].[NH2-].[Pt+2]"},
+        {"name": "奥沙利铂", "en": "oxaliplatin", "smiles": "C1CCC2CCCCC2C1N[Pt]3(N)C(=O)C(=O)O3"}
+      ]
+    },
+    {
+      "id": "anthracycline",
+      "category": "杂环",
+      "zh": "蒽环类",
+      "en": "Anthracycline",
+      "symbol": "蒽醌-氨基糖苷",
+      "smiles_example": "O=C1C2=C(C(=O)C3=C(C2=O)C=CC=C3)C(=O)C4=C1C=CC=C4O",
+      "smarts": "",
+      "substructure_smiles": "O=C1C2=C(C(=O)C3=C(C2=O)C=CC=C3)C(=O)C4=C1C=CC=C4O",
+      "short": "多柔比星、表柔比星等抗肿瘤抗生素母核",
+      "description": "蒽环类含平面蒽醌发色团并连接氨基糖（柔红霉素糖胺）。平面结构嵌入 DNA 碱基对间，抑制拓扑异构酶 II 并产生自由基，阻断复制转录。多柔比星（阿霉素）抗瘤谱广，但具有累积性心脏毒性。",
+      "reactions": ["醌环可被还原为半醌自由基（心脏毒性机制）", "嵌入 DNA 碱基对"],
+      "hint": "多柔比星终身累积剂量限制（约 450 mg/m²），可用右雷佐生预防。",
+      "pharmacophore": {
+        "drug_class": "抗肿瘤抗生素（蒽环类）",
+        "target": "拓扑异构酶 II（稳定切割复合物）+ DNA 嵌入",
+        "sar": "平面蒽醌必须保持（嵌入能力）；氨基糖 3'-氨基参与与 DNA 结合；C9 羟基侧链（羟乙酰基）为活性所需；表柔比星 C4' 差向异构降低心脏毒性。",
+        "drugs": [
+          {"name": "多柔比星", "en": "doxorubicin", "smiles": "CC1C(C(CC(O1)OC2CC(CC3=C2C(=C4C(=C3O)C(=O)C5=C(C4=O)C(=CC=C5)OC)O)(C(=O)CO)O)N)O"},
+          {"name": "表柔比星", "en": "epirubicin", "smiles": "CC1C(C(CC(O1)OC2CC(CC3=C2C(=C4C(=C3O)C(=O)C5=C(C4=O)C(=CC=C5)OC)O)(C(=O)CO)O)N)O"}
+        ]
+      },
+      "representatives": [
+        {"name": "多柔比星", "en": "doxorubicin", "smiles": "CC1C(C(CC(O1)OC2CC(CC3=C2C(=C4C(=C3O)C(=O)C5=C(C4=O)C(=CC=C5)OC)O)(C(=O)CO)O)N)O"},
+        {"name": "表柔比星", "en": "epirubicin", "smiles": "CC1C(C(CC(O1)OC2CC(CC3=C2C(=C4C(=C3O)C(=O)C5=C(C4=O)C(=CC=C5)OC)O)(C(=O)CO)O)N)O"}
+      ]
+    },
+    {
+      "id": "camptothecin",
+      "category": "杂环",
+      "zh": "喜树碱",
+      "en": "Camptothecin",
+      "symbol": "五环喹啉内酯",
+      "smiles_example": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=CC=CC=C5N=C4C3=C2)O",
+      "smarts": "",
+      "substructure_smiles": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=CC=CC=C5N=C4C3=C2)O",
+      "short": "拓扑异构酶 I 抑制剂（伊立替康、拓扑替康）母核",
+      "description": "喜树碱是含五环（喹啉+吡咯并喹啉+内酯）的生物碱，通过稳定拓扑异构酶 I-DNA 共价复合物导致 DNA 单链断裂累积，特异作用于 S 期细胞。天然喜树碱毒性大，临床用其水溶性半合成衍生物伊立替康、拓扑替康。",
+      "reactions": ["E 环内酯在生理 pH 下可逆水解开环（失活/毒性平衡）", "10-位取代可提高水溶性"],
+      "hint": "伊立替康活性代谢物 SN-38 经 UGT1A1 灭活，UGT1A1*28 纯合子腹泻风险高。",
+      "pharmacophore": {
+        "drug_class": "抗肿瘤药（拓扑异构酶 I 抑制剂）",
+        "target": "拓扑异构酶 I（稳定切割复合物）",
+        "sar": "完整五环与 E 环 α-羟基内酯为活性必需；A 环 10-位引入羟基/氨基（拓扑替康）或 B 环引入联哌啶侧链（伊立替康前药）改善水溶性；内酯水解后活性大降。",
+        "drugs": [
+          {"name": "伊立替康", "en": "irinotecan", "smiles": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=CC(=CC=C5N=C4C3=C2)N(C)C(=O)OCCN6CCC(CC6)N7CCCCC7)O"},
+          {"name": "拓扑替康", "en": "topotecan", "smiles": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=C(C=CC(=C5N=C4C3=C2)CN(C)C)O)O"}
+        ]
+      },
+      "representatives": [
+        {"name": "伊立替康", "en": "irinotecan", "smiles": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=CC(=CC=C5N=C4C3=C2)N(C)C(=O)OCCN6CCC(CC6)N7CCCCC7)O"},
+        {"name": "拓扑替康", "en": "topotecan", "smiles": "CCC1(C2=C(COC1=O)C(=O)N3CC4=CC5=C(C=CC(=C5N=C4C3=C2)CN(C)C)O)O"}
+      ]
+    },
+    {
+      "id": "taxane",
+      "category": "杂环",
+      "zh": "紫杉烷",
+      "en": "Taxane",
+      "symbol": "二萜多环骨架",
+      "smiles_example": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)C6=CC=CC=C6)O)O)OC(=O)C7=CC=CC=C7)(CO4)OC(=O)C)O)C)OC(=O)C",
+      "smarts": "",
+      "substructure_smiles": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)C6=CC=CC=C6)O)O)OC(=O)C7=CC=CC=C7)(CO4)OC(=O)C)O)C)OC(=O)C",
+      "short": "紫杉醇、多西他赛等抗微管抗肿瘤药母核",
+      "description": "紫杉烷类是以紫杉烷二萜为核心骨架的抗肿瘤药。紫杉醇促进微管聚合并抑制解聚，使细胞周期阻滞于 G2/M，诱导凋亡；对卵巢癌、乳腺癌、肺癌有效。多西他赛为其半合成衍生物。",
+      "reactions": ["C13 侧链（苯基异丝氨酸酯）为活性必需", "C2' 羟基可被代谢酯化失活"],
+      "hint": "紫杉醇含蓖麻油/聚氧乙基化蓖麻油溶剂，需预处理防过敏；卡巴他赛为新一代耐药选择。",
+      "pharmacophore": {
+        "drug_class": "抗肿瘤药（微管稳定剂）",
+        "target": "微管蛋白（促进聚合、抑制解聚）",
+        "sar": "完整紫杉烷骨架与 C13 侧链（N-苯甲酰-苯基异丝氨酸）为活性必需；C2' 羟基必需游离（多西他赛为叔丁氧羰基侧链，水溶性更好）；C10 位修饰影响活性与耐药。",
+        "drugs": [
+          {"name": "紫杉醇", "en": "paclitaxel", "smiles": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)C6=CC=CC=C6)O)O)OC(=O)C7=CC=CC=C7)(CO4)OC(=O)C)O)C)OC(=O)C"},
+          {"name": "多西他赛", "en": "docetaxel", "smiles": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)OC(C)(C)C)O)O)OC(=O)C6=CC=CC=C6)(CO4)OC(=O)C)O)C)OC(=O)C"}
+        ]
+      },
+      "representatives": [
+        {"name": "紫杉醇", "en": "paclitaxel", "smiles": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)C6=CC=CC=C6)O)O)OC(=O)C7=CC=CC=C7)(CO4)OC(=O)C)O)C)OC(=O)C"},
+        {"name": "多西他赛", "en": "docetaxel", "smiles": "CC1=C2C(C(=O)C3(C(CC4C(C3C(C(C2(C)C)(CC1OC(=O)C(C(C5=CC=CC=C5)NC(=O)OC(C)(C)C)O)O)OC(=O)C6=CC=CC=C6)(CO4)OC(=O)C)O)C)OC(=O)C"}
+      ]
+    },
+    {
+      "id": "artemisinin",
+      "category": "含氧基团",
+      "zh": "青蒿素（过氧桥）",
+      "en": "Artemisinin / Endoperoxide",
+      "symbol": "1,2,4-三噁烷",
+      "smiles_example": "CC1CCC2C(C(=O)OC3C24C1CCC(O3)(OO4)C)C",
+      "smarts": "",
+      "substructure_smiles": "CC1CCC2C(C(=O)OC3C24C1CCC(O3)(OO4)C)C",
+      "short": "青蒿素及其衍生物（蒿甲醚、青蒿琥酯）的抗疟药效团",
+      "description": "青蒿素含独特的 1,2,4-三噁烷过氧桥。铁（游离血红素/Fe²⁺）还原过氧桥产生自由基，烷化疟原虫蛋白，快速杀灭红内期疟原虫。对耐氯喹的恶性疟有效，是抗疟联合疗法（ACT）的核心。",
+      "reactions": ["过氧桥被 Fe²⁺ 还原裂解产生活性自由基", "内酯可被还原为半缩醛（二氢青蒿素活性更高）"],
+      "hint": "青蒿素类半衰期短，需与长效药联用（ACT）防复发。",
+      "pharmacophore": {
+        "drug_class": "抗疟药（青蒿素类）",
+        "target": "血红素铁/疟原虫蛋白（自由基烷化）",
+        "sar": "过氧桥（1,2,4-三噁烷）为活性绝对必需；C10 位引入醚/酯（蒿甲醚、青蒿琥酯）提高脂溶性或水溶性；保留内酯/半缩醛环结构。",
+        "drugs": [
+          {"name": "蒿甲醚", "en": "artemether", "smiles": "CC1CCC2C(C(OC3C24C1CCC(O3)(OO4)C)OC)C"},
+          {"name": "青蒿琥酯", "en": "artesunate", "smiles": "CC1CCC2C(C(OC3C24C1CCC(O3)(OO4)C)OC(=O)CCC(=O)O)C"}
+        ]
+      },
+      "representatives": [
+        {"name": "蒿甲醚", "en": "artemether", "smiles": "CC1CCC2C(C(OC3C24C1CCC(O3)(OO4)C)OC)C"},
+        {"name": "青蒿琥酯", "en": "artesunate", "smiles": "CC1CCC2C(C(OC3C24C1CCC(O3)(OO4)C)OC(=O)CCC(=O)O)C"}
+      ]
+    },
+    {
+      "id": "oxazolidinone",
+      "category": "杂环",
+      "zh": "噁唑烷酮",
+      "en": "Oxazolidinone",
+      "symbol": "2-噁唑烷酮",
+      "smiles_example": "O=C1NCCO1",
+      "smarts": "O=C1NCCO1",
+      "substructure_smiles": "O=C1NCCO1",
+      "short": "利奈唑胺等全合成抗菌药母核",
+      "description": "噁唑烷酮类是全新骨架的全合成抗菌药。利奈唑胺结合 50S 核糖体 23S rRNA，阻止 70S 起始复合物形成，对 MRSA、VRE 等耐药阳性菌有效；口服生物利用度 100%，长期使用注意骨髓抑制与周围神经病变。",
+      "reactions": ["5-位乙酰氨基甲基为活性必需", "吗啉环/氟苯基为药代优化基团"],
+      "hint": "利奈唑胺为可逆性 MAO 抑制剂，需注意 5-HT 综合征风险。",
+      "pharmacophore": {
+        "drug_class": "噁唑烷酮类抗菌药",
+        "target": "50S 核糖体（23S rRNA 早期翻译）",
+        "sar": "噁唑烷-2-酮环为活性必需；C5 位（R-构型）乙酰氨基甲基必需；N-芳基对位氟与 3-位吗啉（利奈唑胺）优化代谢与抗菌活性；噁唑烷酮与 D-环丝氨酸结合位点相关。",
+        "drugs": [
+          {"name": "利奈唑胺", "en": "linezolid", "smiles": "CC(=O)N[C@H]1COC(=O)N1C2=CC=C(F)C=C2N3CCOCC3"}
+        ]
+      },
+      "representatives": [
+        {"name": "利奈唑胺", "en": "linezolid", "smiles": "CC(=O)N[C@H]1COC(=O)N1C2=CC=C(F)C=C2N3CCOCC3"}
+      ]
+    },
+    {
+      "id": "statin_sidechain",
+      "category": "含氧基团",
+      "zh": "他汀（二羟基庚酸侧链）",
+      "en": "Statin / Dihydroxyheptanoic Acid",
+      "symbol": "3,5-二羟基庚酸",
+      "smiles_example": "O=C(O)CC(O)CC(O)CC1=CC=C(F)C=C1",
+      "smarts": "",
+      "substructure_smiles": "O=C(O)CC(O)CC(O)CC1=CC=C(F)C=C1",
+      "short": "HMG-CoA 还原酶抑制剂（阿托伐他汀、瑞舒伐他汀）药效团",
+      "description": "他汀类的药效团是 3,5-二羟基庚酸（或内酯形式），模拟 HMG-CoA，竞争性抑制 HMG-CoA 还原酶，减少肝内胆固醇合成并上调 LDL 受体，显著降低 LDL-C，是动脉粥样硬化性心血管疾病的一线治疗。",
+      "reactions": ["二羟基庚酸与内酯形式可互变（前药）", "被 CYP3A4（阿托伐他汀）或 CYP2C9（瑞舒伐他汀）代谢"],
+      "hint": "他汀类主要不良反应为肌病/横纹肌溶解，与 CYP3A4 抑制剂合用需谨慎。",
+      "pharmacophore": {
+        "drug_class": "调血脂药（他汀类）",
+        "target": "HMG-CoA 还原酶",
+        "sar": "3,5-二羟基庚酸侧链为药效团（内酯为前药）；疏水多环母核占据酶活性口袋（阿托伐他汀吡咯、瑞舒伐他汀嘧啶）；氟苯与磺酰基增强效价；侧链立体化学（3R,5S）必需。",
+        "drugs": [
+          {"name": "阿托伐他汀", "en": "atorvastatin", "smiles": "O=C(O)CC(O)CC(O)CC1C(C2=CC=CC=C2)C(C3=CC=C(F)C=C3)N(CC(C)C)C1C4=CC=CC=C4"},
+          {"name": "瑞舒伐他汀", "en": "rosuvastatin", "smiles": "CC(C)C1=NC(=NC(=C1C=CC(CC(CC(=O)O)O)O)C2=CC=C(C=C2)F)N(C)S(=O)(=O)C"}
+        ]
+      },
+      "representatives": [
+        {"name": "阿托伐他汀", "en": "atorvastatin", "smiles": "O=C(O)CC(O)CC(O)CC1C(C2=CC=CC=C2)C(C3=CC=C(F)C=C3)N(CC(C)C)C1C4=CC=CC=C4"},
+        {"name": "瑞舒伐他汀", "en": "rosuvastatin", "smiles": "CC(C)C1=NC(=NC(=C1C=CC(CC(CC(=O)O)O)O)C2=CC=C(C=C2)F)N(C)S(=O)(=O)C"}
+      ]
+    },
+    {
+      "id": "folate_analog",
+      "category": "杂环",
+      "zh": "叶酸类似物",
+      "en": "Folate Analog / Antifolate",
+      "symbol": "蝶啶-对氨基苯甲酰",
+      "smiles_example": "NC1=NC2=C(N=C1N)N=CN2CC3=CC=C(C=C3)C(=O)NC(CCC(=O)O)C(=O)O",
+      "smarts": "",
+      "substructure_smiles": "NC1=NC2=C(N=C1N)N=CN2CC3=CC=C(C=C3)C(=O)NC(CCC(=O)O)C(=O)O",
+      "short": "甲氨蝶呤（抗肿瘤/免疫抑制）与甲氧苄啶（抗菌）的抗叶酸药效团",
+      "description": "叶酸类似物模拟叶酸（蝶啶-对氨基苯甲酰-谷氨酸），竞争性抑制二氢叶酸还原酶（DHFR），阻断四氢叶酸合成，干扰核酸生物合成。甲氨蝶呤用于肿瘤与自身免疫病（低剂量）；甲氧苄啶选择性抑制细菌 DHFR 用于抗菌。",
+      "reactions": ["4-位氨基取代（甲氨蝶呤）使 DHFR 亲和力大增", "多聚谷氨酸化后胞内潴留增强细胞毒性"],
+      "hint": "甲氨蝶呤毒性可用亚叶酸（四氢叶酸）救援；大剂量需水化碱化防肾损。",
+      "pharmacophore": {
+        "drug_class": "抗肿瘤/免疫抑制药（甲氨蝶呤）；抗菌药（甲氧苄啶）",
+        "target": "二氢叶酸还原酶（DHFR）",
+        "sar": "蝶啶环 4-氨基-2,4-二氨基嘧啶为强效 DHFR 结合形式（甲氨蝶呤、甲氧苄啶、乙胺嘧啶）；对氨基苯甲酰-谷氨酸侧链保留叶酸转运识别；甲氧苄啶以三甲氧基苄基替代对氨基苯甲酰获得选择性。",
+        "drugs": [
+          {"name": "甲氨蝶呤", "en": "methotrexate", "smiles": "NC1=NC2=C(N=C1N)N=CN2CC3=CC=C(C=C3)C(=O)NC(CCC(=O)O)C(=O)O"},
+          {"name": "甲氧苄啶", "en": "trimethoprim", "smiles": "COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N"},
+          {"name": "乙胺嘧啶", "en": "pyrimethamine", "smiles": "CCC1=C(C(=NC(=N1)N)N)C2=CC=C(C=C2)Cl"}
+        ]
+      },
+      "representatives": [
+        {"name": "甲氨蝶呤", "en": "methotrexate", "smiles": "NC1=NC2=C(N=C1N)N=CN2CC3=CC=C(C=C3)C(=O)NC(CCC(=O)O)C(=O)O"},
+        {"name": "甲氧苄啶", "en": "trimethoprim", "smiles": "COC1=CC(=CC(=C1OC)OC)CC2=CN=C(N=C2N)N"},
+        {"name": "乙胺嘧啶", "en": "pyrimethamine", "smiles": "CCC1=C(C(=NC(=N1)N)N)C2=CC=C(C=C2)Cl"}
+      ]
     }
   ]
 }

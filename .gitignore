@@ -16,6 +16,10 @@ desktop/dist-backend/
 *.exe
 *.zip
 
+# Rust / Tauri
+src-tauri/target/
+src-tauri/gen/
+
 # 运行缓存
 images/
 

@@ -54,6 +54,11 @@ Copy-Item -Path (Join-Path $PSScriptRoot "main.js"), (Join-Path $PSScriptRoot "p
 Copy-Item -Path (Join-Path $PSScriptRoot "assets\icon.ico") -Destination (Join-Path $dist "resources\app\assets") -Force
 Copy-Item -Path (Join-Path $PSScriptRoot "dist-backend\ChemHelperBackend") -Destination (Join-Path $dist "resources\ChemHelperBackend") -Recurse -Force
 
+# 精简语言包：仅保留中英文
+Get-ChildItem (Join-Path $dist "locales") -Filter *.pak |
+  Where-Object { $_.Name -notin @('en-US.pak', 'zh-CN.pak') } |
+  Remove-Item -Force
+
 $rcedit = Join-Path $PSScriptRoot "node_modules\rcedit\bin\rcedit-x64.exe"
 if (Test-Path $rcedit) {
   & $rcedit (Join-Path $dist "MedChemHelper.exe") `

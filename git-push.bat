@@ -1,18 +1,65 @@
 @echo off
-rem 把本地源码推送到 GitHub（远程地址已配置为 MedChemHelper）
+rem MedChemHelper: auto commit + confirm push
 setlocal
 cd /d "%~dp0"
 
-if not "%~1"=="" (
-  echo 设置远程仓库为 %~1
-  git remote remove origin >nul 2>nul
-  git remote add origin %~1
-)
-
-git remote -v
-git branch -M main
-git push -u origin main
-
+echo ============================================
+echo   MedChemHelper - Commit & Push
+echo ============================================
 echo.
-echo 推送结束。如果提示需要登录，请按提示在浏览器/终端中完成 GitHub 认证。
-pause
+
+rem 1) stage all changes
+git add -A
+
+rem 2) check if there is anything to commit
+git diff --cached --quiet
+if errorlevel 1 goto has_changes
+
+echo [Info] No changes detected, nothing to commit.
+goto ask
+
+:has_changes
+echo The following files will be committed:
+git diff --cached --name-status
+echo.
+git commit -m "MedChemHelper"
+if errorlevel 1 (
+  echo.
+  echo [Error] Commit failed. Please check Git configuration.
+  pause
+  exit /b 1
+)
+echo.
+echo [Done] Committed. Summary of this commit:
+git show --stat --oneline HEAD
+echo.
+
+:ask
+set /p CONFIRM=Push to GitHub now? (Y/N):
+if /i "%CONFIRM%"=="Y" goto do_push
+if /i "%CONFIRM%"=="N" (
+  echo.
+  echo Pushing cancelled. Changes are saved locally.
+  echo Press any key to exit...
+  pause >nul
+  exit /b 0
+)
+echo Please enter Y or N.
+goto ask
+
+:do_push
+echo.
+echo Pushing to GitHub ...
+git push origin main
+if errorlevel 1 (
+  echo.
+  echo [Error] Push failed. Please check network or login status.
+  echo Press any key to exit...
+  pause >nul
+  exit /b 1
+)
+echo.
+echo [Done] Pushed to GitHub successfully.
+echo Press any key to exit...
+pause >nul
+exit /b 0

@@ -1,6 +1,6 @@
 # MedChemHelper
 
-化学学习工具：输入名称 / 分子式 / SMILES / CAS，快速得到候选化合物、结构式、药理信息与相似药物。
+药物化学学习工具：输入名称 / 分子式 / SMILES / CAS，快速得到候选化合物、结构式、药理信息与相似药物。
 
 ## 功能特性
 
@@ -9,15 +9,11 @@
 - **药理信息**：约 190 种常见药物精编资料（母体、药效基团、靶点、药理作用、代谢毒理、相似药、部分构效关系 SAR），其余药物从 PubChem 提取兜底
 - **官能团**：RDKit 自动识别 49 种基团/药物母核（β-内酰胺、1,4-二氢吡啶、苯二氮䓬、噻嗪、甾体、嘌呤、喹诺酮等），含药效基团信息
 - **对比**：固定对比栏，检索下一个药物时并排比对；相似化合物显示中文名与共同结构
-- **搜索体验**：同音模糊搜索（噁唑/恶唑、苯二氮卓/苯二氮䓬）；联网开关（离线仅用本地词典与本地渲染）
 
 ## 快速开始
 
-### 桌面版（唯一使用方式）
-
 - 直接运行 `desktop\dist\MedChemHelper-win32-x64\MedChemHelper.exe`
 - 或解压 `desktop\dist\MedChemHelper.zip` 到任意 Windows 电脑（Win10/11，64 位）后运行 `MedChemHelper.exe`
-- 无需安装 Python，无需手动启动服务；程序内置本地服务，关窗即退出
 
 修改源码后重新打包：运行 `desktop\build-all.ps1`（需要 Node 环境）。
 
@@ -32,17 +28,14 @@
 
 ```text
 chem-helper/
-├─ server.py                 # 本地后端服务（仅桌面版内部使用，禁止浏览器直连）
+├─ server.py                 # 本地后端服务
 ├─ static/                   # 前端页面
 ├─ data/                     # 药物库 / 药理信息 / 官能团库 / 中文词典
 ├─ scripts/                  # 药物库构建脚本
-├─ desktop/                  # 桌面版（Electron 壳 + 打包脚本 + 打包产物）
+├─ desktop/                  # 桌面版
 └─ images/                   # 结构图缓存（运行时生成）
 ```
 
-## 常见问题
-
-- **端口被占用**：桌面版会自动连接已有实例；如需换端口，设置环境变量 `CHEMHELPER_PORT` 后重启桌面版
 - **显示“未找到”**：中文名用常见叫法；英文支持部分匹配；也可用分子式（`C2H6O`）、SMILES（`CCO`）或 CAS 号
 - **想添加更多药物**：编辑 `data/drug_names.csv` 后运行 `.venv\Scripts\python scripts\build_drugs.py` 重建
 - **重新打包桌面版**：运行 `desktop\build-all.ps1`（需要 Node 环境）

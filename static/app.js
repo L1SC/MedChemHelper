@@ -139,25 +139,47 @@
 
   /* ---------------- 固定对比栏 ---------------- */
   function savePinned() {
-    localStorage.setItem("ch_pinned_v1", JSON.stringify(state.pinned.slice(0, 12)));
+    localStorage.setItem("ch_pinned_v1", JSON.stringify(state.pinned.slice(0, 10)));
   }
 
-  function isPinned(cid) {
-    return state.pinned.some((p) => String(p.cid) === String(cid));
+  function isPinnedDrug(cid) {
+    return state.pinned.some((p) => p.type !== "group" && String(p.cid) === String(cid));
+  }
+
+  function isPinnedGroup(gid) {
+    return state.pinned.some((p) => p.type === "group" && String(p.gid) === String(gid));
   }
 
   function togglePin(c) {
-    if (isPinned(c.cid)) {
+    if (isPinnedDrug(c.cid)) {
       state.pinned = state.pinned.filter((p) => String(p.cid) !== String(c.cid));
     } else {
-      if (state.pinned.length >= 12) {
-        showMessage("对比栏最多固定 12 个，请先移除部分条目。", "warn");
+      if (state.pinned.length >= 10) {
+        showMessage("对比栏最多固定 10 个，请先移除部分条目。", "warn");
         return;
       }
       state.pinned.push({
-        cid: c.cid, zh: c.zh || "", iupac: c.iupac || "",
-        smiles: c.smiles || "", formula: c.formula || "", category: c.category || "",
+        type: "drug",
+        cid: c.cid, zh: c.zh || "", iupac: c.iupac || "", smiles: c.smiles || "",
+        formula: c.formula || "", category: c.category || "",
+        parent: c.parent || "", pharmacophore: c.pharmacophore || "", target: c.target || "",
+        action: c.action || "", similar: c.similar || [], groups: c.groups || [],
       });
+    }
+    savePinned();
+    renderPinned();
+    refreshPinButtons();
+  }
+
+  function togglePinGroup(g) {
+    if (isPinnedGroup(g.id)) {
+      state.pinned = state.pinned.filter((p) => !(p.type === "group" && String(p.gid) === String(g.id)));
+    } else {
+      if (state.pinned.length >= 10) {
+        showMessage("对比栏最多固定 10 个，请先移除部分条目。", "warn");
+        return;
+      }
+      state.pinned.push(Object.assign({ type: "group", gid: g.id }, g));
     }
     savePinned();
     renderPinned();
@@ -167,32 +189,108 @@
   function refreshPinButtons() {
     $$(".pin-btn").forEach((b) => {
       const cid = b.dataset.cid;
-      const on = isPinned(cid);
+      const on = isPinnedDrug(cid);
       b.textContent = on ? "📌 已固定" : "📌 固定";
       b.classList.toggle("pinned", on);
     });
+    $$("[data-act='pin-group']").forEach((b) => {
+      const on = isPinnedGroup(b.dataset.gid);
+      b.textContent = on ? "📌 已固定" : "📌 固定";
+      b.classList.toggle("pinned", on);
+    });
+  }
+
+  function pinnedDrugHtml(c) {
+    const groups = (c.groups || []).map((g) =>
+      `<button class="g-chip" data-gid="${esc(g.id)}" title="${esc(g.en || "")}">${esc(g.symbol || g.zh)}</button>`
+    ).join("");
+    return `
+      <div class="pinned-item">
+        <div class="card-item" data-cid="${esc(c.cid)}">
+          <div class="card-head">
+            <div class="card-title">
+              ${c.zh ? `<span class="zh">${esc(c.zh)}</span>` : esc(c.iupac || "化合物")}
+              ${c.category ? `<span class="badge cat">${esc(c.category)}</span>` : ""}
+            </div>
+            <div class="card-iupac">${esc(c.iupac || "")}</div>
+          </div>
+          <div class="struct" data-smiles="${esc(c.smiles || "")}"><div class="spinner"></div></div>
+          <div class="card-body">
+            ${pharmBlockHtml(c)}
+            ${c.smiles ? `<div class="smiles-line"><span>${esc(c.smiles)}</span><button class="copy-btn" data-copy="${esc(c.smiles)}">⧉</button></div>` : ""}
+            ${groups ? `<div class="groups-row">${groups}</div>` : ""}
+            <div class="card-actions">
+              <button class="btn-mini" data-act="detail">详情</button>
+              <button class="btn-mini" data-act="similar">相似化合物</button>
+              ${c.cid ? `<button class="btn-mini" data-act="pubchem" data-cid="${esc(c.cid)}">PubChem ↗</button>` : ""}
+              <button class="btn-mini" data-p-remove="${esc(c.cid)}">移除</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  function pinnedGroupHtml(g) {
+    const reps = (g.representatives || []).map((r) =>
+      `<button class="chip" data-rep-name="${esc(r.name)}" data-rep-en="${esc(r.en)}">${esc(r.name)}</button>`
+    ).join("");
+    const reactions = (g.reactions || []).map((r) => `<span class="r-chip">${esc(r)}</span>`).join("");
+    const ph = g.pharmacophore || {};
+    const phDrugs = (ph.drugs || []).map((d) =>
+      `<button class="chip" data-rep-name="${esc(d.name)}" data-rep-en="${esc(d.en)}">${esc(d.name)}</button>`).join("");
+    let phBox = "";
+    if (ph.drug_class) {
+      phBox = `<div class="pharm-box">
+        <div class="label">🔑 药效基团信息</div>
+        <div><b>对应药物类别：</b>${esc(ph.drug_class)}</div>
+        ${ph.target ? `<div><b>作用靶点：</b>${esc(ph.target)}</div>` : ""}
+        ${ph.sar ? `<div><b>构效关系：</b>${esc(ph.sar)}</div>` : ""}
+        ${phDrugs ? `<div><b>代表药物：</b><div class="similar-chips">${phDrugs}</div></div>` : ""}
+      </div>`;
+    }
+    return `
+      <div class="pinned-item">
+        <div class="group-card" data-group-id="${esc(g.id)}">
+          <div class="group-top">
+            <div class="group-img" data-group-img="${esc(g.id)}" data-smiles="${esc(g.smiles_example || "")}"><div class="spinner"></div></div>
+            <div>
+              <div class="g-head"><h3>${esc(g.zh)} <span class="g-symbol">${esc(g.symbol || "")}</span></h3></div>
+              <div class="g-en">${esc(g.en || "")}</div>
+              <p class="g-short">${esc(g.short || "")}</p>
+            </div>
+          </div>
+          <details class="g-details">
+            <summary>特点 / 性质 / 药效基团 / 代表药物</summary>
+            <div class="g-desc">${esc(g.description || "")}</div>
+            ${phBox}
+            ${reactions ? `<div class="g-reactions">${reactions}</div>` : ""}
+            ${g.hint ? `<div class="g-hint">💡 ${esc(g.hint)}</div>` : ""}
+            ${reps ? `<div class="g-reps"><span class="label">代表化合物：</span>${reps}</div>` : ""}
+          </details>
+          <div class="g-actions">
+            <button class="btn-mini" data-sub-smiles="${esc(g.substructure_smiles || g.smiles_example || "")}" data-group-zh="${esc(g.zh)}">查找含此基团的化合物</button>
+            <button class="btn-mini" data-p-remove="g:${esc(g.id)}">移除</button>
+          </div>
+        </div>
+      </div>`;
   }
 
   function renderPinned() {
     const list = $("#pinned-list");
     $("#pinned-count").textContent = state.pinned.length;
     if (!state.pinned.length) {
-      list.innerHTML = `<div class="pinned-empty">还没有固定条目。在结果卡片上点“📌 固定”，即可把结构留在旁边与下一个检索结果比对。</div>`;
+      list.innerHTML = `<div class="pinned-empty">还没有固定条目。在结果卡片或官能团卡片上点“📌 固定”，即可把完整内容留在旁边与下一个检索结果比对。</div>`;
       return;
     }
-    list.innerHTML = state.pinned.map((p, i) => `
-      <div class="pinned-item" data-i="${i}">
-        <div class="p-img" data-p-smiles="${esc(p.smiles)}"><div class="spinner"></div></div>
-        <div class="p-info">
-          <div class="p-name">${esc(p.zh || p.iupac || "化合物")}</div>
-          <div class="p-sub">${esc(p.category || p.formula || p.iupac || "")}</div>
-          <div class="p-actions">
-            <button class="btn-mini" data-p-act="detail">详情</button>
-            <button class="btn-mini" data-p-act="remove">移除</button>
-          </div>
-        </div>
-      </div>`).join("");
-    list.querySelectorAll("[data-p-smiles]").forEach((b) => fillStructBox(b, b.dataset.pSmiles));
+    list.innerHTML = state.pinned.map((p) => (p.type === "group" ? pinnedGroupHtml(p) : pinnedDrugHtml(p))).join("");
+    list.querySelectorAll(".struct[data-smiles]").forEach((el) => {
+      if (el.dataset.smiles) ensureIO().observe(el);
+      else el.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    });
+    list.querySelectorAll("[data-group-img][data-smiles]").forEach((el) => {
+      if (el.dataset.smiles) ensureIO().observe(el);
+      else el.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    });
   }
 
   /* ---------------- 结果卡片 ---------------- */
@@ -271,6 +369,8 @@
   function clearResults() {
     $("#results").innerHTML = "";
     $("#results-header").classList.add("hidden");
+    $("#group-match-panel").classList.add("hidden");
+    $("#group-match-grid").innerHTML = "";
     $("#more-wrap").classList.add("hidden");
     $("#similar-panel").classList.add("hidden");
     state.candidates = [];
@@ -280,6 +380,23 @@
   function switchTab(name) {
     $$(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
     $$(".tab-panel").forEach((p) => p.classList.toggle("active", p.id === `tab-${name}`));
+  }
+
+  function renderGroupMatches(groups) {
+    const panel = $("#group-match-panel");
+    const grid = $("#group-match-grid");
+    if (!groups.length) {
+      panel.classList.add("hidden");
+      return;
+    }
+    $("#group-match-title").textContent = `🧪 官能团匹配（${groups.length}）`;
+    grid.innerHTML = groups.map(groupCardHtml).join("");
+    grid.querySelectorAll("[data-group-img][data-smiles]").forEach((el) => {
+      if (el.dataset.smiles) ensureIO().observe(el);
+      else el.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    });
+    panel.classList.remove("hidden");
+    refreshPinButtons();
   }
 
   function doSearch(q, type) {
@@ -292,13 +409,9 @@
     api("/api/search", { q, type, online: state.online })
       .then((res) => {
         showMessage("");
-        const gm = res.groups_match || [];
-        if ((!res.candidates || !res.candidates.length) && gm.length) {
-          switchTab("groups");
-          showGroup(gm[0].id);
-          showMessage(`“${esc(q)}”匹配到官能团：${gm.map((g) => esc(g.zh)).join("、")}，已为你打开对应的官能团卡片。`, "ok");
-          return;
-        }
+        const gm = (res.groups_match || [])
+          .map((m) => (m && typeof m === "object" ? state.groupsById[m.id] : state.groupsById[m]))
+          .filter(Boolean);
         state.candidates = res.candidates || [];
         state.shown = 0;
         const typeLabel = SOURCE_LABEL[res.type] || res.type || "自动识别";
@@ -306,15 +419,21 @@
         if (res.matched_zh) header += ` · 匹配“${esc(res.matched_zh)}”`;
         if (res.truncated) header += ` · 已显示前 ${state.candidates.length} 个`;
         if (res.offline) header += ` · 离线模式`;
-        if (!state.candidates.length) {
+        if (!state.candidates.length && !gm.length) {
           $("#results-header").innerHTML = header;
           $("#results-header").classList.remove("hidden");
-          showMessage("找到候选但缺少属性数据，请尝试更精确的查询。", "warn");
+          showMessage("未找到匹配的化合物或官能团，请尝试更精确的名称、分子式或 SMILES。", "warn");
           return;
         }
-        $("#results-header").innerHTML = header;
-        $("#results-header").classList.remove("hidden");
-        showMore();
+        renderGroupMatches(gm);
+        if (state.candidates.length) {
+          $("#results-header").innerHTML = header;
+          $("#results-header").classList.remove("hidden");
+          showMore();
+        } else if (gm.length) {
+          $("#results-header").innerHTML = `共 <strong>${gm.length}</strong> 个官能团匹配：${gm.map((g) => esc(g.zh)).join("、")}`;
+          $("#results-header").classList.remove("hidden");
+        }
       })
       .catch((e) => {
         showMessage(e.message, "err");
@@ -386,6 +505,8 @@
           togglePin({
             cid: d.cid, zh: zh, iupac: d.iupac, smiles: smi,
             formula: d.formula, category: d.category,
+            parent: d.parent, pharmacophore: d.pharmacophore, target: d.target,
+            action: d.action, similar: d.similar || [], groups: d.groups || [],
           });
         };
         if (!d.action || !d.mt) {
@@ -495,6 +616,7 @@
         </details>
         <div class="g-actions">
           <button class="btn-mini" data-sub-smiles="${esc(g.substructure_smiles || g.smiles_example || "")}" data-group-zh="${esc(g.zh)}">查找含此基团的化合物</button>
+          <button class="btn-mini" data-act="pin-group" data-gid="${esc(g.id)}">📌 固定</button>
         </div>
       </div>`;
   }
@@ -622,7 +744,7 @@
         }).catch(() => {});
         return;
       }
-      const gchip = e.target.closest("[data-gid]");
+      const gchip = e.target.closest("[data-gid]:not([data-act='pin-group'])");
       if (gchip) {
         showGroup(gchip.dataset.gid);
         return;
@@ -638,15 +760,23 @@
       const pinBtn = e.target.closest('[data-act="pin"]');
       if (pinBtn) {
         const card = pinBtn.closest(".card-item");
+        const cid = card.dataset.cid;
+        const full = state.candidates.find((x) => String(x.cid) === String(cid));
         const c = {
-          cid: card.dataset.cid,
+          cid: cid,
           zh: card.querySelector(".zh")?.textContent || "",
           iupac: card.querySelector(".card-iupac")?.textContent.split(" · ")[0] || "",
           smiles: card.querySelector(".struct")?.dataset.smiles || "",
           formula: "",
           category: card.querySelector(".badge.cat")?.textContent || "",
         };
-        togglePin(c);
+        togglePin(Object.assign(c, full || {}));
+        return;
+      }
+      const pinGroupBtn = e.target.closest('[data-act="pin-group"]');
+      if (pinGroupBtn) {
+        const g = state.groupsById[pinGroupBtn.dataset.gid];
+        if (g) togglePinGroup(g);
         return;
       }
       const detailBtn = e.target.closest('[data-act="detail"]');
@@ -681,18 +811,15 @@
         runSubstructure(sub.dataset.subSmiles, sub.dataset.groupZh);
         return;
       }
-      const pDetail = e.target.closest('[data-p-act="detail"]');
-      if (pDetail) {
-        const item = pDetail.closest(".pinned-item");
-        const p = state.pinned[Number(item.dataset.i)];
-        openDetail(p.cid, p.smiles, p.zh);
-        return;
-      }
-      const pRemove = e.target.closest('[data-p-act="remove"]');
+      const pRemove = e.target.closest("[data-p-remove]");
       if (pRemove) {
-        const item = pRemove.closest(".pinned-item");
-        const p = state.pinned[Number(item.dataset.i)];
-        state.pinned = state.pinned.filter((x) => String(x.cid) !== String(p.cid));
+        const key = pRemove.dataset.pRemove;
+        if (String(key).startsWith("g:")) {
+          const gid = String(key).slice(2);
+          state.pinned = state.pinned.filter((x) => !(x.type === "group" && String(x.gid) === gid));
+        } else {
+          state.pinned = state.pinned.filter((x) => String(x.cid) !== String(key));
+        }
         savePinned();
         renderPinned();
         refreshPinButtons();
@@ -701,8 +828,56 @@
   }
 
   /* ---------------- 启动 ---------------- */
+  function initPinnedPanel() {
+    const panel = $("#pinned-panel");
+    const head = panel.querySelector(".pinned-head");
+
+    const savedCollapsed = localStorage.getItem("ch_pinned_collapsed") === "1";
+    panel.classList.toggle("collapsed", savedCollapsed);
+    $("#pinned-collapse").textContent = savedCollapsed ? "展开" : "收起";
+    $("#pinned-collapse").addEventListener("click", () => {
+      const collapsed = panel.classList.toggle("collapsed");
+      localStorage.setItem("ch_pinned_collapsed", collapsed ? "1" : "0");
+      $("#pinned-collapse").textContent = collapsed ? "展开" : "收起";
+    });
+
+    let savedPos = null;
+    try { savedPos = JSON.parse(localStorage.getItem("ch_pinned_pos") || "null"); } catch (e) { savedPos = null; }
+    if (savedPos && typeof savedPos.x === "number" && typeof savedPos.y === "number") {
+      panel.style.left = savedPos.x + "px";
+      panel.style.top = savedPos.y + "px";
+      panel.style.right = "auto";
+    }
+
+    let drag = null;
+    head.addEventListener("mousedown", (e) => {
+      if (e.target.closest("button") || e.target.closest("input")) return;
+      const rect = panel.getBoundingClientRect();
+      drag = { dx: e.clientX - rect.left, dy: e.clientY - rect.top };
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", (e) => {
+      if (!drag) return;
+      const x = Math.min(Math.max(e.clientX - drag.dx, 0), window.innerWidth - 180);
+      const y = Math.min(Math.max(e.clientY - drag.dy, 0), window.innerHeight - 60);
+      panel.style.left = x + "px";
+      panel.style.top = y + "px";
+      panel.style.right = "auto";
+    });
+    document.addEventListener("mouseup", () => {
+      if (!drag) return;
+      drag = null;
+      const rect = panel.getBoundingClientRect();
+      localStorage.setItem("ch_pinned_pos", JSON.stringify({
+        x: Math.round(rect.left),
+        y: Math.round(rect.top),
+      }));
+    });
+  }
+
   async function init() {
     bindEvents();
+    initPinnedPanel();
     $("#online-toggle").checked = state.online;
     try {
       const [g] = await Promise.all([

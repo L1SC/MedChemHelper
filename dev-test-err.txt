@@ -1,0 +1,222 @@
+[01:14:39] "GET /api/health HTTP/1.1" 200 -
+[01:14:39] "GET /api/groups HTTP/1.1" 200 -
+[01:14:39] "POST /api/search HTTP/1.1" 200 -
+[01:14:39] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:14:39] "GET / HTTP/1.1" 200 -
+[01:14:52] "POST /api/search HTTP/1.1" 200 -
+[01:15:06] "GET / HTTP/1.1" 200 -
+[01:15:06] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:15:06] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:15:06] "GET /api/groups HTTP/1.1" 200 -
+[01:15:06] "GET /favicon.ico HTTP/1.1" 404 -
+[01:15:33] "GET / HTTP/1.1" 200 -
+[01:15:33] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:15:33] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:15:33] "GET /api/groups HTTP/1.1" 200 -
+[01:15:36] "POST /api/search HTTP/1.1" 200 -
+[01:15:37] "POST /api/render HTTP/1.1" 200 -
+[01:15:37] "POST /api/search HTTP/1.1" 200 -
+[01:15:38] "POST /api/render HTTP/1.1" 200 -
+[01:15:38] "GET /api/image/975f4ba64117f4dc65044299552ee698.png HTTP/1.1" 200 -
+[01:15:38] "POST /api/render HTTP/1.1" 200 -
+[01:15:39] "POST /api/render HTTP/1.1" 200 -
+[01:15:39] "POST /api/render HTTP/1.1" 200 -
+[01:15:39] "POST /api/render HTTP/1.1" 200 -
+[01:15:39] "POST /api/render HTTP/1.1" 200 -
+[01:15:39] "POST /api/render HTTP/1.1" 500 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55899)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1063, in do_POST
+    self._send_json({"image": image, "descriptors": desc, "source": source})
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 997, in _send_json
+    self.wfile.write(body)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 433, in handle
+    self.handle_one_request()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 421, in handle_one_request
+    method()
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1107, in do_POST
+    self._send_json({"error": str(e)}, 500)
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 996, in _send_json
+    self.end_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 535, in end_headers
+    self.flush_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 539, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+----------------------------------------
+[01:15:43] "GET / HTTP/1.1" 200 -
+[01:15:43] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:15:43] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:15:43] "GET /api/groups HTTP/1.1" 200 -
+[01:15:46] "POST /api/search HTTP/1.1" 200 -
+[01:15:46] "POST /api/render HTTP/1.1" 200 -
+[01:15:46] "POST /api/render HTTP/1.1" 200 -
+[01:15:46] "GET /api/image/7b612f1d24e3a3c95255f01936fe3f59.png HTTP/1.1" 200 -
+[01:15:48] "POST /api/search HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 200 -
+[01:15:49] "POST /api/render HTTP/1.1" 500 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 55935)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1063, in do_POST
+    self._send_json({"image": image, "descriptors": desc, "source": source})
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 997, in _send_json
+    self.wfile.write(body)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 433, in handle
+    self.handle_one_request()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 421, in handle_one_request
+    method()
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1107, in do_POST
+    self._send_json({"error": str(e)}, 500)
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 996, in _send_json
+    self.end_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 535, in end_headers
+    self.flush_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 539, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+----------------------------------------
+[01:15:52] "GET / HTTP/1.1" 200 -
+[01:15:53] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:15:53] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:15:53] "GET /api/groups HTTP/1.1" 200 -
+[01:15:55] "POST /api/search HTTP/1.1" 200 -
+[01:15:55] "POST /api/render HTTP/1.1" 200 -
+[01:15:55] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/render HTTP/1.1" 200 -
+[01:15:56] "POST /api/search HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/adaf856fdafbe5e4bee0ddd998fe60da.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/22f06a3d48b9e77e8e10361818cfa8a5.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/82cce384d65aa7736f2fdbdd401d54c2.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/8c41246612a528cdc2dba18fdb18fe9a.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/5e4776c513a4aba23cb394682c8becda.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/47029b0a89b677c61d67c3a1b1071f07.png HTTP/1.1" 200 -
+[01:15:57] "GET /api/image/4368e565771f92069932a7ce22298037.png HTTP/1.1" 200 -
+[01:16:30] "GET / HTTP/1.1" 200 -
+[01:16:30] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:16:30] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:16:30] "GET /api/groups HTTP/1.1" 200 -
+[01:16:33] "POST /api/search HTTP/1.1" 200 -
+[01:16:34] "POST /api/render HTTP/1.1" 200 -
+[01:16:34] "POST /api/render HTTP/1.1" 200 -
+[01:16:34] "POST /api/search HTTP/1.1" 200 -
+[01:16:35] "POST /api/render HTTP/1.1" 200 -
+[01:16:36] "POST /api/render HTTP/1.1" 200 -
+[01:16:36] "POST /api/render HTTP/1.1" 200 -
+[01:16:36] "POST /api/render HTTP/1.1" 200 -
+[01:16:36] "POST /api/render HTTP/1.1" 200 -
+[01:16:36] "POST /api/render HTTP/1.1" 500 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 56074)
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1063, in do_POST
+    self._send_json({"image": image, "descriptors": desc, "source": source})
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 997, in _send_json
+    self.wfile.write(body)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 683, in process_request_thread
+    self.finish_request(request, client_address)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 360, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 747, in __init__
+    self.handle()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 433, in handle
+    self.handle_one_request()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 421, in handle_one_request
+    method()
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 1107, in do_POST
+    self._send_json({"error": str(e)}, 500)
+  File "C:\Users\Administrator\Documents\Codex\2026-08-17\new-chat-2\outputs\chem-helper\server.py", line 996, in _send_json
+    self.end_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 535, in end_headers
+    self.flush_headers()
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\http\server.py", line 539, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+  File "C:\Users\Administrator\AppData\Local\Programs\Python\Python310\lib\socketserver.py", line 826, in write
+    self._sock.sendall(b)
+ConnectionAbortedError: [WinError 10053] 你的主机中的软件中止了一个已建立的连接。
+----------------------------------------
+[01:16:58] "GET / HTTP/1.1" 200 -
+[01:16:58] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:16:58] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:16:58] "GET /api/groups HTTP/1.1" 200 -
+[01:16:58] "GET / HTTP/1.1" 200 -
+[01:16:58] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:16:58] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:16:58] "GET /api/groups HTTP/1.1" 200 -
+[01:17:01] "POST /api/search HTTP/1.1" 200 -
+[01:17:01] "POST /api/render HTTP/1.1" 200 -
+[01:17:01] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:02] "POST /api/render HTTP/1.1" 200 -
+[01:17:03] "POST /api/search HTTP/1.1" 200 -
+[01:17:27] "GET / HTTP/1.1" 200 -
+[01:17:27] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:17:27] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:17:27] "GET /api/groups HTTP/1.1" 200 -
+[01:17:27] "GET / HTTP/1.1" 200 -
+[01:17:27] "GET /static/style.css?v=3 HTTP/1.1" 200 -
+[01:17:27] "GET /static/app.js?v=3 HTTP/1.1" 200 -
+[01:17:27] "GET /api/groups HTTP/1.1" 200 -
+[01:17:30] "POST /api/search HTTP/1.1" 200 -
+[01:17:30] "POST /api/render HTTP/1.1" 200 -
+[01:17:30] "POST /api/render HTTP/1.1" 200 -
+[01:17:33] "POST /api/search HTTP/1.1" 200 -
+[01:17:34] "POST /api/render HTTP/1.1" 200 -

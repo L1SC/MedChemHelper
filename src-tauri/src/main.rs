@@ -6,9 +6,13 @@ use std::process::{Child, Command, Stdio};
 use std::sync::Mutex;
 use std::time::Duration;
 
+#[cfg(windows)]
+use std::os::windows::process::CommandExt;
+
 use tauri::{Manager, RunEvent, WebviewUrl, WebviewWindowBuilder};
 
 const PORT: u16 = 8765;
+const CREATE_NO_WINDOW: u32 = 0x0800_0000;
 
 struct Backend(Mutex<Option<Child>>);
 
@@ -77,6 +81,7 @@ fn main() {
                 .stdin(Stdio::null())
                 .stdout(Stdio::null())
                 .stderr(Stdio::null())
+                .creation_flags(CREATE_NO_WINDOW)
                 .spawn()
                 .map_err(|e| format!("后端启动失败: {}", e))?;
             eprintln!("[tauri] 后端已生成, pid={}", child.id());

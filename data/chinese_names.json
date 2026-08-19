@@ -504,25 +504,37 @@
   "smiles": "NC(CC1=CN=CN1)C(=O)O"
  },
  "葡萄糖": {
-  "en": "glucose"
+  "en": "glucose",
+  "smiles": "C(C1C(C(C(C(O1)O)O)O)O)O",
+  "cid": 5793,
+  "formula": "C6H12O6",
+  "mw": "180.16",
+  "iupac": "(3R,4S,5S,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol",
+  "inchikey": "WQZGKKKJIJFFOK-GASJEMHNSA-N"
  },
  "果糖": {
-  "en": "fructose"
+  "en": "fructose",
+  "smiles": "OC[C@@H]1OC(O)(CO)[C@H](O)[C@@H]1O"
  },
  "蔗糖": {
-  "en": "sucrose"
+  "en": "sucrose",
+  "smiles": "OC[C@H]1O[C@@](CO)(O[C@H]2[C@H](O)[C@@H](O)[C@H](O)[C@@H](CO)O2)[C@@H](O)[C@@H](O)[C@@H]1O"
  },
  "麦芽糖": {
-  "en": "maltose"
+  "en": "maltose",
+  "smiles": "OC[C@H]1O[C@@H](O[C@@H]2[C@H](O)[C@@H](O)[C@H](O)O[C@@H]2CO)[C@H](O)[C@@H](O)[C@@H]1O"
  },
  "乳糖": {
-  "en": "lactose"
+  "en": "lactose",
+  "smiles": "OC[C@H]1O[C@@H](O[C@@H]2[C@H](O)[C@H](O)[C@@H](O)[C@H](O2)CO)[C@H](O)[C@@H](O)[C@@H]1O"
  },
  "核糖": {
-  "en": "ribose"
+  "en": "ribose",
+  "smiles": "OC[C@@H]1OC(O)[C@H](O)[C@@H]1O"
  },
  "脱氧核糖": {
-  "en": "deoxyribose"
+  "en": "deoxyribose",
+  "smiles": "OC[C@H]1OC(O)C[C@@H]1O"
  },
  "淀粉": {
   "en": "starch"
@@ -531,14 +543,21 @@
   "en": "cellulose"
  },
  "维生素C": {
-  "en": "ascorbic acid"
+  "en": "ascorbic acid",
+  "smiles": "C(C(C1C(=C(C(=O)O1)O)O)O)O",
+  "cid": 54670067,
+  "formula": "C6H8O6",
+  "mw": "176.12",
+  "iupac": "(2R)-2-[(1S)-1,2-dihydroxyethyl]-3,4-dihydroxy-2H-furan-5-one",
+  "inchikey": "CIWBSHSKHKDKBQ-JLAZNSOCSA-N"
  },
  "维生素B6": {
   "en": "pyridoxine",
   "smiles": "Cc1ncc(CO)c(CO)c1O"
  },
  "胆固醇": {
-  "en": "cholesterol"
+  "en": "cholesterol",
+  "smiles": "C[C@H](CCCC(C)C)[C@H]1CC[C@@H]2[C@@]1(C)CC[C@H]3[C@H]2CC=C4[C@@]3(C)CC[C@H](O)C4"
  },
  "香草醛": {
   "en": "vanillin",
@@ -565,7 +584,8 @@
   "smiles": "Nc1ncnc2[nH]cnc12"
  },
  "鸟嘌呤": {
-  "en": "guanine"
+  "en": "guanine",
+  "smiles": "NC1=NC2=C(NC=N2)C(=O)N1"
  },
  "胞嘧啶": {
   "en": "cytosine",
@@ -580,7 +600,8 @@
   "smiles": "Cc1c[nH]c(=O)[nH]c1=O"
  },
  "尿酸": {
-  "en": "uric acid"
+  "en": "uric acid",
+  "smiles": "O=C1NC(=O)NC2=C1NC(=O)N2"
  },
  "吡啶": {
   "en": "pyridine",
@@ -611,16 +632,40 @@
   "smiles": "c1ccc2nc[nH]c2c1"
  },
  "青蒿素": {
-  "en": "artemisinin"
+  "en": "artemisinin",
+  "smiles": "CC1CCC2C(C(=O)OC3C24C1CCC(O3)(OO4)C)C",
+  "cid": 68827,
+  "formula": "C15H22O5",
+  "mw": "282.33",
+  "iupac": "(1R,4S,5R,8S,9R,12S,13R)-1,5,9-trimethyl-11,14,15,16-tetraoxatetracyclo[10.3.1.04,13.08,13]hexadecan-10-one",
+  "inchikey": "BLUAFEHZUWYNDE-NNWCWBAJSA-N"
  },
  "青霉素": {
-  "en": "penicillin G"
+  "en": "penicillin G",
+  "smiles": "CC1(C(N2C(S1)C(C2=O)NC(=O)CC3=CC=CC=C3)C(=O)O)C",
+  "cid": 5904,
+  "formula": "C16H18N2O4S",
+  "mw": "334.4",
+  "iupac": "(2S,5R,6R)-3,3-dimethyl-7-oxo-6-[(2-phenylacetyl)amino]-4-thia-1-azabicyclo[3.2.0]heptane-2-carboxylic acid",
+  "inchikey": "JGSARLDLIJGVTE-MBNYWOFBSA-N"
  },
  "阿莫西林": {
-  "en": "amoxicillin"
+  "en": "amoxicillin",
+  "smiles": "CC1(C(N2C(S1)C(C2=O)NC(=O)C(C3=CC=C(C=C3)O)N)C(=O)O)C",
+  "cid": 33613,
+  "formula": "C16H19N3O5S",
+  "mw": "365.4",
+  "iupac": "(2S,5R,6R)-6-[[(2R)-2-amino-2-(4-hydroxyphenyl)acetyl]amino]-3,3-dimethyl-7-oxo-4-thia-1-azabicyclo[3.2.0]heptane-2-carboxylic acid",
+  "inchikey": "LSQZJLSUYDQPKJ-NJBDSQKTSA-N"
  },
  "红霉素": {
-  "en": "erythromycin"
+  "en": "erythromycin",
+  "smiles": "CCC1C(C(C(C(=O)C(CC(C(C(C(C(C(=O)O1)C)OC2CC(C(C(O2)C)O)(C)OC)C)OC3C(C(CC(O3)C)N(C)C)O)(C)O)C)C)O)(C)O",
+  "cid": 12560,
+  "formula": "C37H67NO13",
+  "mw": "733.9",
+  "iupac": "(3R,4S,5S,6R,7R,9R,11R,12R,13S,14R)-6-[(2S,3R,4S,6R)-4-(dimethylamino)-3-hydroxy-6-methyloxan-2-yl]oxy-14-ethyl-7,12,13-trihydroxy-4-[(2R,4R,5S,6S)-5-hydroxy-4-methoxy-4,6-dimethyloxan-2-yl]oxy-3,5,7,9,11,13-hexamethyl-oxacyclotetradecane-2,10-dione",
+  "inchikey": "ULGZDMOVFRHVEP-RWJQBGPGSA-N"
  },
  "烟碱": {
   "en": "nicotine",

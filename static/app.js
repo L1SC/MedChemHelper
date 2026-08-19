@@ -798,6 +798,10 @@
       const detailBtn = e.target.closest('[data-act="detail"]');
       if (detailBtn) {
         const card = detailBtn.closest(".card-item");
+        if (!card.dataset.cid) {
+          showMessage("该化合物没有 PubChem CID，暂无法查看在线详情。", "warn");
+          return;
+        }
         openDetail(card.dataset.cid, card.querySelector(".struct")?.dataset.smiles || "");
         return;
       }

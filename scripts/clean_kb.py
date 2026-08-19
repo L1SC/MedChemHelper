@@ -217,6 +217,18 @@ REMOVED_TO_ALIAS = {
     "催化生成多巴": ("多巴", "dopa"),
     "LI-精氨酸": ("精氨酸", "arginine"),
 }
+# 5) 词典条目缺 SMILES 的补齐（教科书标准结构，RDKit 已验证可解析）
+DICT_SMILES_FIX = {
+    "果糖": "OC[C@@H]1OC(O)(CO)[C@H](O)[C@@H]1O",
+    "蔗糖": "OC[C@H]1O[C@@](CO)(O[C@H]2[C@H](O)[C@@H](O)[C@H](O)[C@@H](CO)O2)[C@@H](O)[C@@H](O)[C@@H]1O",
+    "麦芽糖": "OC[C@H]1O[C@@H](O[C@@H]2[C@H](O)[C@@H](O)[C@H](O)O[C@@H]2CO)[C@H](O)[C@@H](O)[C@@H]1O",
+    "乳糖": "OC[C@H]1O[C@@H](O[C@@H]2[C@H](O)[C@H](O)[C@@H](O)[C@H](O2)CO)[C@H](O)[C@@H](O)[C@@H]1O",
+    "核糖": "OC[C@@H]1OC(O)[C@H](O)[C@@H]1O",
+    "脱氧核糖": "OC[C@H]1OC(O)C[C@@H]1O",
+    "胆固醇": "C[C@H](CCCC(C)C)[C@H]1CC[C@@H]2[C@@]1(C)CC[C@H]3[C@H]2CC=C4[C@@]3(C)CC[C@H](O)C4",
+    "鸟嘌呤": "NC1=NC2=C(NC=N2)C(=O)N1",
+    "尿酸": "O=C1NC(=O)NC2=C1NC(=O)N2",
+}
 
 PHARM_GARBAGE_RE = re.compile(
     r"第[一二三四五六七八九十百\d]+章|表\s*\d|\[药理作用\]|【体内过程】|"
@@ -311,6 +323,32 @@ def main():
         }
         added_alias += 1
     print("新增词典别名:", added_alias, list(REMOVED_TO_ALIAS.values())[:5], "...")
+
+    # 词典条目补结构：优先静态表，其次按英文名匹配药物库
+    n_fixed = 0
+    drugs_by_en = {}
+    for d in drugs:
+        if d.get("en"):
+            drugs_by_en.setdefault(d["en"].lower(), d)
+    for zh, info in chinese.items():
+        if info.get("smiles"):
+            continue
+        smi = DICT_SMILES_FIX.get(zh)
+        src = None
+        if not smi:
+            src = drugs_by_en.get((info.get("en") or "").lower())
+            smi = (src or {}).get("smiles") or ""
+        if not smi:
+            continue
+        info["smiles"] = smi
+        cid = info.get("cid") or (src or {}).get("cid")
+        if cid:
+            info["cid"] = cid
+        for k in ("formula", "mw", "iupac", "inchikey"):
+            if not info.get(k) and src and src.get(k):
+                info[k] = src[k]
+        n_fixed += 1
+    print("词典补结构条目:", n_fixed)
 
     # 药理库：删除已删药名条目，清空受污染字段
     n_del = n_blank = 0

@@ -459,10 +459,11 @@ def pc_fastsubstructure_cids(smiles, max_records=24):
     return _pc_search_cids(path, timeout=90)
 
 
-def pc_props(cids):
-    """批量获取属性，返回 {cid: {...}}。"""
+def pc_props(cids, on_progress=None):
+    """批量获取属性，返回 {cid: {...}}；on_progress(loaded, total) 汇报分批进度。"""
     result = {}
-    for i in range(0, len(cids), PROPS_CHUNK):
+    total = len(cids)
+    for i in range(0, total, PROPS_CHUNK):
         chunk = cids[i:i + PROPS_CHUNK]
         url = pubchem_url(f"/compound/cid/{','.join(map(str, chunk))}/property/{PROP_NAMES}/JSON")
         data = http_json(url, timeout=45)
@@ -484,6 +485,8 @@ def pc_props(cids):
                 "rotb": p.get("RotatableBondCount"),
                 "exact_mass": p.get("ExactMass"),
             }
+        if on_progress:
+            on_progress(min(i + PROPS_CHUNK, total), total)
     return result
 
 
@@ -1008,12 +1011,17 @@ def _local_search(q, type_):
     }
 
 
-def do_search(q, type_="auto", online=True):
+def do_search(q, type_="auto", online=True, on_progress=None):
+    """检索化合物；on_progress({stage, ...}) 用于流式汇报进度。"""
     q = q.strip()
     if not q:
         raise ApiError("请输入要查询的内容")
     if type_ == "auto":
         type_ = detect_type(q)
+
+    def progress(**kw):
+        if on_progress:
+            on_progress(kw)
 
     if not online:
         return _local_search(q, type_)
@@ -1099,7 +1107,11 @@ def do_search(q, type_="auto", online=True):
     order = [c for c, s in cid_sources.items()][: (MAX_FORMULA if type_ == "formula" else MAX_GENERAL)]
     total = len(cid_sources)
     truncated = total > len(order)
-    props = pc_props(order)
+    progress(stage="cids", count=total)
+    props = pc_props(
+        order,
+        on_progress=(lambda loaded, n: progress(stage="props", loaded=loaded, total=n))
+        if on_progress else None)
     candidates = [_enrich(cid, props.get(cid, {"cid": cid}), cid_sources.get(cid, "search"))
                   for cid in order if cid in props]
     # 有中文名/来源优先排序：autocomplete/name/dict 在前
@@ -1307,9 +1319,12 @@ class Handler(BaseHTTPRequestHandler):
             body = self._read_json()
             path = urllib.parse.urlparse(self.path).path
             if path == "/api/search":
-                result = do_search(body.get("q", ""), body.get("type", "auto"),
-                                   online=bool(body.get("online", True)))
-                self._send_json(result)
+                if body.get("stream"):
+                    self._stream_search(body)
+                else:
+                    result = do_search(body.get("q", ""), body.get("type", "auto"),
+                                       online=bool(body.get("online", True)))
+                    self._send_json(result)
             elif path == "/api/import":
                 result = import_drugs(body.get("drugs") or [])
                 self._send_json(result)
@@ -1363,6 +1378,40 @@ class Handler(BaseHTTPRequestHandler):
             self._send_json({"error": str(e)}, 502)
         except Exception as e:
             self._send_json({"error": str(e)}, 500)
+
+    def _stream_search(self, body):
+        """流式检索：NDJSON + chunked，逐阶段汇报进度，最后输出 result/error。"""
+        self.send_response(200)
+        self.send_header("Content-Type", "application/x-ndjson; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Transfer-Encoding", "chunked")
+        self.end_headers()
+
+        def emit(obj):
+            line = (json.dumps(obj, ensure_ascii=False) + "\n").encode("utf-8")
+            try:
+                self.wfile.write(("%x\r\n" % len(line)).encode("ascii"))
+                self.wfile.write(line)
+                self.wfile.write(b"\r\n")
+                self.wfile.flush()
+            except OSError:
+                pass  # 客户端已断开
+
+        try:
+            result = do_search(
+                body.get("q", ""), body.get("type", "auto"),
+                online=bool(body.get("online", True)),
+                on_progress=lambda ev: emit({"type": "progress", **ev}))
+            emit({"type": "result", "data": result})
+        except (NotFoundError, ApiError) as e:
+            emit({"type": "error", "message": str(e)})
+        except Exception as e:
+            emit({"type": "error", "message": str(e)})
+        try:
+            self.wfile.write(b"0\r\n\r\n")
+            self.wfile.flush()
+        except OSError:
+            pass
 
 
 def main():

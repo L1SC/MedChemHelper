@@ -40,6 +40,60 @@
     });
   }
 
+  /* 流式请求：读取 NDJSON 分块，onEvent 收到 {type:"progress",...}，最后返回 result 或抛错 */
+  async function apiStream(path, data, onEvent) {
+    let resp;
+    try {
+      resp = await fetch(path, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data || {}),
+      });
+    } catch (e) {
+      throw new Error(NET_MSG);
+    }
+    if (!resp.ok || !resp.body) {
+      const d = await resp.json().catch(() => ({}));
+      throw new Error(d.error || `请求失败 (${resp.status})`);
+    }
+    const reader = resp.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = "";
+    let result = null;
+    let err = null;
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      let idx;
+      while ((idx = buf.indexOf("\n")) >= 0) {
+        const line = buf.slice(0, idx).trim();
+        buf = buf.slice(idx + 1);
+        if (!line) continue;
+        let msg;
+        try { msg = JSON.parse(line); } catch (e) { continue; }
+        if (msg.type === "result") result = msg.data;
+        else if (msg.type === "error") err = new Error(msg.message || "检索失败");
+        else if (msg.type === "progress" && onEvent) onEvent(msg);
+      }
+    }
+    if (err) throw err;
+    if (!result) throw new Error("服务返回了无法解析的数据");
+    return result;
+  }
+
+  function setSearchProgress(text) {
+    const el = $("#search-progress");
+    if (!el) return;
+    if (!text) {
+      el.classList.add("hidden");
+      el.textContent = "";
+      return;
+    }
+    el.textContent = text;
+    el.classList.remove("hidden");
+  }
+
   function getJSON(path) {
     return fetch(path).then(async (r) => {
       const d = await r.json().catch(() => ({}));
@@ -577,11 +631,24 @@
     state.type = type;
     clearResults();
     showMessage(`正在检索“${esc(q)}”…`, "info");
+    setSearchProgress("正在连接检索服务…");
     const btn = $("#search-form button[type=submit]");
     btn.disabled = true;
-    api("/api/search", { q, type, online: state.online })
+    let matchedCount = null;
+    apiStream("/api/search", { q, type, online: state.online, stream: true }, (ev) => {
+      if (ev.stage === "cids") {
+        matchedCount = ev.count;
+        setSearchProgress(`已匹配 ${ev.count} 种候选化合物，正在加载资料…`);
+      } else if (ev.stage === "props") {
+        const base = matchedCount != null
+          ? `已匹配 ${matchedCount} 种候选化合物，正在加载资料（${ev.loaded}/${ev.total}）…`
+          : `正在加载资料（${ev.loaded}/${ev.total}）…`;
+        setSearchProgress(base);
+      }
+    })
       .then((res) => {
         showMessage("");
+        setSearchProgress("");
         const gm = (res.groups_match || [])
           .map((m) => (m && typeof m === "object" ? state.groupsById[m.id] : state.groupsById[m]))
           .filter(Boolean);
@@ -609,6 +676,7 @@
         }
       })
       .catch((e) => {
+        setSearchProgress("");
         showMessage(e.message, "err");
         $("#results-header").classList.add("hidden");
       })

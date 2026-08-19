@@ -1143,7 +1143,7 @@ def compound_detail(cid):
         if ph.get("source"):
             out["source"] = ph["source"]
     out["groups"] = detect_groups(out.get("smiles") or "")
-    out["source"] = out.get("source") or "detail"
+    out["source"] = out.get("source") or []
     return out
 
 

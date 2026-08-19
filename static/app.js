@@ -295,7 +295,7 @@
 
   /* ---------------- 结果卡片 ---------------- */
   function sourceHtml(src) {
-    if (!src || !src.length) return "";
+    if (!Array.isArray(src) || !src.length) return "";
     const parts = src.slice(0, 2).map((s) => {
       if (!s || typeof s !== "object") return "";
       if (s.book === "PubChem") return "PubChem 中文整理";
@@ -487,7 +487,7 @@
               ${d.target ? `<div class="m-block"><h4>作用靶点</h4><p>${esc(d.target)}</p></div>` : ""}
               <div class="m-block"><h4>药理作用</h4><p id="m-action">${esc(d.action || "加载中…")}</p></div>
               <div class="m-block"><h4>代谢与毒理</h4><p id="m-mt">${esc(d.mt || "加载中…")}</p></div>
-              ${d.source ? `<div class="m-block">${sourceHtml(d.source)}</div>` : ""}
+              ${d.source && d.source.length ? `<div class="m-block">${sourceHtml(d.source)}</div>` : ""}
               ${d.sar ? `<div class="m-block"><h4>构效关系（SAR）</h4><p>${esc(d.sar)}</p></div>` : ""}
               ${sims ? `<div class="m-block"><h4>相似药物</h4><div class="similar-chips">${sims}</div></div>` : ""}
               ${groups ? `<div class="m-block"><h4>检出的官能团</h4><div class="groups-row">${groups}</div></div>` : ""}

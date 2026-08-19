@@ -429,7 +429,7 @@ details.g-details summary { cursor: pointer; font-size: 13px; color: var(--accen
   max-width: calc(100vw - 24px);
   max-height: calc(100vh - 100px);
   overflow-y: auto;
-  z-index: 60;
+  z-index: 150;
   padding: 12px;
   box-shadow: 0 12px 36px rgba(15, 23, 42, .18), 0 2px 8px rgba(15, 23, 42, .12);
   transition: height .18s ease;
@@ -453,6 +453,96 @@ details.g-details summary { cursor: pointer; font-size: 13px; color: var(--accen
 .pinned-item { margin-bottom: 12px; }
 .pinned-item .card-item { box-shadow: none; }
 .pinned-empty { font-size: 12.5px; color: var(--muted); padding: 8px 0; }
+
+/* ---------------- 独立固定资料卡浮窗 ---------------- */
+#pinned-windows {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 55;
+}
+.pin-window {
+  position: absolute;
+  width: 350px;
+  max-width: calc(100vw - 24px);
+  max-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 12px;
+  box-shadow: 0 14px 40px rgba(15, 23, 42, .22), 0 2px 8px rgba(15, 23, 42, .12);
+  overflow: hidden;
+  pointer-events: auto;
+}
+.pin-win-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: move;
+  user-select: none;
+  background: linear-gradient(180deg, rgba(15, 23, 42, .035), rgba(15, 23, 42, 0));
+  border-bottom: 1px solid var(--border, #e2e8f0);
+}
+.pin-win-head:active { cursor: grabbing; }
+.pin-win-title {
+  flex: 1;
+  min-width: 0;
+  font-weight: 700;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pin-win-head .btn-mini {
+  flex: 0 0 auto;
+  padding: 3px 8px;
+  font-size: 11px;
+}
+.pin-win-body {
+  padding: 10px;
+  overflow-y: auto;
+  max-height: calc(100vh - 120px);
+}
+.pin-window.collapsed { max-height: none; overflow: visible; }
+.pin-window.collapsed .pin-win-head { border-bottom: none; }
+.pin-window.collapsed .pin-win-body { display: none; }
+.pin-win-body .card-item,
+.pin-win-body .group-card { box-shadow: none; border: none; margin: 0; }
+
+/* ---------------- 已固定目录 ---------------- */
+.pin-dir-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  margin-bottom: 6px;
+  border: 1px solid var(--border, #e2e8f0);
+  border-radius: 8px;
+  background: var(--card-bg, #fff);
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+}
+.pin-dir-item:hover { border-color: var(--primary, #2563eb); background: #f8fafc; }
+.pin-dir-item .dir-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pin-dir-item .dir-badge {
+  flex: 0 0 auto;
+  font-size: 11px;
+  color: var(--muted, #64748b);
+  max-width: 90px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.pin-dir-item .btn-mini { flex: 0 0 auto; padding: 2px 7px; font-size: 11px; line-height: 1.3; }
 
 #group-match-panel { margin-top: 18px; }
 #group-match-grid { margin-top: 12px; }

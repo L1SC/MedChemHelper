@@ -138,6 +138,27 @@
   }
 
   /* ---------------- 固定对比栏 ---------------- */
+  let pinZ = 100;   // 浮窗层级计数（目录 150 常显，聚焦/拖动置顶 1000+）
+
+  function pinKey(p) {
+    return p.type === "group" ? "g:" + p.gid : "d:" + p.cid;
+  }
+
+  function getPinWinPos(key) {
+    try {
+      const m = JSON.parse(localStorage.getItem("ch_pinwin_pos_v1") || "{}");
+      return m[key] || null;
+    } catch (e) { return null; }
+  }
+
+  function setPinWinPos(key, pos) {
+    try {
+      const m = JSON.parse(localStorage.getItem("ch_pinwin_pos_v1") || "{}");
+      m[key] = pos;
+      localStorage.setItem("ch_pinwin_pos_v1", JSON.stringify(m));
+    } catch (e) { /* ignore */ }
+  }
+
   function savePinned() {
     localStorage.setItem("ch_pinned_v1", JSON.stringify(state.pinned.slice(0, 10)));
   }
@@ -168,6 +189,7 @@
     }
     savePinned();
     renderPinned();
+    renderPinWindows();
     refreshPinButtons();
   }
 
@@ -183,6 +205,7 @@
     }
     savePinned();
     renderPinned();
+    renderPinWindows();
     refreshPinButtons();
   }
 
@@ -279,19 +302,154 @@
     const list = $("#pinned-list");
     $("#pinned-count").textContent = state.pinned.length;
     if (!state.pinned.length) {
-      list.innerHTML = `<div class="pinned-empty">还没有固定条目。在结果卡片或官能团卡片上点“📌 固定”，即可把完整内容留在旁边与下一个检索结果比对。</div>`;
+      list.innerHTML = `<div class="pinned-empty">还没有固定条目。在结果卡片或官能团卡片上点“📌 固定”，即会以独立资料卡浮窗显示，并在右侧目录列出。</div>`;
       return;
     }
-    list.innerHTML = state.pinned.map((p) => (p.type === "group" ? pinnedGroupHtml(p) : pinnedDrugHtml(p))).join("");
-    list.querySelectorAll(".struct[data-smiles]").forEach((el) => {
-      if (el.dataset.smiles) ensureIO().observe(el);
-      else el.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    list.innerHTML = state.pinned.map((p) => {
+      const key = pinKey(p);
+      const name = p.type === "group"
+        ? (p.zh || p.en || "官能团")
+        : (p.zh || p.iupac || "化合物");
+      const badge = p.type === "group" ? "基团" : (p.category || "药物");
+      return `<div class="pin-dir-item" data-dir-key="${esc(key)}" title="点击展开/聚焦该窗口">
+        <span class="dir-name">${esc(name)}</span>
+        <span class="dir-badge">${esc(badge)}</span>
+        <button class="btn-mini" data-p-remove="${esc(key)}" title="移除">×</button>
+      </div>`;
+    }).join("");
+  }
+
+  function pinName(p) {
+    return p.type === "group"
+      ? (p.zh || p.en || "官能团")
+      : (p.zh || p.iupac || "化合物");
+  }
+
+  function renderPinWindows() {
+    const layer = $("#pinned-windows");
+    const keys = new Set(state.pinned.map(pinKey));
+    Array.from(layer.children).forEach((el) => {
+      if (!keys.has(el.dataset.key)) el.remove();
     });
-    list.querySelectorAll("[data-group-img][data-smiles]").forEach((el) => {
-      if (el.dataset.smiles) ensureIO().observe(el);
-      else el.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    let cascade = 0;
+    state.pinned.forEach((p) => {
+      ensurePinWindow(p, cascade++);
     });
   }
+
+  function ensurePinWindow(p, cascade) {
+    const layer = $("#pinned-windows");
+    const key = pinKey(p);
+    let el = null;
+    Array.from(layer.children).forEach((c) => { if (c.dataset.key === key) el = c; });
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "pin-window";
+      el.dataset.key = key;
+      el.innerHTML = `
+        <div class="pin-win-head">
+          <span class="pin-win-title"></span>
+          <button class="btn-mini pin-win-collapse" title="收起/展开">收起</button>
+          <button class="btn-mini pin-win-remove" title="移除">×</button>
+        </div>
+        <div class="pin-win-body"></div>`;
+      el.style.zIndex = pinZ++;
+      layer.appendChild(el);
+      bindPinWindow(el, key);
+    }
+    const pos = getPinWinPos(key);
+    if (pos && typeof pos.x === "number" && typeof pos.y === "number") {
+      el.style.left = pos.x + "px";
+      el.style.top = pos.y + "px";
+      el.classList.toggle("collapsed", !!pos.collapsed);
+      el.querySelector(".pin-win-collapse").textContent = pos.collapsed ? "展开" : "收起";
+    } else {
+      const x = 48 + (cascade % 6) * 30;
+      const y = 72 + (cascade % 6) * 34;
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+    }
+    el.querySelector(".pin-win-title").textContent = pinName(p);
+    el.querySelector(".pin-win-body").innerHTML = p.type === "group" ? pinnedGroupHtml(p) : pinnedDrugHtml(p);
+    el.querySelectorAll(".struct[data-smiles]").forEach((img) => {
+      if (img.dataset.smiles) ensureIO().observe(img);
+      else img.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    });
+    el.querySelectorAll("[data-group-img][data-smiles]").forEach((img) => {
+      if (img.dataset.smiles) ensureIO().observe(img);
+      else img.innerHTML = `<div class="placeholder">无 SMILES</div>`;
+    });
+  }
+
+  function bindPinWindow(el, key) {
+    const head = el.querySelector(".pin-win-head");
+    head.addEventListener("mousedown", (e) => {
+      if (e.target.closest("button")) return;
+      el.style.zIndex = 1000 + (pinZ++ % 200);
+      const rect = el.getBoundingClientRect();
+      window._pinDrag = { el, dx: e.clientX - rect.left, dy: e.clientY - rect.top };
+      e.preventDefault();
+    });
+    el.querySelector(".pin-win-collapse").addEventListener("click", (e) => {
+      e.stopPropagation();
+      const collapsed = el.classList.toggle("collapsed");
+      el.querySelector(".pin-win-collapse").textContent = collapsed ? "展开" : "收起";
+      const pos = getPinWinPos(key) || {};
+      pos.collapsed = collapsed;
+      setPinWinPos(key, pos);
+    });
+    el.querySelector(".pin-win-remove").addEventListener("click", (e) => {
+      e.stopPropagation();
+      removePinByKey(key);
+    });
+  }
+
+  function focusPinWindow(key) {
+    const layer = $("#pinned-windows");
+    let el = null;
+    Array.from(layer.children).forEach((c) => { if (c.dataset.key === key) el = c; });
+    if (!el) return;
+    el.classList.remove("collapsed");
+    el.querySelector(".pin-win-collapse").textContent = "收起";
+    const pos = getPinWinPos(key) || {};
+    pos.collapsed = false;
+    setPinWinPos(key, pos);
+    el.style.zIndex = 1000 + (pinZ++ % 200);
+  }
+
+  function removePinByKey(key) {
+    if (String(key).startsWith("g:")) {
+      const gid = String(key).slice(2);
+      state.pinned = state.pinned.filter((x) => !(x.type === "group" && String(x.gid) === gid));
+    } else {
+      const cid = String(key).startsWith("d:") ? String(key).slice(2) : String(key);
+      state.pinned = state.pinned.filter((x) => String(x.cid) !== cid);
+    }
+    savePinned();
+    renderPinned();
+    renderPinWindows();
+    refreshPinButtons();
+  }
+
+  document.addEventListener("mousemove", (e) => {
+    const drag = window._pinDrag;
+    if (!drag) return;
+    const x = Math.min(Math.max(e.clientX - drag.dx, 0), window.innerWidth - 90);
+    const y = Math.min(Math.max(e.clientY - drag.dy, 0), window.innerHeight - 44);
+    drag.el.style.left = x + "px";
+    drag.el.style.top = y + "px";
+  });
+  document.addEventListener("mouseup", () => {
+    const drag = window._pinDrag;
+    if (!drag) return;
+    window._pinDrag = null;
+    const rect = drag.el.getBoundingClientRect();
+    const key = drag.el.dataset.key;
+    const pos = getPinWinPos(key) || {};
+    pos.x = Math.round(rect.left);
+    pos.y = Math.round(rect.top);
+    setPinWinPos(key, pos);
+  });
 
   /* ---------------- 结果卡片 ---------------- */
   function sourceHtml(src) {
@@ -747,6 +905,7 @@
       state.pinned = [];
       savePinned();
       renderPinned();
+      $("#pinned-windows").innerHTML = "";
       refreshPinButtons();
     });
 
@@ -833,16 +992,13 @@
       }
       const pRemove = e.target.closest("[data-p-remove]");
       if (pRemove) {
-        const key = pRemove.dataset.pRemove;
-        if (String(key).startsWith("g:")) {
-          const gid = String(key).slice(2);
-          state.pinned = state.pinned.filter((x) => !(x.type === "group" && String(x.gid) === gid));
-        } else {
-          state.pinned = state.pinned.filter((x) => String(x.cid) !== String(key));
-        }
-        savePinned();
-        renderPinned();
-        refreshPinButtons();
+        removePinByKey(pRemove.dataset.pRemove);
+        return;
+      }
+      const dirItem = e.target.closest("[data-dir-key]");
+      if (dirItem) {
+        focusPinWindow(dirItem.dataset.dirKey);
+        return;
       }
     });
   }
@@ -912,11 +1068,13 @@
       showMessage("初始化数据失败：" + e.message, "err");
     }
     try {
-      state.pinned = JSON.parse(localStorage.getItem("ch_pinned_v1") || "[]").filter((p) => p && p.cid);
+      state.pinned = JSON.parse(localStorage.getItem("ch_pinned_v1") || "[]")
+        .filter((p) => p && (p.cid || (p.type === "group" && p.gid)));
     } catch (e) {
       state.pinned = [];
     }
     renderPinned();
+    renderPinWindows();
   }
 
   init();

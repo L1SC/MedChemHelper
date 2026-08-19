@@ -1,162 +1,769 @@
 {
-  "水": {"en": "water", "smiles": "O"},
-  "过氧化氢": {"en": "hydrogen peroxide", "smiles": "OO"},
-  "双氧水": {"en": "hydrogen peroxide", "smiles": "OO"},
-  "氨": {"en": "ammonia", "smiles": "N"},
-  "氨水": {"en": "ammonium hydroxide", "smiles": "N"},
-  "二氧化碳": {"en": "carbon dioxide", "smiles": "O=C=O"},
-  "一氧化碳": {"en": "carbon monoxide", "smiles": "[C-]#[O+]"},
-  "氧气": {"en": "dioxygen", "smiles": "O=O"},
-  "氢气": {"en": "hydrogen", "smiles": "[HH]"},
-  "氮气": {"en": "dinitrogen", "smiles": "N#N"},
-  "氯气": {"en": "chlorine", "smiles": "ClCl"},
-  "氯化钠": {"en": "sodium chloride", "smiles": "[Na+].[Cl-]"},
-  "氢氧化钠": {"en": "sodium hydroxide", "smiles": "[Na+].[OH-]"},
-  "碳酸钙": {"en": "calcium carbonate", "smiles": "[Ca+2].[O-]C(=O)[O-]"},
-  "碳酸氢钠": {"en": "sodium bicarbonate", "smiles": "[Na+].OC(=O)[O-]"},
-  "硫酸": {"en": "sulfuric acid", "smiles": "OS(=O)(=O)O"},
-  "硝酸": {"en": "nitric acid", "smiles": "O[N+](=O)[O-]"},
-  "盐酸": {"en": "hydrochloric acid", "smiles": "Cl"},
-  "高锰酸钾": {"en": "potassium permanganate", "smiles": "[K+].[O-][Mn](=O)(=O)=O"},
-  "甲烷": {"en": "methane", "smiles": "C"},
-  "乙烷": {"en": "ethane", "smiles": "CC"},
-  "丙烷": {"en": "propane", "smiles": "CCC"},
-  "丁烷": {"en": "butane", "smiles": "CCCC"},
-  "异丁烷": {"en": "isobutane", "smiles": "CC(C)C"},
-  "己烷": {"en": "hexane", "smiles": "CCCCCC"},
-  "环丙烷": {"en": "cyclopropane", "smiles": "C1CC1"},
-  "环己烷": {"en": "cyclohexane", "smiles": "C1CCCCC1"},
-  "乙烯": {"en": "ethylene", "smiles": "C=C"},
-  "丙烯": {"en": "propylene", "smiles": "CC=C"},
-  "1,3-丁二烯": {"en": "1,3-butadiene", "smiles": "C=CC=C"},
-  "丁二烯": {"en": "1,3-butadiene", "smiles": "C=CC=C"},
-  "乙炔": {"en": "acetylene", "smiles": "C#C"},
-  "苯": {"en": "benzene", "smiles": "c1ccccc1"},
-  "甲苯": {"en": "toluene", "smiles": "Cc1ccccc1"},
-  "邻二甲苯": {"en": "o-xylene", "smiles": "Cc1ccccc1C"},
-  "乙苯": {"en": "ethylbenzene", "smiles": "CCc1ccccc1"},
-  "苯乙烯": {"en": "styrene", "smiles": "C=Cc1ccccc1"},
-  "氯乙烯": {"en": "vinyl chloride", "smiles": "C=CCl"},
-  "萘": {"en": "naphthalene", "smiles": "c1ccc2ccccc2c1"},
-  "蒽": {"en": "anthracene", "smiles": "c1ccc2cc3ccccc3cc2c1"},
-  "菲": {"en": "phenanthrene", "smiles": "c1ccc2ccc3ccccc3c2c1"},
-  "甲醇": {"en": "methanol", "smiles": "CO"},
-  "乙醇": {"en": "ethanol", "smiles": "CCO"},
-  "1-丙醇": {"en": "1-propanol", "smiles": "CCCO"},
-  "异丙醇": {"en": "2-propanol", "smiles": "CC(C)O"},
-  "乙二醇": {"en": "ethylene glycol", "smiles": "OCCO"},
-  "甘油": {"en": "glycerol", "smiles": "C(C(CO)O)O"},
-  "苯酚": {"en": "phenol", "smiles": "Oc1ccccc1"},
-  "甲醛": {"en": "formaldehyde", "smiles": "C=O"},
-  "乙醛": {"en": "acetaldehyde", "smiles": "CC=O"},
-  "苯甲醛": {"en": "benzaldehyde", "smiles": "O=Cc1ccccc1"},
-  "丙酮": {"en": "acetone", "smiles": "CC(=O)C"},
-  "丁酮": {"en": "butanone", "smiles": "CCC(=O)C"},
-  "环己酮": {"en": "cyclohexanone", "smiles": "O=C1CCCCC1"},
-  "苯乙酮": {"en": "acetophenone", "smiles": "CC(=O)c1ccccc1"},
-  "甲酸": {"en": "formic acid", "smiles": "O=CO"},
-  "乙酸": {"en": "acetic acid", "smiles": "CC(=O)O"},
-  "草酸": {"en": "oxalic acid", "smiles": "OC(=O)C(=O)O"},
-  "苯甲酸": {"en": "benzoic acid", "smiles": "OC(=O)c1ccccc1"},
-  "水杨酸": {"en": "salicylic acid", "smiles": "OC(=O)c1ccccc1O"},
-  "阿司匹林": {"en": "aspirin", "smiles": "CC(=O)Oc1ccccc1C(=O)O"},
-  "乙酰水杨酸": {"en": "aspirin", "smiles": "CC(=O)Oc1ccccc1C(=O)O"},
-  "对乙酰氨基酚": {"en": "paracetamol", "smiles": "CC(=O)Nc1ccc(O)cc1"},
-  "扑热息痛": {"en": "paracetamol", "smiles": "CC(=O)Nc1ccc(O)cc1"},
-  "布洛芬": {"en": "ibuprofen", "smiles": "CC(C)Cc1ccc(cc1)C(C)C(=O)O"},
-  "乙酸乙酯": {"en": "ethyl acetate", "smiles": "CCOC(=O)C"},
-  "苯甲酸甲酯": {"en": "methyl benzoate", "smiles": "COC(=O)c1ccccc1"},
-  "乙醚": {"en": "diethyl ether", "smiles": "CCOCC"},
-  "苯甲醚": {"en": "anisole", "smiles": "COc1ccccc1"},
-  "四氢呋喃": {"en": "tetrahydrofuran", "smiles": "C1CCOC1"},
-  "1,4-二氧六环": {"en": "1,4-dioxane", "smiles": "C1COCCO1"},
-  "环氧乙烷": {"en": "ethylene oxide", "smiles": "C1CO1"},
-  "苯胺": {"en": "aniline", "smiles": "Nc1ccccc1"},
-  "甲胺": {"en": "methylamine", "smiles": "CN"},
-  "二甲胺": {"en": "dimethylamine", "smiles": "CNC"},
-  "三甲胺": {"en": "trimethylamine", "smiles": "CN(C)C"},
-  "乙胺": {"en": "ethylamine", "smiles": "CCN"},
-  "乙二胺": {"en": "ethylenediamine", "smiles": "NCCN"},
-  "乙酰胺": {"en": "acetamide", "smiles": "CC(N)=O"},
-  "苯甲酰胺": {"en": "benzamide", "smiles": "NC(=O)c1ccccc1"},
-  "N,N-二甲基甲酰胺": {"en": "DMF", "smiles": "CN(C)C=O"},
-  "己内酰胺": {"en": "caprolactam", "smiles": "O=C1CCCCCN1"},
-  "尿素": {"en": "urea", "smiles": "NC(=O)N"},
-  "三聚氰胺": {"en": "melamine", "smiles": "Nc1nc(N)nc(N)n1"},
-  "咖啡因": {"en": "caffeine", "smiles": "Cn1cnc2c1c(=O)n(C)c(=O)n2C"},
-  "茶碱": {"en": "theophylline", "smiles": "Cn1c2nc[nH]c2c(=O)n(C)c1=O"},
-  "尼古丁": {"en": "nicotine", "smiles": "CN1CCCC1c1cccnc1"},
-  "硝基苯": {"en": "nitrobenzene", "smiles": "[O-][N+](=O)c1ccccc1"},
-  "硝基甲烷": {"en": "nitromethane", "smiles": "C[N+](=O)[O-]"},
-  "三硝基甲苯": {"en": "TNT", "smiles": "Cc1c([N+](=O)[O-])cc([N+](=O)[O-])cc1[N+](=O)[O-]"},
-  "硝化甘油": {"en": "nitroglycerin", "smiles": "C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-]"},
-  "乙腈": {"en": "acetonitrile", "smiles": "CC#N"},
-  "丙烯腈": {"en": "acrylonitrile", "smiles": "C=CC#N"},
-  "氯甲烷": {"en": "chloromethane", "smiles": "CCl"},
-  "氯乙烷": {"en": "chloroethane", "smiles": "CCCl"},
-  "氯仿": {"en": "chloroform", "smiles": "ClC(Cl)Cl"},
-  "四氯化碳": {"en": "carbon tetrachloride", "smiles": "ClC(Cl)(Cl)Cl"},
-  "二氯甲烷": {"en": "dichloromethane", "smiles": "ClCCl"},
-  "溴乙烷": {"en": "bromoethane", "smiles": "CCBr"},
-  "氯苯": {"en": "chlorobenzene", "smiles": "Clc1ccccc1"},
-  "氟利昂-12": {"en": "dichlorodifluoromethane", "smiles": "ClC(F)(F)Cl"},
-  "甲磺酸": {"en": "methanesulfonic acid", "smiles": "CS(=O)(=O)O"},
-  "苯磺酸": {"en": "benzenesulfonic acid", "smiles": "OS(=O)(=O)c1ccccc1"},
-  "对甲苯磺酸": {"en": "p-toluenesulfonic acid", "smiles": "Cc1ccc(S(=O)(=O)O)cc1"},
-  "牛磺酸": {"en": "taurine", "smiles": "NCCS(=O)(=O)O"},
-  "甲硫醇": {"en": "methanethiol", "smiles": "CS"},
-  "乙硫醇": {"en": "ethanethiol", "smiles": "CCS"},
-  "苯硫酚": {"en": "thiophenol", "smiles": "Sc1ccccc1"},
-  "二甲硫醚": {"en": "dimethyl sulfide", "smiles": "CSC"},
-  "二甲基亚砜": {"en": "DMSO", "smiles": "CS(C)=O"},
-  "丙烯酸": {"en": "acrylic acid", "smiles": "C=CC(=O)O"},
-  "甲基丙烯酸甲酯": {"en": "methyl methacrylate", "smiles": "CC(=C)C(=O)OC"},
-  "对苯二甲酸": {"en": "terephthalic acid", "smiles": "OC(=O)c1ccc(C(=O)O)cc1"},
-  "双酚A": {"en": "bisphenol A", "smiles": "CC(C)(c1ccc(O)cc1)c1ccc(O)cc1"},
-  "硬脂酸": {"en": "stearic acid", "smiles": "CCCCCCCCCCCCCCCCCC(=O)O"},
-  "软脂酸": {"en": "palmitic acid", "smiles": "CCCCCCCCCCCCCCCC(=O)O"},
-  "油酸": {"en": "oleic acid", "smiles": "CCCCCCCC=CCCCCCCCC(=O)O"},
-  "亚油酸": {"en": "linoleic acid", "smiles": "CCCCCC=CCC=CCCCCCCCC(=O)O"},
-  "甘氨酸": {"en": "glycine", "smiles": "NCC(=O)O"},
-  "丙氨酸": {"en": "alanine", "smiles": "CC(N)C(=O)O"},
-  "苯丙氨酸": {"en": "phenylalanine", "smiles": "NC(Cc1ccccc1)C(=O)O"},
-  "谷氨酸": {"en": "glutamic acid", "smiles": "NC(CCC(=O)O)C(=O)O"},
-  "赖氨酸": {"en": "lysine", "smiles": "NCCCCC(N)C(=O)O"},
-  "半胱氨酸": {"en": "cysteine", "smiles": "NC(CS)C(=O)O"},
-  "蛋氨酸": {"en": "methionine", "smiles": "CSCCC(N)C(=O)O"},
-  "组氨酸": {"en": "histidine", "smiles": "NC(CC1=CN=CN1)C(=O)O"},
-  "葡萄糖": {"en": "glucose"},
-  "果糖": {"en": "fructose"},
-  "蔗糖": {"en": "sucrose"},
-  "麦芽糖": {"en": "maltose"},
-  "乳糖": {"en": "lactose"},
-  "核糖": {"en": "ribose"},
-  "脱氧核糖": {"en": "deoxyribose"},
-  "淀粉": {"en": "starch"},
-  "纤维素": {"en": "cellulose"},
-  "维生素C": {"en": "ascorbic acid"},
-  "维生素B6": {"en": "pyridoxine", "smiles": "Cc1ncc(CO)c(CO)c1O"},
-  "胆固醇": {"en": "cholesterol"},
-  "香草醛": {"en": "vanillin", "smiles": "COc1cc(C=O)ccc1O"},
-  "二甲双胍": {"en": "metformin", "smiles": "CN(C)C(=N)NC(=N)N"},
-  "甲硝唑": {"en": "metronidazole", "smiles": "Cc1ncc([N+](=O)[O-])n1CCO"},
-  "利多卡因": {"en": "lidocaine", "smiles": "CCN(CC)CC(=O)Nc1c(C)cccc1C"},
-  "嘌呤": {"en": "purine", "smiles": "c1ncc2[nH]cnc2n1"},
-  "腺嘌呤": {"en": "adenine", "smiles": "Nc1ncnc2[nH]cnc12"},
-  "鸟嘌呤": {"en": "guanine"},
-  "胞嘧啶": {"en": "cytosine", "smiles": "Nc1ccnc(=O)[nH]1"},
-  "尿嘧啶": {"en": "uracil", "smiles": "O=c1cc[nH]c(=O)[nH]1"},
-  "胸腺嘧啶": {"en": "thymine", "smiles": "Cc1c[nH]c(=O)[nH]c1=O"},
-  "尿酸": {"en": "uric acid"},
-  "吡啶": {"en": "pyridine", "smiles": "c1ccncc1"},
-  "呋喃": {"en": "furan", "smiles": "c1ccoc1"},
-  "噻吩": {"en": "thiophene", "smiles": "c1ccsc1"},
-  "吡咯": {"en": "pyrrole", "smiles": "c1cc[nH]c1"},
-  "咪唑": {"en": "imidazole", "smiles": "c1cnc[nH]1"},
-  "嘧啶": {"en": "pyrimidine", "smiles": "c1cncnc1"},
-  "苯并咪唑": {"en": "benzimidazole", "smiles": "c1ccc2nc[nH]c2c1"},
-  "青蒿素": {"en": "artemisinin"},
-  "青霉素": {"en": "penicillin G"},
-  "阿莫西林": {"en": "amoxicillin"},
-  "红霉素": {"en": "erythromycin"}
+ "水": {
+  "en": "water",
+  "smiles": "O"
+ },
+ "过氧化氢": {
+  "en": "hydrogen peroxide",
+  "smiles": "OO"
+ },
+ "双氧水": {
+  "en": "hydrogen peroxide",
+  "smiles": "OO"
+ },
+ "氨": {
+  "en": "ammonia",
+  "smiles": "N"
+ },
+ "氨水": {
+  "en": "ammonium hydroxide",
+  "smiles": "N"
+ },
+ "二氧化碳": {
+  "en": "carbon dioxide",
+  "smiles": "O=C=O"
+ },
+ "一氧化碳": {
+  "en": "carbon monoxide",
+  "smiles": "[C-]#[O+]"
+ },
+ "氧气": {
+  "en": "dioxygen",
+  "smiles": "O=O"
+ },
+ "氢气": {
+  "en": "hydrogen",
+  "smiles": "[HH]"
+ },
+ "氮气": {
+  "en": "dinitrogen",
+  "smiles": "N#N"
+ },
+ "氯气": {
+  "en": "chlorine",
+  "smiles": "ClCl"
+ },
+ "氯化钠": {
+  "en": "sodium chloride",
+  "smiles": "[Na+].[Cl-]"
+ },
+ "氢氧化钠": {
+  "en": "sodium hydroxide",
+  "smiles": "[Na+].[OH-]"
+ },
+ "碳酸钙": {
+  "en": "calcium carbonate",
+  "smiles": "[Ca+2].[O-]C(=O)[O-]"
+ },
+ "碳酸氢钠": {
+  "en": "sodium bicarbonate",
+  "smiles": "[Na+].OC(=O)[O-]"
+ },
+ "硫酸": {
+  "en": "sulfuric acid",
+  "smiles": "OS(=O)(=O)O"
+ },
+ "硝酸": {
+  "en": "nitric acid",
+  "smiles": "O[N+](=O)[O-]"
+ },
+ "盐酸": {
+  "en": "hydrochloric acid",
+  "smiles": "Cl"
+ },
+ "高锰酸钾": {
+  "en": "potassium permanganate",
+  "smiles": "[K+].[O-][Mn](=O)(=O)=O"
+ },
+ "甲烷": {
+  "en": "methane",
+  "smiles": "C"
+ },
+ "乙烷": {
+  "en": "ethane",
+  "smiles": "CC"
+ },
+ "丙烷": {
+  "en": "propane",
+  "smiles": "CCC"
+ },
+ "丁烷": {
+  "en": "butane",
+  "smiles": "CCCC"
+ },
+ "异丁烷": {
+  "en": "isobutane",
+  "smiles": "CC(C)C"
+ },
+ "己烷": {
+  "en": "hexane",
+  "smiles": "CCCCCC"
+ },
+ "环丙烷": {
+  "en": "cyclopropane",
+  "smiles": "C1CC1"
+ },
+ "环己烷": {
+  "en": "cyclohexane",
+  "smiles": "C1CCCCC1"
+ },
+ "乙烯": {
+  "en": "ethylene",
+  "smiles": "C=C"
+ },
+ "丙烯": {
+  "en": "propylene",
+  "smiles": "CC=C"
+ },
+ "1,3-丁二烯": {
+  "en": "1,3-butadiene",
+  "smiles": "C=CC=C"
+ },
+ "丁二烯": {
+  "en": "1,3-butadiene",
+  "smiles": "C=CC=C"
+ },
+ "乙炔": {
+  "en": "acetylene",
+  "smiles": "C#C"
+ },
+ "苯": {
+  "en": "benzene",
+  "smiles": "c1ccccc1"
+ },
+ "甲苯": {
+  "en": "toluene",
+  "smiles": "Cc1ccccc1"
+ },
+ "邻二甲苯": {
+  "en": "o-xylene",
+  "smiles": "Cc1ccccc1C"
+ },
+ "乙苯": {
+  "en": "ethylbenzene",
+  "smiles": "CCc1ccccc1"
+ },
+ "苯乙烯": {
+  "en": "styrene",
+  "smiles": "C=Cc1ccccc1"
+ },
+ "氯乙烯": {
+  "en": "vinyl chloride",
+  "smiles": "C=CCl"
+ },
+ "萘": {
+  "en": "naphthalene",
+  "smiles": "c1ccc2ccccc2c1"
+ },
+ "蒽": {
+  "en": "anthracene",
+  "smiles": "c1ccc2cc3ccccc3cc2c1"
+ },
+ "菲": {
+  "en": "phenanthrene",
+  "smiles": "c1ccc2ccc3ccccc3c2c1"
+ },
+ "甲醇": {
+  "en": "methanol",
+  "smiles": "CO"
+ },
+ "乙醇": {
+  "en": "ethanol",
+  "smiles": "CCO"
+ },
+ "1-丙醇": {
+  "en": "1-propanol",
+  "smiles": "CCCO"
+ },
+ "异丙醇": {
+  "en": "2-propanol",
+  "smiles": "CC(C)O"
+ },
+ "乙二醇": {
+  "en": "ethylene glycol",
+  "smiles": "OCCO"
+ },
+ "甘油": {
+  "en": "glycerol",
+  "smiles": "C(C(CO)O)O"
+ },
+ "苯酚": {
+  "en": "phenol",
+  "smiles": "Oc1ccccc1"
+ },
+ "甲醛": {
+  "en": "formaldehyde",
+  "smiles": "C=O"
+ },
+ "乙醛": {
+  "en": "acetaldehyde",
+  "smiles": "CC=O"
+ },
+ "苯甲醛": {
+  "en": "benzaldehyde",
+  "smiles": "O=Cc1ccccc1"
+ },
+ "丙酮": {
+  "en": "acetone",
+  "smiles": "CC(=O)C"
+ },
+ "丁酮": {
+  "en": "butanone",
+  "smiles": "CCC(=O)C"
+ },
+ "环己酮": {
+  "en": "cyclohexanone",
+  "smiles": "O=C1CCCCC1"
+ },
+ "苯乙酮": {
+  "en": "acetophenone",
+  "smiles": "CC(=O)c1ccccc1"
+ },
+ "甲酸": {
+  "en": "formic acid",
+  "smiles": "O=CO"
+ },
+ "乙酸": {
+  "en": "acetic acid",
+  "smiles": "CC(=O)O"
+ },
+ "草酸": {
+  "en": "oxalic acid",
+  "smiles": "OC(=O)C(=O)O"
+ },
+ "苯甲酸": {
+  "en": "benzoic acid",
+  "smiles": "OC(=O)c1ccccc1"
+ },
+ "水杨酸": {
+  "en": "salicylic acid",
+  "smiles": "OC(=O)c1ccccc1O"
+ },
+ "阿司匹林": {
+  "en": "aspirin",
+  "smiles": "CC(=O)Oc1ccccc1C(=O)O"
+ },
+ "乙酰水杨酸": {
+  "en": "aspirin",
+  "smiles": "CC(=O)Oc1ccccc1C(=O)O"
+ },
+ "对乙酰氨基酚": {
+  "en": "paracetamol",
+  "smiles": "CC(=O)Nc1ccc(O)cc1"
+ },
+ "扑热息痛": {
+  "en": "paracetamol",
+  "smiles": "CC(=O)Nc1ccc(O)cc1"
+ },
+ "布洛芬": {
+  "en": "ibuprofen",
+  "smiles": "CC(C)Cc1ccc(cc1)C(C)C(=O)O"
+ },
+ "乙酸乙酯": {
+  "en": "ethyl acetate",
+  "smiles": "CCOC(=O)C"
+ },
+ "苯甲酸甲酯": {
+  "en": "methyl benzoate",
+  "smiles": "COC(=O)c1ccccc1"
+ },
+ "乙醚": {
+  "en": "diethyl ether",
+  "smiles": "CCOCC"
+ },
+ "苯甲醚": {
+  "en": "anisole",
+  "smiles": "COc1ccccc1"
+ },
+ "四氢呋喃": {
+  "en": "tetrahydrofuran",
+  "smiles": "C1CCOC1"
+ },
+ "1,4-二氧六环": {
+  "en": "1,4-dioxane",
+  "smiles": "C1COCCO1"
+ },
+ "环氧乙烷": {
+  "en": "ethylene oxide",
+  "smiles": "C1CO1"
+ },
+ "苯胺": {
+  "en": "aniline",
+  "smiles": "Nc1ccccc1"
+ },
+ "甲胺": {
+  "en": "methylamine",
+  "smiles": "CN"
+ },
+ "二甲胺": {
+  "en": "dimethylamine",
+  "smiles": "CNC"
+ },
+ "三甲胺": {
+  "en": "trimethylamine",
+  "smiles": "CN(C)C"
+ },
+ "乙胺": {
+  "en": "ethylamine",
+  "smiles": "CCN"
+ },
+ "乙二胺": {
+  "en": "ethylenediamine",
+  "smiles": "NCCN"
+ },
+ "乙酰胺": {
+  "en": "acetamide",
+  "smiles": "CC(N)=O"
+ },
+ "苯甲酰胺": {
+  "en": "benzamide",
+  "smiles": "NC(=O)c1ccccc1"
+ },
+ "N,N-二甲基甲酰胺": {
+  "en": "DMF",
+  "smiles": "CN(C)C=O"
+ },
+ "己内酰胺": {
+  "en": "caprolactam",
+  "smiles": "O=C1CCCCCN1"
+ },
+ "尿素": {
+  "en": "urea",
+  "smiles": "NC(=O)N"
+ },
+ "三聚氰胺": {
+  "en": "melamine",
+  "smiles": "Nc1nc(N)nc(N)n1"
+ },
+ "咖啡因": {
+  "en": "caffeine",
+  "smiles": "Cn1cnc2c1c(=O)n(C)c(=O)n2C"
+ },
+ "茶碱": {
+  "en": "theophylline",
+  "smiles": "Cn1c2nc[nH]c2c(=O)n(C)c1=O"
+ },
+ "尼古丁": {
+  "en": "nicotine",
+  "smiles": "CN1CCCC1c1cccnc1"
+ },
+ "硝基苯": {
+  "en": "nitrobenzene",
+  "smiles": "[O-][N+](=O)c1ccccc1"
+ },
+ "硝基甲烷": {
+  "en": "nitromethane",
+  "smiles": "C[N+](=O)[O-]"
+ },
+ "三硝基甲苯": {
+  "en": "TNT",
+  "smiles": "Cc1c([N+](=O)[O-])cc([N+](=O)[O-])cc1[N+](=O)[O-]"
+ },
+ "硝化甘油": {
+  "en": "nitroglycerin",
+  "smiles": "C(C(CO[N+](=O)[O-])O[N+](=O)[O-])O[N+](=O)[O-]"
+ },
+ "乙腈": {
+  "en": "acetonitrile",
+  "smiles": "CC#N"
+ },
+ "丙烯腈": {
+  "en": "acrylonitrile",
+  "smiles": "C=CC#N"
+ },
+ "氯甲烷": {
+  "en": "chloromethane",
+  "smiles": "CCl"
+ },
+ "氯乙烷": {
+  "en": "chloroethane",
+  "smiles": "CCCl"
+ },
+ "氯仿": {
+  "en": "chloroform",
+  "smiles": "ClC(Cl)Cl"
+ },
+ "四氯化碳": {
+  "en": "carbon tetrachloride",
+  "smiles": "ClC(Cl)(Cl)Cl"
+ },
+ "二氯甲烷": {
+  "en": "dichloromethane",
+  "smiles": "ClCCl"
+ },
+ "溴乙烷": {
+  "en": "bromoethane",
+  "smiles": "CCBr"
+ },
+ "氯苯": {
+  "en": "chlorobenzene",
+  "smiles": "Clc1ccccc1"
+ },
+ "氟利昂-12": {
+  "en": "dichlorodifluoromethane",
+  "smiles": "ClC(F)(F)Cl"
+ },
+ "甲磺酸": {
+  "en": "methanesulfonic acid",
+  "smiles": "CS(=O)(=O)O"
+ },
+ "苯磺酸": {
+  "en": "benzenesulfonic acid",
+  "smiles": "OS(=O)(=O)c1ccccc1"
+ },
+ "对甲苯磺酸": {
+  "en": "p-toluenesulfonic acid",
+  "smiles": "Cc1ccc(S(=O)(=O)O)cc1"
+ },
+ "牛磺酸": {
+  "en": "taurine",
+  "smiles": "NCCS(=O)(=O)O"
+ },
+ "甲硫醇": {
+  "en": "methanethiol",
+  "smiles": "CS"
+ },
+ "乙硫醇": {
+  "en": "ethanethiol",
+  "smiles": "CCS"
+ },
+ "苯硫酚": {
+  "en": "thiophenol",
+  "smiles": "Sc1ccccc1"
+ },
+ "二甲硫醚": {
+  "en": "dimethyl sulfide",
+  "smiles": "CSC"
+ },
+ "二甲基亚砜": {
+  "en": "DMSO",
+  "smiles": "CS(C)=O"
+ },
+ "丙烯酸": {
+  "en": "acrylic acid",
+  "smiles": "C=CC(=O)O"
+ },
+ "甲基丙烯酸甲酯": {
+  "en": "methyl methacrylate",
+  "smiles": "CC(=C)C(=O)OC"
+ },
+ "对苯二甲酸": {
+  "en": "terephthalic acid",
+  "smiles": "OC(=O)c1ccc(C(=O)O)cc1"
+ },
+ "双酚A": {
+  "en": "bisphenol A",
+  "smiles": "CC(C)(c1ccc(O)cc1)c1ccc(O)cc1"
+ },
+ "硬脂酸": {
+  "en": "stearic acid",
+  "smiles": "CCCCCCCCCCCCCCCCCC(=O)O"
+ },
+ "软脂酸": {
+  "en": "palmitic acid",
+  "smiles": "CCCCCCCCCCCCCCCC(=O)O"
+ },
+ "油酸": {
+  "en": "oleic acid",
+  "smiles": "CCCCCCCC=CCCCCCCCC(=O)O"
+ },
+ "亚油酸": {
+  "en": "linoleic acid",
+  "smiles": "CCCCCC=CCC=CCCCCCCCC(=O)O"
+ },
+ "甘氨酸": {
+  "en": "glycine",
+  "smiles": "NCC(=O)O"
+ },
+ "丙氨酸": {
+  "en": "alanine",
+  "smiles": "CC(N)C(=O)O"
+ },
+ "苯丙氨酸": {
+  "en": "phenylalanine",
+  "smiles": "NC(Cc1ccccc1)C(=O)O"
+ },
+ "谷氨酸": {
+  "en": "glutamic acid",
+  "smiles": "NC(CCC(=O)O)C(=O)O"
+ },
+ "赖氨酸": {
+  "en": "lysine",
+  "smiles": "NCCCCC(N)C(=O)O"
+ },
+ "半胱氨酸": {
+  "en": "cysteine",
+  "smiles": "NC(CS)C(=O)O"
+ },
+ "蛋氨酸": {
+  "en": "methionine",
+  "smiles": "CSCCC(N)C(=O)O"
+ },
+ "组氨酸": {
+  "en": "histidine",
+  "smiles": "NC(CC1=CN=CN1)C(=O)O"
+ },
+ "葡萄糖": {
+  "en": "glucose"
+ },
+ "果糖": {
+  "en": "fructose"
+ },
+ "蔗糖": {
+  "en": "sucrose"
+ },
+ "麦芽糖": {
+  "en": "maltose"
+ },
+ "乳糖": {
+  "en": "lactose"
+ },
+ "核糖": {
+  "en": "ribose"
+ },
+ "脱氧核糖": {
+  "en": "deoxyribose"
+ },
+ "淀粉": {
+  "en": "starch"
+ },
+ "纤维素": {
+  "en": "cellulose"
+ },
+ "维生素C": {
+  "en": "ascorbic acid"
+ },
+ "维生素B6": {
+  "en": "pyridoxine",
+  "smiles": "Cc1ncc(CO)c(CO)c1O"
+ },
+ "胆固醇": {
+  "en": "cholesterol"
+ },
+ "香草醛": {
+  "en": "vanillin",
+  "smiles": "COc1cc(C=O)ccc1O"
+ },
+ "二甲双胍": {
+  "en": "metformin",
+  "smiles": "CN(C)C(=N)NC(=N)N"
+ },
+ "甲硝唑": {
+  "en": "metronidazole",
+  "smiles": "Cc1ncc([N+](=O)[O-])n1CCO"
+ },
+ "利多卡因": {
+  "en": "lidocaine",
+  "smiles": "CCN(CC)CC(=O)Nc1c(C)cccc1C"
+ },
+ "嘌呤": {
+  "en": "purine",
+  "smiles": "c1ncc2[nH]cnc2n1"
+ },
+ "腺嘌呤": {
+  "en": "adenine",
+  "smiles": "Nc1ncnc2[nH]cnc12"
+ },
+ "鸟嘌呤": {
+  "en": "guanine"
+ },
+ "胞嘧啶": {
+  "en": "cytosine",
+  "smiles": "Nc1ccnc(=O)[nH]1"
+ },
+ "尿嘧啶": {
+  "en": "uracil",
+  "smiles": "O=c1cc[nH]c(=O)[nH]1"
+ },
+ "胸腺嘧啶": {
+  "en": "thymine",
+  "smiles": "Cc1c[nH]c(=O)[nH]c1=O"
+ },
+ "尿酸": {
+  "en": "uric acid"
+ },
+ "吡啶": {
+  "en": "pyridine",
+  "smiles": "c1ccncc1"
+ },
+ "呋喃": {
+  "en": "furan",
+  "smiles": "c1ccoc1"
+ },
+ "噻吩": {
+  "en": "thiophene",
+  "smiles": "c1ccsc1"
+ },
+ "吡咯": {
+  "en": "pyrrole",
+  "smiles": "c1cc[nH]c1"
+ },
+ "咪唑": {
+  "en": "imidazole",
+  "smiles": "c1cnc[nH]1"
+ },
+ "嘧啶": {
+  "en": "pyrimidine",
+  "smiles": "c1cncnc1"
+ },
+ "苯并咪唑": {
+  "en": "benzimidazole",
+  "smiles": "c1ccc2nc[nH]c2c1"
+ },
+ "青蒿素": {
+  "en": "artemisinin"
+ },
+ "青霉素": {
+  "en": "penicillin G"
+ },
+ "阿莫西林": {
+  "en": "amoxicillin"
+ },
+ "红霉素": {
+  "en": "erythromycin"
+ },
+ "烟碱": {
+  "en": "nicotine",
+  "smiles": "CN1CCCC1C2=CN=CC=C2",
+  "cid": 89594,
+  "formula": "C10H14N2",
+  "mw": "162.23",
+  "iupac": "3-[(2S)-1-methylpyrrolidin-2-yl]pyridine",
+  "inchikey": "SNICXCGAKADSCV-JTQLQIEISA-N"
+ },
+ "毛果芸香碱": {
+  "en": "pilocarpine",
+  "smiles": "CCC1C(COC1=O)CC2=CN=CN2C",
+  "cid": 5910,
+  "formula": "C11H16N2O2",
+  "mw": "208.26",
+  "iupac": "(3S,4R)-3-ethyl-4-[(3-methylimidazol-4-yl)methyl]oxolan-2-one",
+  "inchikey": "QCHFTSOMWOSFHM-WPRPVWTQSA-N"
+ },
+ "氢可酮": {
+  "en": "hydrocodone",
+  "smiles": "CN1CCC23C4C1CC5=C2C(=C(C=C5)OC)OC3C(=O)CC4",
+  "cid": 5284569,
+  "formula": "C18H21NO3",
+  "mw": "299.4",
+  "iupac": "(4R,4aR,7aR,12bS)-9-methoxy-3-methyl-1,2,4,4a,5,6,7a,13-octahydro-4,12-methanobenzofuro[3,2-e]isoquinolin-7-one",
+  "inchikey": "LLPOLZWFYMWNKH-CMKMFDCUSA-N"
+ },
+ "司可林": {
+  "en": "suxamethonium",
+  "smiles": "C[N+](C)(C)CCOC(=O)CCC(=O)OCC[N+](C)(C)C.[Cl-].[Cl-]",
+  "cid": 22475,
+  "formula": "C14H30Cl2N2O4",
+  "mw": "361.3",
+  "iupac": "trimethyl-[2-[4-oxo-4-[2-(trimethylazaniumyl)ethoxy]butanoyl]oxyethyl]azanium dichloride",
+  "inchikey": "YOEWQQVKRJEPAE-UHFFFAOYSA-L"
+ },
+ "β-苯乙胺": {
+  "en": "phenylethylamine",
+  "smiles": "C1=CC=C(C=C1)CCN",
+  "cid": 1001,
+  "formula": "C8H11N",
+  "mw": "121.18",
+  "iupac": "2-phenylethanamine",
+  "inchikey": "BHHGXPLMPWCGHP-UHFFFAOYSA-N"
+ },
+ "奴佛卡因": {
+  "en": "procaine",
+  "smiles": "CCN(CC)CCOC(=O)C1=CC=C(C=C1)N",
+  "cid": 4914,
+  "formula": "C13H20N2O2",
+  "mw": "236.31",
+  "iupac": "2-(diethylamino)ethyl 4-aminobenzoate",
+  "inchikey": "MFDFERRIHVXMIY-UHFFFAOYSA-N"
+ },
+ "赛罗卡因": {
+  "en": "lidocaine",
+  "smiles": "CCN(CC)CC(=O)NC1=C(C=CC=C1C)C",
+  "cid": 3676,
+  "formula": "C14H22N2O",
+  "mw": "234.34",
+  "iupac": "2-(diethylamino)-N-(2,6-dimethylphenyl)acetamide",
+  "inchikey": "NNJVILVZKWQKPM-UHFFFAOYSA-N"
+ },
+ "麻卡因": {
+  "en": "bupivacaine",
+  "smiles": "CCCCN1CCCCC1C(=O)NC2=C(C=CC=C2C)C.Cl",
+  "cid": 64737,
+  "formula": "C18H29ClN2O",
+  "mw": "324.9",
+  "iupac": "1-butyl-N-(2,6-dimethylphenyl)piperidine-2-carboxamide;hydrochloride",
+  "inchikey": "SIEYLFHKZGLBNX-UHFFFAOYSA-N"
+ },
+ "大仑丁": {
+  "en": "phenytoin",
+  "smiles": "C1=CC=C(C=C1)C2(C(=O)NC(=O)N2)C3=CC=CC=C3",
+  "cid": 1775,
+  "formula": "C15H12N2O2",
+  "mw": "252.27",
+  "iupac": "5,5-diphenylimidazolidine-2,4-dione",
+  "inchikey": "CXOFVDLJLONNDW-UHFFFAOYSA-N"
+ },
+ "三氟拉嗪": {
+  "en": "trifluoperazine",
+  "smiles": "CN1CCN(CC1)CCCN2C3=CC=CC=C3SC4=C2C=C(C=C4)C(F)(F)F",
+  "cid": 5566,
+  "formula": "C21H24F3N3S",
+  "mw": "407.5",
+  "iupac": "10-[3-(4-methylpiperazin-1-yl)propyl]-2-(trifluoromethyl)phenothiazine",
+  "inchikey": "ZEWQUBUPAILYHI-UHFFFAOYSA-N"
+ },
+ "度冷丁": {
+  "en": "pethidine",
+  "smiles": "CCOC(=O)C1(CCN(CC1)C)C2=CC=CC=C2.Cl",
+  "cid": 5750,
+  "formula": "C15H22ClNO2",
+  "mw": "283.79",
+  "iupac": "ethyl 1-methyl-4-phenylpiperidine-4-carboxylate;hydrochloride",
+  "inchikey": "WCNLCIJMFAJCPX-UHFFFAOYSA-N"
+ },
+ "血清素": {
+  "en": "serotonin",
+  "smiles": "C1=CC2=C(C=C1O)C(=CN2)CCN",
+  "cid": 5202,
+  "formula": "C10H12N2O",
+  "mw": "176.21",
+  "iupac": "3-(2-aminoethyl)-1H-indol-5-ol",
+  "inchikey": "QZAYGJVTTNCVMB-UHFFFAOYSA-N"
+ },
+ "雷米封": {
+  "en": "isoniazid",
+  "smiles": "C1=CN=CC=C1C(=O)NN",
+  "cid": 3767,
+  "formula": "C6H7N3O",
+  "mw": "137.14",
+  "iupac": "pyridine-4-carbohydrazide",
+  "inchikey": "QRXWMOHMRWLFEY-UHFFFAOYSA-N"
+ },
+ "酪胺": {
+  "en": "tyramine",
+  "smiles": "C1=CC(=CC=C1CCN)O",
+  "cid": 5610,
+  "formula": "C8H11NO",
+  "mw": "137.18",
+  "iupac": "4-(2-aminoethyl)phenol",
+  "inchikey": "DZGWFCGJZKJUFP-UHFFFAOYSA-N"
+ },
+ "多巴": {
+  "en": "dopa",
+  "smiles": "C1=CC(=C(C=C1CC(C(=O)O)N)O)O",
+  "cid": 6047,
+  "formula": "C9H11NO4",
+  "mw": "197.19",
+  "iupac": "(2S)-2-amino-3-(3,4-dihydroxyphenyl)propanoic acid",
+  "inchikey": "WTDRDQBEARUVNC-LURJTMIESA-N"
+ },
+ "精氨酸": {
+  "en": "arginine",
+  "smiles": "C(CC(C(=O)O)N)CN=C(N)N",
+  "cid": 6322,
+  "formula": "C6H14N4O2",
+  "mw": "174.20",
+  "iupac": "(2S)-2-amino-5-(diaminomethylideneamino)pentanoic acid",
+  "inchikey": "ODKSFYDXXFIFQN-BYPYZUCNSA-N"
+ }
 }

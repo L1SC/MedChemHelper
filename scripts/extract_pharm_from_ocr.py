@@ -72,7 +72,11 @@ def clean_frag(s):
 
 
 def pick_window(text, name, kw, limit=2, window=220, span=70):
-    """在药物名出现位置附近，按关键词定位内容片段。"""
+    """在药物名出现位置附近，按关键词定位内容片段。
+
+    片段必须以药物名本身为锚点（避免截到同页其他药物的文本），
+    并拒绝含章节标题/表格/剂量文本的碎片。
+    """
     idxs = []
     pos = 0
     low = text.lower()
@@ -87,14 +91,18 @@ def pick_window(text, name, kw, limit=2, window=220, span=70):
         return []
     out = []
     for i in idxs:
-        seg = text[max(0, i - 40): i + window]
-        seg = clean_frag(seg)
+        seg = text[i: i + window]
         for k in kw:
             ki = seg.find(k)
             if ki >= 0:
-                frag = seg[max(0, ki - 25): ki + span]
+                frag = seg[: max(0, ki + span)]
                 frag = clean_frag(frag)
-                if len(frag) >= 12 and frag not in out:
+                # 片段必须包含药物名本身，且不含章节/表格/剂量等噪声
+                if (len(frag) >= 12 and frag not in out
+                        and name in frag
+                        and not re.search(r"第[一二三四五六七八九十百\d]+章|表\s*\d|"
+                                          r"\[?药理作用\]?|【体内过程】|制剂及用法|"
+                                          r"每次\s*\d|mg/d|mg/(kg|次)", frag)):
                     out.append(frag)
                 break
         if len(out) >= limit:
@@ -123,7 +131,9 @@ def extract_for_drug(zh, en, texts_by_book, chapters_by_book):
             if m:
                 mt.append(m[0])
             if t:
-                target.append(t[0])
+                # 靶点不应与药理/代谢文本重复（错配信号）
+                if t[0] not in (action + mt):
+                    target.append(t[0])
             if act or m or t:
                 sources.append({
                     "book": book,

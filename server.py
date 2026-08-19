@@ -76,7 +76,10 @@ if os.path.exists(_drug_path):
     except Exception:
         DRUGS = []
 DRUGS_BY_ZH = {d["zh"]: d for d in DRUGS}
-DRUGS_BY_CID = {d.get("cid"): d for d in DRUGS if d.get("cid")}
+DRUGS_BY_CID = {}
+for _d in DRUGS:
+    if _d.get("cid") and _d["cid"] not in DRUGS_BY_CID:
+        DRUGS_BY_CID[_d["cid"]] = _d
 CHINESE = {**ZH_BASE, **DRUGS_BY_ZH}   # 药物条目优先（含 CID/类别）
 
 # 药物药理信息库（分类/母体/药效基团/靶点/药理/代谢毒理/相似药）
@@ -95,7 +98,7 @@ HOMOPHONE_MAP = {"噁": "恶", "䓬": "卓", "碸": "砜", "羥": "羟", "甙": 
 def norm_zh(s):
     return "".join(HOMOPHONE_MAP.get(ch, ch) for ch in s)
 
-# 反向索引：英文名 / SMILES -> 中文名
+# 反向索引：英文名 / SMILES / CID -> 中文名候选（同一结构可能有多个中文名/盐型）
 ZH_BY_EN = {}
 ZH_BY_SMILES = {}
 CAT_BY_CID = {}
@@ -105,9 +108,13 @@ def _index_name(zh, info):
     en = info.get("en", "").lower()
     smi = info.get("smiles", "")
     if en:
-        ZH_BY_EN.setdefault(en, zh)
+        lst = ZH_BY_EN.setdefault(en, [])
+        if zh not in lst:
+            lst.append(zh)
     if smi:
-        ZH_BY_SMILES.setdefault(smi, zh)
+        lst = ZH_BY_SMILES.setdefault(smi, [])
+        if zh not in lst:
+            lst.append(zh)
     cid = info.get("cid")
     if cid:
         CAT_BY_CID.setdefault(cid, info.get("category") or "")
@@ -122,14 +129,97 @@ for _d in DRUGS:
 CHINESE_NORM = {norm_zh(k): k for k in CHINESE}
 
 
+PHARM_GARBAGE_RE = re.compile(
+    r"第[一二三四五六七八九十百\d]+章|表\s*\d|\[药理作用\]|【体内过程】|"
+    r"制剂及用法|结构式|分子式|[\u2500\u2502|]")
+
+
+def _pharm_garbage(zh):
+    """判断某中文名的药理条目是否含明显 OCR 碎片/章节表格文本。"""
+    p = DRUG_PHARM.get(zh) or {}
+    for k in ("parent", "pharmacophore", "target", "action", "mt", "sar"):
+        if PHARM_GARBAGE_RE.search(str(p.get(k) or "")):
+            return True
+    return False
+
+
+def _cid_zh(cid):
+    """CID 对应的最优中文名：优先选用药理条目可用的药物库条目。"""
+    if not cid:
+        return None
+    cands = []
+    for d in DRUGS:
+        if d.get("cid") and str(d.get("cid")) == str(cid) and d.get("zh") not in cands:
+            cands.append(d["zh"])
+    if not cands:
+        return None
+
+    def key(zh):
+        p = DRUG_PHARM.get(zh) or {}
+        usable = not _pharm_garbage(zh)
+        return (1 if usable else 0,
+                len(str(p.get("action") or "")),
+                len(str(p.get("mt") or "")),
+                len(str(p.get("target") or "")),
+                -cands.index(zh))
+    return max(cands, key=key)
+
+
+def _zh_matches_cid(zh, cid):
+    """中文名与 CID 是否指向同一药物（CID 或 SMILES/InChIKey 核对）。"""
+    if not zh or not cid:
+        return False
+    d = DRUGS_BY_ZH.get(zh)
+    if not d:
+        # 词典别名（不在药物库）：用 SMILES（含盐剥离）与 CID 对应药物比对
+        c = ZH_BASE.get(zh)
+        if not c or not c.get("smiles"):
+            return False
+        e = DRUGS_BY_CID.get(cid)
+        if not e:
+            return False
+        c_smi = _strip_salt(c["smiles"]) or c["smiles"]
+        e_smi = _strip_salt(e.get("smiles") or "") or e.get("smiles") or ""
+        if not e_smi:
+            return False
+        cc, ec = _canon(c_smi), _canon(e_smi)
+        return bool(cc and ec and cc == ec)
+    if d.get("cid") and str(d.get("cid")) == str(cid):
+        return True
+    e = DRUGS_BY_CID.get(cid)
+    if not e:
+        return False
+    if d.get("inchikey") and e.get("inchikey"):
+        return str(d["inchikey"]).upper() == str(e["inchikey"]).upper()
+    if d.get("smiles") and e.get("smiles"):
+        dc = _canon(d["smiles"])
+        ec = _canon(e["smiles"])
+        return bool(dc and ec and dc == ec)
+    return False
+
+
+def _strip_salt(smiles):
+    """剥离 SMILES 尾部的盐/离子标记（如 .Cl、.[Cl-]、.Na），用于别名归一。"""
+    if not smiles:
+        return None
+    return re.sub(r"\.[A-Za-z0-9+\-\[\]()]+$", "", smiles.strip())
+
+
 def pharm_for(cid, zh=None):
-    """返回某药物的药理信息（按中文名或 CID）。"""
-    if zh and zh in DRUG_PHARM:
-        return DRUG_PHARM[zh]
+    """返回某药物的药理信息。CID 是化合物身份的权威依据，中文名只作辅助。"""
     if cid:
-        d = DRUGS_BY_CID.get(cid)
-        if d and d.get("zh") in DRUG_PHARM:
-            return DRUG_PHARM[d["zh"]]
+        z = _cid_zh(cid)
+        if z and z in DRUG_PHARM:
+            return DRUG_PHARM[z]
+    if zh:
+        if zh not in DRUG_PHARM:
+            # 词典别名（如 度冷丁 -> 哌替啶）：按结构解析到药物库规范名
+            cinfo = ZH_BASE.get(zh) or {}
+            z2 = zh_name_for(en_name=cinfo.get("en"), smiles=cinfo.get("smiles"), cid=cid)
+            if z2 and z2 in DRUG_PHARM:
+                return DRUG_PHARM[z2]
+        elif cid is None or _zh_matches_cid(zh, cid):
+            return DRUG_PHARM[zh]
     return {}
 
 
@@ -143,22 +233,63 @@ def category_for(cid, zh=None):
     return ""
 
 
-def zh_name_for(en_name=None, smiles=None, iupac=None):
+def zh_name_for(en_name=None, smiles=None, iupac=None, cid=None):
+    """由英文名/IUPAC/SMILES（可配合 CID）确定药物中文名。
+
+    返回的中文名必须与 CID 一致：同一结构存在多个中文名/盐型时，
+    优先取与 CID 核对一致者；无法核对的候选不猜测。
+    """
+    if cid:
+        z = _cid_zh(cid)
+        if z:
+            return z
+    cands = []
     for key in (en_name, iupac):
         if key:
-            hit = ZH_BY_EN.get(str(key).strip().lower())
-            if hit:
-                return hit
+            for zh in ZH_BY_EN.get(str(key).strip().lower(), []):
+                if zh not in cands:
+                    cands.append(zh)
     if smiles:
-        hit = ZH_BY_SMILES.get(smiles)
-        if hit:
-            return hit
+        for zh in ZH_BY_SMILES.get(smiles, []):
+            if zh not in cands:
+                cands.append(zh)
+        stripped = _strip_salt(smiles)
+        if stripped and stripped != smiles:
+            for zh in ZH_BY_SMILES.get(stripped, []):
+                if zh not in cands:
+                    cands.append(zh)
         canon = _canon(smiles)
-        if canon:
-            hit = ZH_BY_SMILES.get(canon)
-            if hit:
-                return hit
-    return None
+        if canon and canon != smiles:
+            for zh in ZH_BY_SMILES.get(canon, []):
+                if zh not in cands:
+                    cands.append(zh)
+    if not cands:
+        return None
+    if cid:
+        for zh in cands:
+            if _zh_matches_cid(zh, cid):
+                return zh
+        # 放宽：结构与 CID 药物一致（含盐剥离）也可接受，避免别名/盐型解析失败
+        e = DRUGS_BY_CID.get(cid)
+        if e:
+            ec = _canon(_strip_salt(e.get("smiles") or "") or e.get("smiles") or "")
+            for zh in cands:
+                d = DRUGS_BY_ZH.get(zh)
+                if d:
+                    dc = _canon(_strip_salt(d.get("smiles") or "") or d.get("smiles") or "")
+                    if dc and ec and dc == ec:
+                        return zh
+            return None
+        # 本地库无该 CID（如别名/盐型的 CID 未收录）：接受 en/SMILES 精确匹配的候选
+        for zh in cands:
+            if not _pharm_garbage(zh) and zh in DRUG_PHARM:
+                return zh
+        return None
+    # 无 CID 时取第一个可用药理的中文名（词典顺序即为常用名优先）
+    for zh in cands:
+        if not _pharm_garbage(zh) and zh in DRUG_PHARM:
+            return zh
+    return cands[0]
 
 
 def _canon(smiles):
@@ -661,7 +792,7 @@ def detect_type(q):
 def _enrich(cid, props, source):
     out = dict(props)
     out["source"] = source
-    zh = zh_name_for(en_name=out.get("iupac"), smiles=out.get("smiles"))
+    zh = zh_name_for(en_name=out.get("iupac"), smiles=out.get("smiles"), cid=cid)
     out["zh"] = zh
     out["category"] = category_for(cid, zh)
     ph = pharm_for(cid, zh)
@@ -774,7 +905,7 @@ def import_drugs(items):
             DRUGS.append(d)
             DRUGS_BY_ZH[d["zh"]] = d
             if d.get("cid"):
-                DRUGS_BY_CID[d["cid"]] = d
+                DRUGS_BY_CID.setdefault(d["cid"], d)
             CHINESE[d["zh"]] = d
             CHINESE_NORM[norm_zh(d["zh"])] = d["zh"]
             _index_name(d["zh"], d)
@@ -971,10 +1102,6 @@ def do_search(q, type_="auto", online=True):
     props = pc_props(order)
     candidates = [_enrich(cid, props.get(cid, {"cid": cid}), cid_sources.get(cid, "search"))
                   for cid in order if cid in props]
-    if matched_zh:
-        for c in candidates:
-            if not c.get("zh"):
-                c["zh"] = matched_zh
     # 有中文名/来源优先排序：autocomplete/name/dict 在前
     rank = {"dict": 0, "name": 1, "autocomplete": 2, "cas": 1, "smiles": 3, "formula": 4}
     candidates.sort(key=lambda c: (
@@ -1006,7 +1133,7 @@ def compound_detail(cid):
     names = [s for s in syns if not CAS_RE.match(s.strip())][:20]
     out["cas"] = cas
     out["names"] = names
-    out["zh"] = zh_name_for(en_name=out.get("iupac"), smiles=out.get("smiles"))
+    out["zh"] = zh_name_for(en_name=out.get("iupac"), smiles=out.get("smiles"), cid=cid)
     out["category"] = category_for(cid, out.get("zh"))
     ph = pharm_for(cid, out.get("zh"))
     if ph:

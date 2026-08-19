@@ -128,6 +128,7 @@ RENAME = {
     "磷酸苯丙哌林": "苯丙哌林",        # benproperine 盐/碱重复合并
     "硫酸特布他林": "特布他林",        # terbutaline 盐/碱重复合并
     "硫酸沙丁胺醇": "沙丁胺醇",        # salbutamol 盐/碱重复合并
+    "重酒石酸间产胺": "重酒石酸间羟胺",  # metaraminol bitartrate
     "敌敌旦": "敌敌畏",              # DDVP
     "塔月": "塔崩",                 # tabun
     "多库铵": "多库氯铵",            # doxacurium chloride

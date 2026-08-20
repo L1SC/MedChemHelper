@@ -57,10 +57,12 @@ fn wait_health(tries: u32) -> bool {
                 PORT
             );
             if s.write_all(req.as_bytes()).is_ok() {
-                let mut buf = [0u8; 128];
-                if s.read(&mut buf).is_ok() {
+                let mut buf = Vec::new();
+                if s.read_to_end(&mut buf).is_ok() {
                     let text = String::from_utf8_lossy(&buf);
-                    if text.contains("\"ok\":true") || text.contains("\"ok\": true") {
+                    if (text.contains("HTTP/1.0 200") || text.contains("HTTP/1.1 200"))
+                        && (text.contains("\"ok\":true") || text.contains("\"ok\": true"))
+                    {
                         return true;
                     }
                 }
@@ -90,6 +92,13 @@ fn main() {
             let healthy = wait_health(60);
             eprintln!("[tauri] 后端健康检查: {}", healthy);
             if !healthy {
+                if let Some(state) = app.try_state::<Backend>() {
+                    if let Ok(mut guard) = state.0.lock() {
+                        if let Some(mut child) = guard.take() {
+                            let _ = child.kill();
+                        }
+                    }
+                }
                 return Err("后端健康检查失败：端口 8765 未返回有效的 MedChemHelper 服务".into());
             }
             let url = format!("http://127.0.0.1:{}/", PORT)

@@ -1,44 +1,38 @@
-# MedChemHelper
+# MedChemHelper-Tauri
 
-药物化学学习工具：输入名称 / 分子式 / SMILES / CAS，快速得到候选化合物、结构式、药理信息与相似药物。
+药物化学学习工具：输入名称、分子式、SMILES 或 CAS，查询候选化合物、结构式、药理信息、官能团和相似药物。
 
-## 功能特性
+## 当前结构
 
-- **检索**：中文名（内置 614 种药物 + 常用化合物词典）、英文名（PubChem 联想/部分匹配）、分子式（列出同分异构体）、SMILES、CAS
-- **结构式**：ChemToolsHub 渲染 2D 结构图，离线自动降级为 RDKit 本地渲染
-- **药理信息**：约 190 种常见药物精编资料（母体、药效基团、靶点、药理作用、代谢毒理、相似药、部分构效关系 SAR），其余药物从 PubChem 提取兜底
-- **官能团**：RDKit 自动识别 49 种基团/药物母核（β-内酰胺、1,4-二氢吡啶、苯二氮䓬、噻嗪、甾体、嘌呤、喹诺酮等），含药效基团信息
-- **对比**：固定对比栏，检索下一个药物时并排比对；相似化合物显示中文名与共同结构
+- `server.py`：本地 Python HTTP 后端，支持普通 JSON 和 NDJSON 流式检索。
+- `static/`：Tauri 使用的前端页面。
+- `data/`：药物、药理、中文词典和官能团数据。
+- `backend/ChemHelperBackend/`：PyInstaller 后端运行包。
+- `src-tauri/`：Tauri 2 桌面壳。
+- `运行版/`：绿色版目录；`MedChemHelper-Tauri-win32-fixed.zip` 是本次修复后生成的包。
 
-## 快速开始
+## 运行开发后端
 
-- 直接运行 `desktop\dist\MedChemHelper-win32-x64\MedChemHelper.exe`
-- 或解压 `desktop\dist\MedChemHelper.zip` 到任意 Windows 电脑（Win10/11，64 位）后运行 `MedChemHelper.exe`
-
-修改源码后重新打包：运行 `desktop\build-all.ps1`（需要 Node 环境）。
-
-## 数据与依赖
-
-- 检索与属性数据：[PubChem REST API](https://pubchem.ncbi.nlm.nih.gov/)（在线）
-- 结构图渲染：[ChemToolsHub](https://chemtoolshub.com/zh-hans/tools/molecular-descriptor-calculator/)（在线）
-- 本地官能团识别与渲染备用：RDKit
-- 工具本身不使用 AI，不消耗 tokens
-
-## 目录结构
-
-```text
-chem-helper/
-├─ server.py                 # 本地后端服务
-├─ static/                   # 前端页面
-├─ data/                     # 药物库 / 药理信息 / 官能团库 / 中文词典
-├─ scripts/                  # 药物库构建脚本
-├─ desktop/                  # 桌面版
-└─ images/                   # 结构图缓存（运行时生成）
+```powershell
+$env:MEDCHEMHELPER_DEV = "1"
+python server.py --port 8765 --no-browser
 ```
 
-- **显示“未找到”**：中文名用常见叫法；英文支持部分匹配；也可用分子式（`C2H6O`）、SMILES（`CCO`）或 CAS 号
-- **想添加更多药物**：编辑 `data/drug_names.csv` 后运行 `.venv\Scripts\python scripts\build_drugs.py` 重建
-- **重新打包桌面版**：运行 `desktop\build-all.ps1`（需要 Node 环境）
+然后访问 `http://127.0.0.1:8765/`。
+
+## 构建桌面版
+
+需要 Node.js、Rust、Tauri CLI、Python、PyInstaller 和 RDKit。构建 Tauri 壳：
+
+```powershell
+npx --yes @tauri-apps/cli@2.11.4 build
+```
+
+后端运行包必须使用同一份 `server.py`、`static/` 和 `data/` 重新打包，否则发布版会继续使用旧的内嵌数据或前端文件。
+
+## 数据来源
+
+PubChem REST API、ChemToolsHub、RDKit，以及仓库内置的药物和药理知识库。
 
 ## 许可证
 

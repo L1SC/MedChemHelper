@@ -144,6 +144,11 @@ def main():
                 entry["inchikey"] = p["inchikey"]
         result.append(entry)
 
+    # CSV 是增量构建清单，不应删除已有但尚未列入 CSV 的人工/教材条目。
+    for zh, entry in existing.items():
+        if zh not in seen_zh:
+            result.append(entry)
+
     with open(OUT_PATH, "w", encoding="utf-8") as f:
         json.dump(result, f, ensure_ascii=False, indent=1)
 

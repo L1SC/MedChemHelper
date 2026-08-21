@@ -632,11 +632,11 @@
 
   function categoryNodeHtml(node, depth) {
     const children = node.children || [];
-    const drugs = node.drugs || [];
+    const drugs = node.drug_cards || (node.drugs || []).map((zh) => ({ zh }));
     const body = `
       ${node.description ? `<p class="category-desc">${esc(node.description)}</p>` : ""}
-      ${drugs.length ? `<div class="category-drugs">${drugs.map((name) =>
-        `<button class="drug-link" data-search-q="${esc(name)}">${esc(name)}</button>`).join("")}</div>` : ""}
+      ${drugs.length ? `<div class="category-drugs">${drugs.map((drug) =>
+        `<button class="drug-link" data-category-drug="${esc(drug.zh)}" data-cid="${esc(drug.cid || "")}" data-smiles="${esc(drug.smiles || "")}">${esc(drug.zh)}</button>`).join("")}</div>` : ""}
       ${children.length ? `<div class="category-children">${children.map((child) => categoryNodeHtml(child, depth + 1)).join("")}</div>` : ""}
       ${node.source ? `<div class="category-source">教材依据：${esc(node.source)}</div>` : ""}`;
     return `<details class="category-node depth-${depth}" ${depth < 2 ? "open" : ""}>
@@ -738,7 +738,7 @@
     const body = $("#modal-body");
     body.innerHTML = `<div class="m-title">加载中…</div><div class="m-sub">CID ${esc(cid)}</div>`;
     modal.classList.remove("hidden");
-    api("/api/compound", { cid })
+    api("/api/compound", { cid: cid || 0, zh: knownZh || "", online: state.online })
       .then((d) => {
         const zh = d.zh || knownZh || "";
         const groups = (d.groups || []).map((g) =>
@@ -760,6 +760,7 @@
               ${d.parent ? `<div class="m-block"><h4>药物母体</h4><p>${esc(d.parent)}</p></div>` : ""}
               ${d.pharmacophore ? `<div class="m-block"><h4>药效基团</h4><p>${esc(d.pharmacophore)}</p></div>` : ""}
               ${d.target ? `<div class="m-block"><h4>作用靶点</h4><p>${esc(d.target)}</p></div>` : ""}
+              ${d.textbook_source ? `<div class="m-block"><h4>教材归类依据</h4><p>${esc(d.textbook_source)}</p></div>` : ""}
               <div class="m-block"><h4>药理作用</h4><p id="m-action">${esc(d.action || "加载中…")}</p></div>
               <div class="m-block"><h4>代谢与毒理</h4><p id="m-mt">${esc(d.mt || "加载中…")}</p></div>
               ${d.source && d.source.length ? `<div class="m-block">${sourceHtml(d.source)}</div>` : ""}
@@ -783,23 +784,25 @@
             </div>
           </div>
           <div class="m-actions">
-            <button class="btn-mini alt" id="m-pin">📌 固定</button>
-            <button class="btn-mini" id="m-similar">🧬 相似化合物</button>
+            ${d.cid ? `<button class="btn-mini alt" id="m-pin">📌 固定</button>` : ""}
+            ${d.cid ? `<button class="btn-mini" id="m-similar">🧬 相似化合物</button>` : ""}
             ${d.cid ? `<button class="btn-mini" data-act="pubchem" data-cid="${esc(d.cid)}">PubChem ↗</button>` : ""}
             <button class="btn-mini" id="m-close">关闭</button>
           </div>`;
         const mimg = body.querySelector("[data-m-smiles]");
         fillStructBox(mimg, smi);
         $("#m-close").onclick = () => modal.classList.add("hidden");
-        $("#m-similar").onclick = () => { modal.classList.add("hidden"); loadSimilar(d.cid, zh || d.iupac); };
-        $("#m-pin").onclick = () => {
-          togglePin({
-            cid: d.cid, zh: zh, iupac: d.iupac, smiles: smi,
-            formula: d.formula, category: d.category,
-            parent: d.parent, pharmacophore: d.pharmacophore, target: d.target,
-            action: d.action, similar: d.similar || [], groups: d.groups || [],
-          });
-        };
+        if (d.cid) {
+          $("#m-similar").onclick = () => { modal.classList.add("hidden"); loadSimilar(d.cid, zh || d.iupac); };
+          $("#m-pin").onclick = () => {
+            togglePin({
+              cid: d.cid, zh: zh, iupac: d.iupac, smiles: smi,
+              formula: d.formula, category: d.category,
+              parent: d.parent, pharmacophore: d.pharmacophore, target: d.target,
+              action: d.action, similar: d.similar || [], groups: d.groups || [],
+            });
+          };
+        }
         if (!d.action || !d.mt) {
           api("/api/pharm", { cid: d.cid, zh: zh }).then((ph) => {
             if (ph.action) $("#m-action").textContent = ph.action;
@@ -1015,7 +1018,7 @@
       localStorage.setItem("ch_online", state.online ? "1" : "0");
       showMessage(state.online
         ? "已开启联网搜索：可使用 PubChem 全库检索、相似化合物与结构渲染。"
-        : "已关闭联网搜索：仅使用本地词典（约 614 种药物）与本地渲染。", "info");
+        : "已关闭联网搜索：仅使用本地药物库与本地渲染。", "info");
     });
 
     $("#pinned-clear").addEventListener("click", () => {
@@ -1049,12 +1052,13 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }
-      const categoryDrug = e.target.closest("[data-search-q]");
+      const categoryDrug = e.target.closest("[data-category-drug]");
       if (categoryDrug) {
-        const query = categoryDrug.dataset.searchQ;
-        $("#q").value = query;
-        doSearch(query, "name");
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        openDetail(
+          categoryDrug.dataset.cid || 0,
+          categoryDrug.dataset.smiles || "",
+          categoryDrug.dataset.categoryDrug
+        );
         return;
       }
       const pinBtn = e.target.closest('[data-act="pin"]');

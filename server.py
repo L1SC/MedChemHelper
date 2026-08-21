@@ -102,15 +102,25 @@ if os.path.exists(_category_path):
 SAR_BY_ID = {item["id"]: item for item in DRUG_CATEGORIES.get("sar", [])}
 
 
-def _index_textbook_drugs(nodes, index):
+def _index_textbook_drugs(nodes, index, meta, inherited_source=""):
     for node in nodes:
+        source = node.get("source") or inherited_source
         for zh in node.get("drugs") or []:
             index.setdefault(zh, node.get("name") or "")
-        _index_textbook_drugs(node.get("children") or [], index)
+            meta.setdefault(zh, {
+                "category": node.get("name") or "",
+                "source": source,
+            })
+        _index_textbook_drugs(node.get("children") or [], index, meta, source)
 
 
 TEXTBOOK_CATEGORY_BY_DRUG = {}
-_index_textbook_drugs(DRUG_CATEGORIES.get("categories") or [], TEXTBOOK_CATEGORY_BY_DRUG)
+TEXTBOOK_META_BY_DRUG = {}
+_index_textbook_drugs(
+    DRUG_CATEGORIES.get("categories") or [],
+    TEXTBOOK_CATEGORY_BY_DRUG,
+    TEXTBOOK_META_BY_DRUG,
+)
 
 # 同音/异形字规范化（噁=恶、䓬=卓、碸=砜、羥=羟、甙=苷、醯=酰）
 HOMOPHONE_MAP = {"噁": "恶", "䓬": "卓", "碸": "砜", "羥": "羟", "甙": "苷", "醯": "酰"}
@@ -155,8 +165,23 @@ def _category_drug_names(node):
 def _category_public(node):
     out = dict(node)
     out["children"] = [_category_public(child) for child in node.get("children") or []]
+    out["drug_cards"] = [_textbook_drug_summary(zh) for zh in node.get("drugs") or []]
     out["drug_count"] = _category_drug_count(node)
     return out
+
+
+def _textbook_drug_summary(zh):
+    info = CHINESE.get(zh) or {}
+    meta = TEXTBOOK_META_BY_DRUG.get(zh) or {}
+    return {
+        "zh": zh,
+        "cid": info.get("cid"),
+        "smiles": info.get("smiles") or "",
+        "formula": info.get("formula") or "",
+        "iupac": info.get("iupac") or "",
+        "category": meta.get("category") or info.get("category") or "",
+        "source": meta.get("source") or "",
+    }
 
 
 def _iter_categories(nodes):
@@ -189,6 +214,8 @@ def category_search(q):
     """按教材类别名称检索；精确命中时只返回该分支。"""
     qn = norm_category(q)
     if not qn:
+        return [], []
+    if any(qn == norm_category(zh) for zh in TEXTBOOK_CATEGORY_BY_DRUG):
         return [], []
     nodes = list(_iter_categories(DRUG_CATEGORIES.get("categories") or []))
 
@@ -1287,12 +1314,31 @@ def do_search(q, type_="auto", online=True, on_progress=None):
     }
 
 
-def compound_detail(cid):
-    props = pc_props([cid]).get(cid)
+def compound_detail(cid, zh=None, online=True):
+    local = DRUGS_BY_CID.get(cid) if cid else None
+    if not local and zh:
+        local = CHINESE.get(zh)
+    resolved_cid = cid or (local or {}).get("cid")
+    props = None
+    if resolved_cid and online:
+        try:
+            props = pc_props([resolved_cid]).get(resolved_cid)
+        except ApiError:
+            props = None
+    if not props and local:
+        props = _local_props(local)
+    if not props and zh in TEXTBOOK_CATEGORY_BY_DRUG:
+        props = {"cid": None, "formula": None, "mw": None, "smiles": None,
+                 "iupac": None, "inchikey": None}
     if not props:
         raise NotFoundError("未找到该化合物")
     out = dict(props)
-    syns = pc_synonyms(cid, limit=60)
+    if resolved_cid:
+        out["cid"] = resolved_cid
+    try:
+        syns = pc_synonyms(resolved_cid, limit=60) if resolved_cid and online else []
+    except ApiError:
+        syns = []
     cas = ""
     for s in syns:
         if CAS_RE.match(s.strip()):
@@ -1301,9 +1347,11 @@ def compound_detail(cid):
     names = [s for s in syns if not CAS_RE.match(s.strip())][:20]
     out["cas"] = cas
     out["names"] = names
-    out["zh"] = zh_name_for(en_name=out.get("iupac"), smiles=out.get("smiles"), cid=cid)
-    out["category"] = category_for(cid, out.get("zh"))
-    ph = pharm_for(cid, out.get("zh"))
+    out["zh"] = zh or zh_name_for(
+        en_name=out.get("iupac"), smiles=out.get("smiles"), cid=resolved_cid)
+    out["category"] = category_for(resolved_cid, out.get("zh"))
+    out["textbook_source"] = (TEXTBOOK_META_BY_DRUG.get(out.get("zh")) or {}).get("source") or ""
+    ph = pharm_for(resolved_cid, out.get("zh"))
     if ph:
         for k in ("parent", "pharmacophore", "target", "action", "mt", "sar"):
             out[k] = ph.get(k)
@@ -1394,6 +1442,8 @@ def pharm_detail(cid, zh=None):
     ph = pharm_for(cid, zh)
     if ph:
         return {"source": "curated", **ph}
+    if not cid:
+        return {"source": "local", "action": "", "mt": ""}
     return _pugview_pharm(cid)
 
 
@@ -1494,7 +1544,11 @@ class Handler(BaseHTTPRequestHandler):
                 self._send_json({"image": image, "descriptors": desc, "source": source})
             elif path == "/api/compound":
                 cid = int(body.get("cid", 0))
-                self._send_json(compound_detail(cid))
+                self._send_json(compound_detail(
+                    cid,
+                    body.get("zh") or "",
+                    online=bool(body.get("online", True)),
+                ))
             elif path == "/api/pharm":
                 cid = int(body.get("cid", 0))
                 zh = body.get("zh") or ""

@@ -6,11 +6,14 @@ __pycache__/
 
 # 打包产物（可从源码重新生成）
 backend-dist/
+backend/
 build-backend-tauri/
 data/images_pre/
 HANDOVER.md
 *.exe
+*.msi
 *.zip
+.build/
 
 # Rust / Tauri
 src-tauri/target/

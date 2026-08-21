@@ -6,12 +6,9 @@
 
 - `server.py`：本地 Python HTTP 后端，支持普通 JSON 和 NDJSON 流式检索。
 - `static/`：Tauri 使用的前端页面。
-- `data/`：药物、药理、中文词典和官能团数据。
-- `backend/ChemHelperBackend/`：PyInstaller 后端运行包。
+- `data/`：药物、药理、中文词典、教材分类和官能团数据。
+- `scripts/build_sar_diagrams.py`：按教材位点编号重建构效关系 SVG。
 - `src-tauri/`：Tauri 2 桌面壳。
-- `MedChemHelper.exe`：绿色版桌面程序，位于本体根目录。
-- `WebView2Loader.dll`：桌面程序依赖的 WebView2 加载组件。
-- `发行包/`（本体同级）：存放用于 GitHub Release 的压缩包。
 
 ## 运行开发后端
 
@@ -24,14 +21,17 @@ python server.py --port 8765 --no-browser
 
 ## 构建桌面版
 
-需要 Node.js、Rust、Tauri CLI、Python、PyInstaller 和 RDKit。构建 Tauri 壳：
+需要 Node.js、Rust、Python、PyInstaller 和 RDKit。执行统一构建脚本：
 
 ```powershell
-$env:CARGO_TARGET_DIR = Join-Path (Split-Path -Parent (Get-Location)) "build-target"
-npx --yes @tauri-apps/cli@2.11.4 build
+powershell -ExecutionPolicy Bypass -File scripts/build_tauri.ps1
 ```
 
-`CARGO_TARGET_DIR` 使用项目根目录下的 ASCII 路径，是为了兼容 Windows GNU 工具链对中文路径的处理限制。后端运行包必须使用同一份 `server.py`、`static/` 和 `data/` 重新打包，否则发布版会继续使用旧的内嵌数据或前端文件。
+脚本会依次重建构效关系 SVG、PyInstaller 后端和 Tauri MSI。`CARGO_TARGET_DIR` 使用仓库外的 ASCII 路径，以兼容 Windows GNU 工具链对中文路径的处理限制。
+
+## Release 格式
+
+自 `v1.7.0` 起，GitHub Release 只发布 Windows MSI 安装包。不要再上传 ZIP、绿色版 EXE 或 NSIS 安装包；Tauri 配置也固定为仅构建 `msi` 目标。
 
 ## 数据来源
 

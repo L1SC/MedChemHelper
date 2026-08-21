@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "basis": "分类以《药物化学》第八章为主，并用《药理学》第39—46章校对类别名称；构效关系仅收录《药物化学》中明确列图或列项说明的类别。",
+  "sources": [
+    {
+      "id": "medchem",
+      "title": "药物化学（中大版）",
+      "location": "第八章 抗菌药，PDF第124—162页（书页116—154）"
+    },
+    {
+      "id": "pharmacology",
+      "title": "《药理学》人卫第9版",
+      "location": "第39—46章，抗菌药物概论至抗结核药及抗麻风病药"
+    }
+  ],
+  "categories": [
+    {
+      "id": "antibacterial",
+      "name": "抗菌药",
+      "aliases": ["抗菌药物", "抗细菌药"],
+      "description": "用于抑制或杀灭细菌的药物。教材按来源和结构先分为抗生素与合成抗菌药，并另列抗结核药。",
+      "source": "medchem:PDF 124-162; pharmacology:第39-46章",
+      "children": [
+        {
+          "id": "antibiotics",
+          "name": "抗生素",
+          "aliases": ["抗菌抗生素"],
+          "description": "微生物代谢产生或由其结构改造而来的抗菌物质。",
+          "source": "medchem:PDF 126-149; pharmacology:第40-43章",
+          "children": [
+            {
+              "id": "beta-lactams",
+              "name": "β-内酰胺类抗生素",
+              "aliases": ["β内酰胺", "内酰胺类抗生素", "B-内酰胺类抗生素"],
+              "description": "共同具有β-内酰胺环，主要抑制细菌细胞壁黏肽交联。",
+              "source": "medchem:PDF 126-136; pharmacology:第40章",
+              "children": [
+                {
+                  "id": "penicillins",
+                  "name": "青霉素类",
+                  "aliases": ["青霉素"],
+                  "source": "medchem:PDF 127-131",
+                  "sar_ids": ["sar-penicillin"],
+                  "children": [
+                    {"id": "penicillin-natural", "name": "天然青霉素", "drugs": ["青霉素G"]},
+                    {"id": "penicillin-acid", "name": "耐酸青霉素", "drugs": ["青霉素V", "非奈西林", "阿度西林"]},
+                    {"id": "penicillin-enzyme", "name": "耐酶青霉素", "drugs": ["甲氧西林", "萘夫西林"]},
+                    {"id": "penicillin-acid-enzyme", "name": "耐酸、耐酶青霉素", "drugs": ["苯唑西林", "氯唑西林", "双氯西林", "氟氯西林"]},
+                    {"id": "penicillin-broad", "name": "广谱青霉素", "drugs": ["氨苄西林", "阿莫西林", "羧苄西林", "磺苄西林"]},
+                    {"id": "penicillin-other", "name": "其他半合成青霉素", "drugs": ["海地西林", "替莫西林"]}
+                  ]
+                },
+                {
+                  "id": "cephalosporins",
+                  "name": "头孢菌素类",
+                  "aliases": ["头孢", "头孢类"],
+                  "source": "medchem:PDF 131-132",
+                  "sar_ids": ["sar-cephalosporin"],
+                  "children": [
+                    {"id": "ceph-first", "name": "第一代头孢菌素", "drugs": ["头孢唑林", "头孢拉定"]},
+                    {"id": "ceph-second", "name": "第二代头孢菌素", "drugs": ["头孢尼西", "氯碳头孢"]},
+                    {"id": "ceph-third", "name": "第三代头孢菌素", "drugs": ["头孢噻肟", "头孢哌酮"]},
+                    {"id": "ceph-fourth", "name": "第四代头孢菌素", "drugs": ["头孢匹罗", "头孢吡肟"]}
+                  ]
+                },
+                {"id": "cephamycins", "name": "头霉素类", "source": "medchem:PDF 133", "drugs": ["头孢西丁", "头孢美唑"]},
+                {"id": "carbapenems", "name": "碳青霉烯类", "source": "medchem:PDF 133-134", "drugs": ["硫霉素", "亚胺培南", "美罗培南", "帕尼培南", "比阿培南"]},
+                {"id": "penems", "name": "青霉烯类", "source": "medchem:PDF 134", "drugs": ["呋罗培南", "利替培南", "硫培南"]},
+                {"id": "monobactams", "name": "单环β-内酰胺类", "aliases": ["单环内酰胺"], "source": "medchem:PDF 134", "drugs": ["诺卡霉素", "氨曲南"]},
+                {
+                  "id": "beta-lactamase-inhibitors",
+                  "name": "β-内酰胺酶抑制药",
+                  "aliases": ["β-内酰胺酶抑制剂"],
+                  "source": "medchem:PDF 135-136; pharmacology:第40章",
+                  "children": [
+                    {"id": "clavams", "name": "氧青霉素类", "drugs": ["克拉维酸"]},
+                    {"id": "penicillanic-sulfones", "name": "青霉烷砜类", "drugs": ["舒巴坦", "他唑巴坦"]}
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "tetracyclines",
+              "name": "四环素类抗生素",
+              "aliases": ["四环素类"],
+              "source": "medchem:PDF 136-139; pharmacology:第43章",
+              "sar_ids": ["sar-tetracycline"],
+              "drugs": ["四环素", "金霉素", "土霉素", "地美环素", "多西环素", "大器环素", "替加环素"]
+            },
+            {
+              "id": "aminoglycosides",
+              "name": "氨基糖苷类抗生素",
+              "aliases": ["氨基糖苷类", "氨基苷类抗生素", "氨基苷类"],
+              "source": "medchem:PDF 139-140; pharmacology:第42章",
+              "drugs": ["链霉素", "卡那霉素", "阿米卡星", "庆大霉素", "新霉素", "妥布霉素", "西索米星", "小诺米星", "地贝卡星", "阿贝卡星"]
+            },
+            {
+              "id": "macrolides",
+              "name": "大环内酯类抗生素",
+              "aliases": ["大环内酯类", "大环内酯"],
+              "source": "medchem:PDF 140-141; pharmacology:第41章",
+              "sar_ids": ["sar-erythromycin"],
+              "drugs": ["红霉素", "麦迪霉素", "螺旋霉素", "克拉霉素", "罗红霉素", "阿奇霉素", "泰利霉素"]
+            },
+            {
+              "id": "other-antibiotics",
+              "name": "其他抗生素",
+              "source": "medchem:PDF 141-143",
+              "children": [
+                {"id": "chloramphenicols", "name": "氯霉素类", "drugs": ["氯霉素", "甲砜霉素"]},
+                {"id": "lincosamides", "name": "林可霉素类", "drugs": ["林可霉素"]},
+                {"id": "glycopeptides", "name": "糖肽类抗生素", "drugs": ["万古霉素"]}
+              ]
+            }
+          ]
+        },
+        {
+          "id": "synthetic-antibacterials",
+          "name": "合成抗菌药",
+          "aliases": ["人工合成抗菌药", "化学合成抗菌药"],
+          "source": "medchem:PDF 149-157; pharmacology:第44章",
+          "children": [
+            {
+              "id": "sulfonamides",
+              "name": "磺胺类抗菌药",
+              "aliases": ["磺胺类", "磺胺药"],
+              "source": "medchem:PDF 149-151; pharmacology:第44章",
+              "sar_ids": ["sar-sulfonamide"],
+              "drugs": ["磺胺", "磺胺嘧啶", "磺胺甲噁唑", "磺胺甲氧嘧啶", "柳氮磺吡啶", "磺胺嘧啶银", "磺胺醋酰钠", "磺胺米隆"]
+            },
+            {
+              "id": "antibacterial-synergists",
+              "name": "抗菌增效剂",
+              "aliases": ["二氢叶酸还原酶抑制剂"],
+              "source": "medchem:PDF 150-151",
+              "drugs": ["甲氧苄啶", "四氧普林", "美替普林", "溴莫普林"]
+            },
+            {
+              "id": "quinolones",
+              "name": "喹诺酮类抗菌药",
+              "aliases": ["喹诺酮类", "氟喹诺酮类"],
+              "source": "medchem:PDF 151-155; pharmacology:第44章",
+              "sar_ids": ["sar-quinolone"],
+              "children": [
+                {"id": "quinolone-first", "name": "第一代喹诺酮", "drugs": ["萘啶酸", "吡咯酸", "吡哌酸"]},
+                {"id": "quinolone-second", "name": "第二代喹诺酮", "drugs": ["诺氟沙星", "氟罗沙星", "环丙沙星", "氧氟沙星"]},
+                {"id": "quinolone-later", "name": "第三、四代喹诺酮", "drugs": ["吉米沙星", "莫西沙星", "加替沙星", "司帕沙星", "加雷沙星"]}
+              ]
+            },
+            {"id": "oxazolidinones", "name": "噁唑烷酮类抗菌药", "aliases": ["唑烷酮类抗菌药", "噁唑烷酮类"], "source": "medchem:PDF 154", "drugs": ["利奈唑胺"]},
+            {"id": "nitrofurans", "name": "硝基呋喃类", "source": "pharmacology:第44章", "drugs": ["呋喃妥因", "呋喃唑酮"]},
+            {"id": "nitroimidazoles", "name": "硝基咪唑类", "source": "pharmacology:第44章", "drugs": ["甲硝唑"]}
+          ]
+        },
+        {
+          "id": "antituberculosis",
+          "name": "抗结核药",
+          "aliases": ["抗结核病药"],
+          "source": "medchem:PDF 157-161; pharmacology:第46章",
+          "children": [
+            {"id": "synthetic-antituberculosis", "name": "合成抗结核药", "drugs": ["异烟肼", "对氨基水杨酸钠", "乙硫异烟胺", "丙硫异烟胺", "乙胺丁醇", "司帕沙星", "氧氟沙星"]},
+            {"id": "antituberculosis-antibiotics", "name": "抗结核抗生素", "drugs": ["链霉素", "利福平", "利福定", "利福喷汀", "环丝氨酸", "卷曲霉素", "紫霉素"]}
+          ]
+        }
+      ]
+    }
+  ],
+  "sar": [
+    {
+      "id": "sar-penicillin",
+      "title": "青霉素类构效关系",
+      "image": "/static/sar-penicillin.svg?v=2",
+      "summary": "青霉素母核的β-内酰胺环、2位羧基和6位酰氨基是活性关键；6位侧链是最重要的可修饰区域。",
+      "points": ["β-内酰胺环、2位羧基和6位酰氨基为抗菌活性所必需", "6位酰胺侧链决定耐酸、耐酶和抗菌谱等性质", "6位引入甲氧基可提高对细菌β-内酰胺酶的稳定性", "3位甲基和4位硫原子可由其他基团或原子替换"],
+      "source": "药物化学，PDF第130-131页（书页122-123），图8-4"
+    },
+    {
+      "id": "sar-cephalosporin",
+      "title": "头孢菌素类构效关系",
+      "image": "/static/sar-cephalosporin.svg?v=2",
+      "summary": "头孢菌素母核两侧链及环上取代共同调节抗菌谱、耐酶性、效力、稳定性与药动性质。",
+      "points": ["7位酰氨基侧链是决定抗菌谱的重要区域", "7位侧链邻近取代影响对β-内酰胺酶的稳定性", "母核上的部分取代影响抗菌效力", "3位取代可同时影响稳定性、抗菌效力与药动性质"],
+      "source": "药物化学，PDF第131页（书页123）"
+    },
+    {
+      "id": "sar-tetracycline",
+      "title": "四环素类构效关系",
+      "image": "/static/sar-tetracycline.svg?v=2",
+      "summary": "四环稠合母核中1—4位和11、12位关键，5—9位可用于优化活性、稳定性和代谢。",
+      "points": ["1—4位取代基是活性必需部分", "11、12位二酮结构为活性所必需", "5—9位允许修饰，可改善抗菌活性、稳定性和代谢性能", "6位碳可用硫替换，活性可能升高但毒副作用也会增加"],
+      "source": "药物化学，PDF第137页（书页129）"
+    },
+    {
+      "id": "sar-erythromycin",
+      "title": "红霉素构效关系",
+      "image": "/static/sar-erythromycin.svg?v=2",
+      "summary": "大环内酯环和二甲氨基糖是活性关键，6位和9位是改善酸稳定性与活性的主要位置。",
+      "points": ["大环内酯结构和二甲氨基为活性必需", "9位羰基重要，还原后活性消失，但可进行肟或氨基相关改造", "6位羟基甲基化可增加酸稳定性", "克拉定糖不是活性必需部分"],
+      "source": "药物化学，PDF第141页（书页133）"
+    },
+    {
+      "id": "sar-sulfonamide",
+      "title": "磺胺类抗菌药构效关系",
+      "image": "/static/sar-sulfonamide.svg?v=2",
+      "summary": "对氨基苯磺酰胺是核心，氨基的状态、磺酰胺位置和氮上取代方式共同决定活性。",
+      "points": ["对位氨基须保持游离或可在体内恢复为游离状态", "磺酰胺基必须位于氨基对位，邻位或间位取代无活性", "磺酰胺氮单取代通常增强活性，杂环取代更有利", "磺酰胺氮双取代会使活性丧失；芳环被替换通常降低或丧失活性"],
+      "source": "药物化学，PDF第150页（书页142）"
+    },
+    {
+      "id": "sar-quinolone",
+      "title": "喹诺酮类抗菌药构效关系",
+      "image": "/static/sar-quinolone.svg?v=2",
+      "summary": "1,4-二氢-4-氧代喹啉-3-羧酸母核为基础，1、5、6、7、8位取代用于调节活性与性质。",
+      "points": ["3位羧基和4位羰基是药效关键，2位取代通常使活性降低或消失", "6位取代影响显著，教材给出的活性顺序为F>Cl>CN>NH₂>H", "7位以哌嗪基最有利，其他取代也会改变抗菌活性", "1位以乙基、环丙基、氟乙基或带吸电子基的芳基较好；5位氨基、8位Cl/F/OCH₃可增强活性"],
+      "source": "药物化学，PDF第154页（书页146）"
+    }
+  ]
+}

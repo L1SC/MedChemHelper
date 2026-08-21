@@ -163,6 +163,7 @@
   const SOURCE_LABEL = {
     dict: "中文词典", name: "名称匹配", autocomplete: "名称联想",
     formula: "分子式", smiles: "SMILES", cas: "CAS", similar: "相似", substructure: "子结构",
+    category: "教材分类",
   };
   const state = {
     candidates: [],
@@ -598,6 +599,9 @@
     $("#results-header").classList.add("hidden");
     $("#group-match-panel").classList.add("hidden");
     $("#group-match-grid").innerHTML = "";
+    $("#category-panel").classList.add("hidden");
+    $("#category-tree").innerHTML = "";
+    $("#category-sar").innerHTML = "";
     $("#more-wrap").classList.add("hidden");
     $("#similar-panel").classList.add("hidden");
     state.candidates = [];
@@ -626,6 +630,45 @@
     refreshPinButtons();
   }
 
+  function categoryNodeHtml(node, depth) {
+    const children = node.children || [];
+    const drugs = node.drugs || [];
+    const body = `
+      ${node.description ? `<p class="category-desc">${esc(node.description)}</p>` : ""}
+      ${drugs.length ? `<div class="category-drugs">${drugs.map((name) =>
+        `<button class="drug-link" data-search-q="${esc(name)}">${esc(name)}</button>`).join("")}</div>` : ""}
+      ${children.length ? `<div class="category-children">${children.map((child) => categoryNodeHtml(child, depth + 1)).join("")}</div>` : ""}
+      ${node.source ? `<div class="category-source">教材依据：${esc(node.source)}</div>` : ""}`;
+    return `<details class="category-node depth-${depth}" ${depth < 2 ? "open" : ""}>
+      <summary><span>${esc(node.name)}</span><span class="category-count">${esc(node.drug_count || drugs.length)} 种药</span></summary>
+      <div class="category-node-body">${body}</div>
+    </details>`;
+  }
+
+  function renderCategoryMatches(matches, sar, basis) {
+    const panel = $("#category-panel");
+    if (!matches.length) {
+      panel.classList.add("hidden");
+      return;
+    }
+    $("#category-title").textContent = `📚 教材药物分类（${matches.length} 个匹配分支）`;
+    $("#category-basis").textContent = basis || "";
+    $("#category-tree").innerHTML = matches.map((node) => categoryNodeHtml(node, 0)).join("");
+    $("#category-sar").innerHTML = sar.length ? `
+      <h3 class="sar-section-title">构效关系（教材明确列出的类别）</h3>
+      <div class="sar-grid">${sar.map((item) => `
+        <article class="sar-card">
+          <img src="${esc(item.image)}" alt="${esc(item.title)}母体结构式与位点编号" loading="lazy">
+          <div class="sar-card-body">
+            <h4>${esc(item.title)}</h4>
+            <p>${esc(item.summary)}</p>
+            <ol>${(item.points || []).map((point) => `<li>${esc(point)}</li>`).join("")}</ol>
+            <div class="category-source">${esc(item.source || "")}</div>
+          </div>
+        </article>`).join("")}</div>` : "";
+    panel.classList.remove("hidden");
+  }
+
   function doSearch(q, type) {
     state.query = q;
     state.type = type;
@@ -652,6 +695,8 @@
         const gm = (res.groups_match || [])
           .map((m) => (m && typeof m === "object" ? state.groupsById[m.id] : state.groupsById[m]))
           .filter(Boolean);
+        const categoryMatches = res.category_matches || [];
+        const sar = res.sar || [];
         state.candidates = res.candidates || [];
         state.shown = 0;
         const typeLabel = SOURCE_LABEL[res.type] || res.type || "自动识别";
@@ -659,14 +704,18 @@
         if (res.matched_zh) header += ` · 匹配“${esc(res.matched_zh)}”`;
         if (res.truncated) header += ` · 已显示前 ${state.candidates.length} 个`;
         if (res.offline) header += ` · 离线模式`;
-        if (!state.candidates.length && !gm.length) {
+        if (!state.candidates.length && !gm.length && !categoryMatches.length) {
           $("#results-header").innerHTML = header;
           $("#results-header").classList.remove("hidden");
           showMessage("未找到匹配的化合物或官能团，请尝试更精确的名称、分子式或 SMILES。", "warn");
           return;
         }
+        renderCategoryMatches(categoryMatches, sar, res.category_basis || "");
         renderGroupMatches(gm);
-        if (state.candidates.length) {
+        if (categoryMatches.length) {
+          $("#results-header").innerHTML = `按教材分类命中 <strong>${categoryMatches.length}</strong> 个分支，共列出 <strong>${res.total}</strong> 个药物条目`;
+          $("#results-header").classList.remove("hidden");
+        } else if (state.candidates.length) {
           $("#results-header").innerHTML = header;
           $("#results-header").classList.remove("hidden");
           showMore();
@@ -997,6 +1046,14 @@
         switchTab("search");
         $("#q").value = simName.dataset.simName;
         doSearch(simName.dataset.simName, "name");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      }
+      const categoryDrug = e.target.closest("[data-search-q]");
+      if (categoryDrug) {
+        const query = categoryDrug.dataset.searchQ;
+        $("#q").value = query;
+        doSearch(query, "name");
         window.scrollTo({ top: 0, behavior: "smooth" });
         return;
       }

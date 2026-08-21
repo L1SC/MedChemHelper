@@ -91,12 +91,145 @@ if os.path.exists(_pp):
     except Exception:
         DRUG_PHARM = {}
 
+# 教材分类树与明确列出的构效关系（SAR）
+DRUG_CATEGORIES = {"categories": [], "sar": []}
+_category_path = os.path.join(DATA_DIR, "drug_categories.json")
+if os.path.exists(_category_path):
+    try:
+        DRUG_CATEGORIES = load_json("drug_categories.json")
+    except Exception:
+        DRUG_CATEGORIES = {"categories": [], "sar": []}
+SAR_BY_ID = {item["id"]: item for item in DRUG_CATEGORIES.get("sar", [])}
+
+
+def _index_textbook_drugs(nodes, index):
+    for node in nodes:
+        for zh in node.get("drugs") or []:
+            index.setdefault(zh, node.get("name") or "")
+        _index_textbook_drugs(node.get("children") or [], index)
+
+
+TEXTBOOK_CATEGORY_BY_DRUG = {}
+_index_textbook_drugs(DRUG_CATEGORIES.get("categories") or [], TEXTBOOK_CATEGORY_BY_DRUG)
+
 # 同音/异形字规范化（噁=恶、䓬=卓、碸=砜、羥=羟、甙=苷、醯=酰）
 HOMOPHONE_MAP = {"噁": "恶", "䓬": "卓", "碸": "砜", "羥": "羟", "甙": "苷", "醯": "酰"}
 
 
 def norm_zh(s):
     return "".join(HOMOPHONE_MAP.get(ch, ch) for ch in s)
+
+
+def norm_category(s):
+    """用于类别名称/别名匹配；保留中文语义，忽略常见排版差异。"""
+    value = norm_zh(str(s or "")).lower()
+    value = value.replace("b-内酰胺", "β内酰胺").replace("β-内酰胺", "β内酰胺")
+    return re.sub(r"[\s·—_\-/（）()，,、]", "", value)
+
+
+CATEGORY_CANONICAL = {
+    "-内酰胺类抗生素": "β-内酰胺类抗生素",
+    "氨基苦类抗生素": "氨基糖苷类抗生素",
+    "氨基苷类抗生素": "氨基糖苷类抗生素",
+    "人工合成抗菌药": "合成抗菌药",
+    "抗骨质玻松药": "抗骨质疏松药",
+    "抗骨质朴松药": "抗骨质疏松药",
+    "抗恶性肿净药": "抗恶性肿瘤药",
+}
+
+
+def _category_drug_count(node):
+    names = set(node.get("drugs") or [])
+    for child in node.get("children") or []:
+        names.update(_category_drug_names(child))
+    return len(names)
+
+
+def _category_drug_names(node):
+    names = list(node.get("drugs") or [])
+    for child in node.get("children") or []:
+        names.extend(_category_drug_names(child))
+    return names
+
+
+def _category_public(node):
+    out = dict(node)
+    out["children"] = [_category_public(child) for child in node.get("children") or []]
+    out["drug_count"] = _category_drug_count(node)
+    return out
+
+
+def _iter_categories(nodes):
+    for node in nodes:
+        yield node
+        yield from _iter_categories(node.get("children") or [])
+
+
+def _category_sar(nodes):
+    ids = []
+    for node in nodes:
+        for sar_id in node.get("sar_ids") or []:
+            if sar_id not in ids:
+                ids.append(sar_id)
+        for sar_id in _category_sar_ids(node.get("children") or []):
+            if sar_id not in ids:
+                ids.append(sar_id)
+    return [SAR_BY_ID[sar_id] for sar_id in ids if sar_id in SAR_BY_ID]
+
+
+def _category_sar_ids(nodes):
+    ids = []
+    for node in nodes:
+        ids.extend(node.get("sar_ids") or [])
+        ids.extend(_category_sar_ids(node.get("children") or []))
+    return ids
+
+
+def category_search(q):
+    """按教材类别名称检索；精确命中时只返回该分支。"""
+    qn = norm_category(q)
+    if not qn:
+        return [], []
+    nodes = list(_iter_categories(DRUG_CATEGORIES.get("categories") or []))
+
+    def terms(node):
+        return [norm_category(node.get("name"))] + [norm_category(a) for a in node.get("aliases") or []]
+
+    exact = [node for node in nodes if qn in terms(node)]
+    matched = exact or [
+        node for node in nodes
+        if any(qn in term or term in qn for term in terms(node) if term)
+    ]
+    if matched:
+        public = [_category_public(node) for node in matched[:8]]
+        return public, _category_sar(matched[:8])
+
+    # 兼容当前药物库中的其他教材类别；同时修正常见 OCR 类别错字。
+    grouped = {}
+    for drug in DRUGS:
+        raw = str(drug.get("category") or "").strip()
+        if not raw:
+            continue
+        name = CATEGORY_CANONICAL.get(raw, raw)
+        grouped.setdefault(name, [])
+        zh = drug.get("zh")
+        if zh and zh not in grouped[name]:
+            grouped[name].append(zh)
+    fallback = []
+    for name, drugs in grouped.items():
+        nn = norm_category(name)
+        if qn in nn or nn in qn:
+            fallback.append({
+                "id": "local-" + hashlib.sha1(name.encode("utf-8")).hexdigest()[:10],
+                "name": name,
+                "description": "内置教材药物表中的同类药物。",
+                "source": "内置教材药物表",
+                "drugs": drugs,
+                "children": [],
+                "drug_count": len(drugs),
+            })
+    fallback.sort(key=lambda item: (-item["drug_count"], item["name"]))
+    return fallback[:8], []
 
 # 反向索引：英文名 / SMILES / CID -> 中文名候选（同一结构可能有多个中文名/盐型）
 ZH_BY_EN = {}
@@ -224,12 +357,18 @@ def pharm_for(cid, zh=None):
 
 
 def category_for(cid, zh=None):
+    if zh and zh in TEXTBOOK_CATEGORY_BY_DRUG:
+        return TEXTBOOK_CATEGORY_BY_DRUG[zh]
     if cid and cid in CAT_BY_CID:
-        return CAT_BY_CID[cid]
+        cid_zh = _cid_zh(cid)
+        if cid_zh and cid_zh in TEXTBOOK_CATEGORY_BY_DRUG:
+            return TEXTBOOK_CATEGORY_BY_DRUG[cid_zh]
+        return CATEGORY_CANONICAL.get(CAT_BY_CID[cid], CAT_BY_CID[cid])
     if zh:
         d = DRUGS_BY_ZH.get(zh)
         if d:
-            return d.get("category") or ""
+            raw = d.get("category") or ""
+            return CATEGORY_CANONICAL.get(raw, raw)
     return ""
 
 
@@ -1019,6 +1158,23 @@ def do_search(q, type_="auto", online=True, on_progress=None):
     if type_ == "auto":
         type_ = detect_type(q)
 
+    if type_ == "name":
+        category_matches, category_sar = category_search(q)
+        if category_matches:
+            return {
+                "query": q,
+                "type": "category",
+                "matched_zh": None,
+                "total": sum(item.get("drug_count", 0) for item in category_matches),
+                "truncated": False,
+                "offline": True,
+                "groups_match": [],
+                "candidates": [],
+                "category_matches": category_matches,
+                "sar": category_sar,
+                "category_basis": DRUG_CATEGORIES.get("basis", ""),
+            }
+
     def progress(**kw):
         if on_progress:
             on_progress(kw)
@@ -1296,6 +1452,8 @@ class Handler(BaseHTTPRequestHandler):
                 self._send_json({"groups": GROUPS})
             elif path == "/api/dict":
                 self._send_json(CHINESE)
+            elif path == "/api/categories":
+                self._send_json(DRUG_CATEGORIES)
             elif path == "/api/network":
                 self._send_json(check_network())
             elif path.startswith("/api/image/"):

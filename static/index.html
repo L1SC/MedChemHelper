@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MedChemHelper</title>
-  <link rel="stylesheet" href="/static/style.css?v=3">
+  <link rel="stylesheet" href="/static/style.css?v=4">
 </head>
 <body>
   <header class="topbar">
@@ -49,6 +49,8 @@
             <span>试试：</span>
             <button class="chip" data-q="阿司匹林">阿司匹林</button>
             <button class="chip" data-q="阿莫西林">阿莫西林</button>
+            <button class="chip" data-q="抗菌药">抗菌药（类别）</button>
+            <button class="chip" data-q="磺胺类">磺胺类（类别）</button>
             <button class="chip" data-q="奥美拉唑">奥美拉唑</button>
             <button class="chip" data-q="苯二氮卓">苯二氮卓（基团）</button>
             <button class="chip" data-q="恶唑">恶唑（基团）</button>
@@ -58,6 +60,12 @@
         </div>
         <div id="message"></div>
         <div id="results-header" class="results-header hidden"></div>
+        <div id="category-panel" class="category-panel hidden">
+          <div class="panel-title" id="category-title">📚 教材药物分类</div>
+          <div id="category-basis" class="category-basis"></div>
+          <div id="category-tree"></div>
+          <div id="category-sar"></div>
+        </div>
         <div id="group-match-panel" class="hidden">
           <div class="panel-title" id="group-match-title">🧪 官能团匹配</div>
           <div id="group-match-grid" class="groups-grid"></div>
@@ -111,6 +119,6 @@
     数据来源：PubChem（检索/药理兜底）· ChemToolsHub（结构图渲染）· RDKit（本地官能团识别）· 内置药理信息库
   </footer>
 
-  <script src="/static/app.js?v=3"></script>
+  <script src="/static/app.js?v=4"></script>
 </body>
 </html>

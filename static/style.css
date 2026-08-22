@@ -79,6 +79,20 @@ body {
 }
 .tab:hover { color: var(--ink); }
 .tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab-count {
+  display: inline-flex;
+  min-width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  margin-left: 3px;
+  padding: 0 5px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 11px;
+  line-height: 1;
+}
 
 .main-layout { max-width: 1400px; margin: 0 auto; padding: 20px 26px 60px; display: flex; gap: 20px; align-items: flex-start; }
 .main-col { flex: 1; min-width: 0; }
@@ -350,6 +364,7 @@ body {
 .btn-mini.alt { background: var(--accent); border-color: var(--accent); color: #fff; }
 .btn-mini.alt:hover { background: #1d4ed8; color: #fff; }
 .btn-mini.pinned { background: var(--amber-soft); border-color: #fde68a; color: var(--amber); }
+.btn-mini.favorited { background: #fff7ed; border-color: #fed7aa; color: #c2410c; }
 
 .center { text-align: center; margin: 16px 0; }
 .btn-ghost {
@@ -501,6 +516,7 @@ details.g-details summary { cursor: pointer; font-size: 13px; color: var(--accen
 .pinned-item { margin-bottom: 12px; }
 .pinned-item .card-item { box-shadow: none; }
 .pinned-empty { font-size: 12.5px; color: var(--muted); padding: 8px 0; }
+.favorite-empty { padding: 22px; color: var(--muted); font-size: 13px; }
 
 /* ---------------- 独立固定资料卡浮窗 ---------------- */
 #pinned-windows {

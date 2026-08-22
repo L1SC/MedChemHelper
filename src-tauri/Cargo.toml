@@ -1,6 +1,6 @@
 [package]
 name = "medchemhelper-tauri"
-version = "1.7.1"
+version = "1.7.2"
 description = "MedChemHelper medicinal chemistry desktop app"
 authors = ["MedChemHelper"]
 edition = "2021"

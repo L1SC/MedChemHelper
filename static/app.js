@@ -173,6 +173,7 @@
     type: "auto",
     online: localStorage.getItem("ch_online") !== "0",
     pinned: [],
+    favorites: [],
     groupsData: [],
     groupsById: {},
   };
@@ -276,6 +277,72 @@
       b.textContent = on ? "📌 已固定" : "📌 固定";
       b.classList.toggle("pinned", on);
     });
+  }
+
+  /* ---------------- 收藏夹 ---------------- */
+  function favoriteKey(c) {
+    if (c && c.cid != null && String(c.cid).trim()) return "d:" + String(c.cid).trim();
+    const fallback = String((c && (c.smiles || c.zh || c.iupac)) || "").trim().toLowerCase();
+    return fallback ? "l:" + fallback : "";
+  }
+
+  function saveFavorites() {
+    localStorage.setItem("ch_favorites_v1", JSON.stringify(state.favorites));
+  }
+
+  function isFavorite(c) {
+    const key = typeof c === "string" ? c : favoriteKey(c);
+    return !!key && state.favorites.some((item) => item.fid === key || favoriteKey(item) === key);
+  }
+
+  function favoriteData(c) {
+    return {
+      fid: favoriteKey(c),
+      cid: c.cid || "", zh: c.zh || "", iupac: c.iupac || "", smiles: c.smiles || "",
+      formula: c.formula || "", category: c.category || "", parent: c.parent || "",
+      pharmacophore: c.pharmacophore || "", target: c.target || "", action: c.action || "",
+      similar: c.similar || [], groups: c.groups || [], source: c.source || [],
+    };
+  }
+
+  function toggleFavorite(c) {
+    const key = favoriteKey(c);
+    if (!key) {
+      showMessage("该资料卡缺少可保存的名称或结构信息。", "warn");
+      return;
+    }
+    if (isFavorite(key)) {
+      state.favorites = state.favorites.filter((item) => item.fid !== key && favoriteKey(item) !== key);
+    } else {
+      state.favorites.push(favoriteData(c));
+    }
+    saveFavorites();
+    renderFavorites();
+    refreshFavoriteButtons();
+  }
+
+  function refreshFavoriteButtons() {
+    $$(".favorite-btn").forEach((b) => {
+      const on = isFavorite(b.dataset.fid || "");
+      b.textContent = on ? "⭐ 已收藏" : "⭐ 收藏";
+      b.classList.toggle("favorited", on);
+    });
+    const count = $("#favorite-count-badge");
+    if (count) count.textContent = state.favorites.length;
+  }
+
+  function renderFavorites() {
+    const grid = $("#favorites-grid");
+    const empty = $("#favorites-empty");
+    const header = $("#favorites-header");
+    if (!grid || !empty || !header) return;
+    grid.innerHTML = "";
+    header.innerHTML = state.favorites.length
+      ? `已收藏 <strong>${state.favorites.length}</strong> 张资料卡`
+      : "";
+    empty.classList.toggle("hidden", state.favorites.length > 0);
+    if (state.favorites.length) renderCandidateCards(state.favorites, grid, false);
+    refreshFavoriteButtons();
   }
 
   function pinnedDrugHtml(c) {
@@ -511,7 +578,7 @@
     if (!Array.isArray(src) || !src.length) return "";
     const parts = src.slice(0, 2).map((s) => {
       if (!s || typeof s !== "object") return "";
-      if (s.book === "PubChem") return "PubChem 中文整理";
+      if (s.book === "PubChem") return "PubChem 在线获取";
       if (s.book === "人工整理") return "人工精编";
       return `${s.book}${s.chapter ? "《" + s.chapter + "》" : ""}${s.page ? "（p" + s.page + "）" : ""}`;
     }).filter(Boolean);
@@ -546,7 +613,7 @@
       `<button class="g-chip" data-gid="${esc(g.id)}" title="${esc(g.en)}">${esc(g.symbol || g.zh)}</button>`
     ).join("");
     return `
-      <div class="card-item" data-cid="${esc(c.cid)}">
+      <div class="card-item" data-cid="${esc(c.cid)}" data-fid="${esc(favoriteKey(c))}">
         <div class="card-head">
           <div class="card-title">
             ${zh || esc(c.iupac || "化合物")}
@@ -561,6 +628,7 @@
           ${c.smiles ? `<div class="smiles-line"><span>${esc(c.smiles)}</span><button class="copy-btn" data-copy="${esc(c.smiles)}">⧉</button></div>` : ""}
           ${groups ? `<div class="groups-row">${groups}</div>` : ""}
           <div class="card-actions">
+            <button class="btn-mini favorite-btn" data-act="favorite" data-fid="${esc(favoriteKey(c))}">⭐ 收藏</button>
             <button class="btn-mini pin-btn" data-act="pin" data-cid="${esc(c.cid)}">📌 固定</button>
             <button class="btn-mini" data-act="detail">详情</button>
             <button class="btn-mini" data-act="similar">相似化合物</button>
@@ -584,6 +652,7 @@
       }
     });
     refreshPinButtons();
+    refreshFavoriteButtons();
   }
 
   function showMore() {
@@ -611,6 +680,7 @@
   function switchTab(name) {
     $$(".tab").forEach((b) => b.classList.toggle("active", b.dataset.tab === name));
     $$(".tab-panel").forEach((p) => p.classList.toggle("active", p.id === `tab-${name}`));
+    if (name === "favorites") renderFavorites();
   }
 
   function renderGroupMatches(groups) {
@@ -763,6 +833,7 @@
               ${d.textbook_source ? `<div class="m-block"><h4>教材归类依据</h4><p>${esc(d.textbook_source)}</p></div>` : ""}
               <div class="m-block"><h4>药理作用</h4><p id="m-action">${esc(d.action || "加载中…")}</p></div>
               <div class="m-block"><h4>代谢与毒理</h4><p id="m-mt">${esc(d.mt || "加载中…")}</p></div>
+              <div id="m-pharm-source"></div>
               ${d.source && d.source.length ? `<div class="m-block">${sourceHtml(d.source)}</div>` : ""}
               ${d.sar ? `<div class="m-block"><h4>构效关系（SAR）</h4><p>${esc(d.sar)}</p></div>` : ""}
               ${sims ? `<div class="m-block"><h4>相似药物</h4><div class="similar-chips">${sims}</div></div>` : ""}
@@ -785,6 +856,7 @@
           </div>
           <div class="m-actions">
             ${d.cid ? `<button class="btn-mini alt" id="m-pin">📌 固定</button>` : ""}
+            ${d.cid || smi || zh || d.iupac ? `<button class="btn-mini favorite-btn" id="m-favorite" data-act="favorite" data-fid="${esc(favoriteKey({ cid: d.cid, smiles: smi, zh, iupac: d.iupac }))}">⭐ 收藏</button>` : ""}
             ${d.cid ? `<button class="btn-mini" id="m-similar">🧬 相似化合物</button>` : ""}
             ${d.cid ? `<button class="btn-mini" data-act="pubchem" data-cid="${esc(d.cid)}">PubChem ↗</button>` : ""}
             <button class="btn-mini" id="m-close">关闭</button>
@@ -792,6 +864,7 @@
         const mimg = body.querySelector("[data-m-smiles]");
         fillStructBox(mimg, smi);
         $("#m-close").onclick = () => modal.classList.add("hidden");
+        refreshFavoriteButtons();
         if (d.cid) {
           $("#m-similar").onclick = () => { modal.classList.add("hidden"); loadSimilar(d.cid, zh || d.iupac); };
           $("#m-pin").onclick = () => {
@@ -803,17 +876,32 @@
             });
           };
         }
+        const favoriteBtn = $("#m-favorite");
+        if (favoriteBtn) {
+          favoriteBtn.onclick = (e) => {
+            e.stopPropagation();
+            toggleFavorite({
+              cid: d.cid, zh, iupac: d.iupac, smiles: smi, formula: d.formula,
+              category: d.category, parent: d.parent, pharmacophore: d.pharmacophore,
+              target: d.target, action: d.action, similar: d.similar || [], groups: d.groups || [],
+              source: d.source || [],
+            });
+          };
+        }
         if (!d.action || !d.mt) {
-          api("/api/pharm", { cid: d.cid, zh: zh }).then((ph) => {
+          api("/api/pharm", { cid: d.cid, zh: zh, online: state.online }).then((ph) => {
             if (ph.action) $("#m-action").textContent = ph.action;
             if (ph.mt) $("#m-mt").textContent = ph.mt;
+            if (ph.origin === "pubchem_online") {
+              $("#m-pharm-source").innerHTML = `<div class="pharm-src">来源：PubChem 在线获取</div>`;
+            }
             if (!ph.action && !ph.mt) {
               $("#m-action").textContent = "暂无资料";
               $("#m-mt").textContent = "暂无资料";
             }
           }).catch(() => {
-            $("#m-action").textContent = "暂无资料";
-            $("#m-mt").textContent = "暂无资料";
+            $("#m-action").textContent = "PubChem 中文翻译暂不可用";
+            $("#m-mt").textContent = "PubChem 中文翻译暂不可用";
           });
         }
       })
@@ -853,6 +941,7 @@
               <div class="card-body">
                 ${common ? `<div class="facts">共同结构：${common}</div>` : ""}
                 <div class="card-actions">
+                  <button class="btn-mini favorite-btn" data-act="favorite" data-fid="${esc(favoriteKey(c))}">⭐ 收藏</button>
                   <button class="btn-mini" data-act="detail">详情</button>
                   <button class="btn-mini" data-act="pubchem">PubChem ↗</button>
                 </div>
@@ -1061,6 +1150,23 @@
         );
         return;
       }
+      const favoriteBtn = e.target.closest('[data-act="favorite"]');
+      if (favoriteBtn) {
+        const card = favoriteBtn.closest(".card-item");
+        if (!card) return;
+        const fid = favoriteBtn.dataset.fid || card.dataset.fid || "";
+        const full = state.candidates.find((x) => favoriteKey(x) === fid)
+          || state.favorites.find((x) => favoriteKey(x) === fid);
+        const c = {
+          cid: card.dataset.cid || "",
+          zh: card.querySelector(".zh")?.textContent || "",
+          iupac: card.querySelector(".card-iupac")?.textContent.split(" · ")[0] || "",
+          smiles: card.querySelector(".struct")?.dataset.smiles || "",
+          category: card.querySelector(".badge.cat")?.textContent || "",
+        };
+        toggleFavorite(Object.assign(c, full || {}));
+        return;
+      }
       const pinBtn = e.target.closest('[data-act="pin"]');
       if (pinBtn) {
         const card = pinBtn.closest(".card-item");
@@ -1202,8 +1308,15 @@
     } catch (e) {
       state.pinned = [];
     }
+    try {
+      state.favorites = JSON.parse(localStorage.getItem("ch_favorites_v1") || "[]")
+        .filter((c) => c && favoriteKey(c));
+    } catch (e) {
+      state.favorites = [];
+    }
     renderPinned();
     renderPinWindows();
+    renderFavorites();
   }
 
   init();

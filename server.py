@@ -44,6 +44,7 @@ PUB_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
 AUTO_BASE = "https://pubchem.ncbi.nlm.nih.gov/rest/autocomplete/compound"
 CTH_PAGE = "https://chemtoolshub.com/zh-hans/tools/molecular-descriptor-calculator/"
 CTH_API = "https://chemtoolshub.com/zh-hans/tools/api/molecular-descriptor/"
+TRANSLATE_API = "https://translate.googleapis.com/translate_a/single"
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
       "ChemHelper/1.0 (local study tool)")
@@ -488,6 +489,7 @@ class RateLimiter:
 
 
 PUB_LIMITER = RateLimiter(0.28)   # PubChem 限速约 5 次/秒
+TRANSLATE_LIMITER = RateLimiter(0.2)
 CTH_LIMITER = RateLimiter(0.6)    # ChemToolsHub 请求间隔
 
 
@@ -1405,12 +1407,64 @@ def _walk_sections(sections, bucket):
             _walk_sections(sec["Section"], bucket)
 
 
+def _translate_to_zh(text):
+    """把 PubChem 英文原文翻译为中文；翻译失败时绝不回退展示英文。"""
+    text = str(text or "").strip()
+    if not text:
+        return ""
+    payload = urllib.parse.urlencode({
+        "client": "gtx", "sl": "en", "tl": "zh-CN", "dt": "t", "q": text,
+    }).encode("utf-8")
+    last_error = None
+    for attempt in range(2):
+        try:
+            TRANSLATE_LIMITER.wait()
+            req = urllib.request.Request(
+                TRANSLATE_API,
+                data=payload,
+                headers={"User-Agent": UA, "Accept": "application/json"},
+            )
+            with urllib.request.urlopen(req, timeout=25) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+            translated = "".join(
+                part[0] or "" for part in (data[0] or [])
+                if isinstance(part, list) and part
+            ).strip()
+            if translated:
+                return translated
+            last_error = ValueError("翻译服务返回空结果")
+        except Exception as exc:
+            last_error = exc
+            if attempt == 0:
+                time.sleep(0.6)
+    raise ApiError(f"PubChem 内容在线翻译失败：{last_error}")
+
+
+def _translated_pubchem_result(action, mt):
+    return {
+        "source": "pubchem",
+        "origin": "pubchem_online",
+        "translated": True,
+        "action": _translate_to_zh(action) if action else "",
+        "mt": _translate_to_zh(mt) if mt else "",
+    }
+
+
 def _pugview_pharm(cid):
-    """从 PubChem PUG View 提取药理/代谢/毒性文字（兜底，缓存到磁盘）。"""
+    """从 PubChem 提取药理/代谢/毒性，翻译为中文后缓存。"""
     cache = os.path.join(IMAGE_DIR, f"pugview_{cid}.json")
     if os.path.exists(cache):
         try:
-            return json.load(open(cache, "r", encoding="utf-8"))
+            cached = json.load(open(cache, "r", encoding="utf-8"))
+            if cached.get("translated") is True:
+                return cached
+            if cached.get("source") == "pubchem" and (
+                    cached.get("action") or cached.get("mt")):
+                result = _translated_pubchem_result(
+                    cached.get("action") or "", cached.get("mt") or "")
+                with open(cache, "w", encoding="utf-8") as f:
+                    json.dump(result, f, ensure_ascii=False)
+                return result
         except Exception:
             pass
     bucket = {}
@@ -1425,11 +1479,10 @@ def _pugview_pharm(cid):
     mech = " ".join(bucket.get("Mechanism of Action", [])).strip()
     metab = " ".join(bucket.get("Metabolism", [])).strip()
     tox = " ".join(bucket.get("Toxicity Summary", []) or bucket.get("Human Toxicity Excerpts", [])).strip()
-    result = {
-        "source": "pubchem",
-        "action": mech[:800] or "",
-        "mt": "；".join(x for x in (metab, tox) if x)[:800] or "",
-    }
+    result = _translated_pubchem_result(
+        mech[:800], "；".join(x for x in (metab, tox) if x)[:800])
+    if not result["action"] and not result["mt"]:
+        return result
     try:
         with open(cache, "w", encoding="utf-8") as f:
             json.dump(result, f, ensure_ascii=False)
@@ -1438,12 +1491,12 @@ def _pugview_pharm(cid):
     return result
 
 
-def pharm_detail(cid, zh=None):
+def pharm_detail(cid, zh=None, online=True):
     ph = pharm_for(cid, zh)
     if ph:
-        return {"source": "curated", **ph}
-    if not cid:
-        return {"source": "local", "action": "", "mt": ""}
+        return {**ph, "origin": "textbook"}
+    if not cid or not online:
+        return {"source": "local", "origin": "local", "action": "", "mt": ""}
     return _pugview_pharm(cid)
 
 
@@ -1552,7 +1605,8 @@ class Handler(BaseHTTPRequestHandler):
             elif path == "/api/pharm":
                 cid = int(body.get("cid", 0))
                 zh = body.get("zh") or ""
-                self._send_json(pharm_detail(cid, zh))
+                self._send_json(pharm_detail(
+                    cid, zh, online=bool(body.get("online", True))))
             elif path == "/api/similar":
                 if not body.get("online", True):
                     raise ApiError("相似化合物需要联网搜索，请打开“允许联网搜索”开关。")

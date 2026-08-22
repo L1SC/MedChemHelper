@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MedChemHelper</title>
-  <link rel="stylesheet" href="/static/style.css?v=4">
+  <link rel="stylesheet" href="/static/style.css?v=5">
 </head>
 <body>
   <header class="topbar">
@@ -27,6 +27,7 @@
   <nav class="tabs">
     <button class="tab active" data-tab="search">🔍 化合物检索</button>
     <button class="tab" data-tab="groups">🧪 官能团速查</button>
+    <button class="tab" data-tab="favorites">⭐ 收藏夹 <span id="favorite-count-badge" class="tab-count">0</span></button>
   </nav>
 
   <main class="main-layout">
@@ -91,6 +92,15 @@
         </div>
         <div id="groups-root"></div>
       </section>
+
+      <section id="tab-favorites" class="tab-panel">
+        <div class="intro card">
+          <p><strong>重点资料卡：</strong>把需要反复查看的药物或化合物加入收藏夹，收藏状态会保存在本机。</p>
+        </div>
+        <div class="results-header" id="favorites-header"></div>
+        <div id="favorites-empty" class="card favorite-empty hidden">还没有收藏资料卡。请在检索结果或详情弹窗中点击“⭐ 收藏”。</div>
+        <div id="favorites-grid" class="cards"></div>
+      </section>
     </div>
 
   </main>
@@ -119,6 +129,6 @@
     数据来源：PubChem（检索/药理兜底）· ChemToolsHub（结构图渲染）· RDKit（本地官能团识别）· 内置药理信息库
   </footer>
 
-  <script src="/static/app.js?v=5"></script>
+  <script src="/static/app.js?v=7"></script>
 </body>
 </html>
